@@ -78,6 +78,18 @@ void vge_polyline(VgeSurface *s, const int32_t *xy, int32_t n, vge_color color);
 /** Export RGB888 tightly packed (for display protocols). dest len = w*h*3. */
 void vge_export_rgb24(const VgeSurface *s, uint8_t *dest);
 
+/**
+ * Copy src into dst (min width/height). Use for double-buffer present:
+ * draw into a system-RAM surface, then blit once to the display surface.
+ */
+void vge_blit(VgeSurface *dst, const VgeSurface *src);
+
+/**
+ * Phosphor-style fade: each channel *= factor_256/256 (0..256).
+ * Call instead of full clear for smooth vector trails. factor 220–245 is typical.
+ */
+void vge_decay(VgeSurface *s, uint32_t factor_256);
+
 /** Engine version string (static). */
 const char *vge_version(void);
 

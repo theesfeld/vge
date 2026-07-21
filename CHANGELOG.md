@@ -11,6 +11,11 @@
 ### Added
 
 - True vector engine: geometry lights individual pixels (no sprite/bitmap draw path)
+- **Fast path:** inlined Bresenham stores, bulk clear, RAM back-buffer + single blit present
+- `vge_blit` / `Surface::blit_to` / `Framebuffer::present_from`
+- `vge_decay` phosphor fade (opt-in smooth trails)
+- `frame::FramePacer` for locked target Hz
+- `examples/bench` FPS measurement
 - x86_64 GNU assembly hot path: `plot`, `clear`, `line` (Bresenham), `circle`, `rect_fill`, `line_thick`
 - Portable C path for other targets (`VGE_FORCE_C=1` forces C on x86_64)
 - Affine transform helpers (translate, scale, rotate) + transformed lines

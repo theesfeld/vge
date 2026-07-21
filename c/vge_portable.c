@@ -102,6 +102,42 @@ void vge_export_rgb24(const VgeSurface *s, uint8_t *dest) {
     }
 }
 
+/* ---- always in C: blit + phosphor decay + composed ops ---- */
+
+void vge_blit(VgeSurface *dst, const VgeSurface *src) {
+    uint32_t y, w, h, row_bytes;
+    if (!dst || !src || !dst->pixels || !src->pixels)
+        return;
+    w = dst->width < src->width ? dst->width : src->width;
+    h = dst->height < src->height ? dst->height : src->height;
+    row_bytes = w * 4u;
+    for (y = 0; y < h; y++) {
+        memcpy(dst->pixels + (size_t)y * dst->stride,
+               src->pixels + (size_t)y * src->stride, row_bytes);
+    }
+}
+
+void vge_decay(VgeSurface *s, uint32_t factor_256) {
+    uint32_t x, y;
+    if (!s || !s->pixels)
+        return;
+    if (factor_256 > 256)
+        factor_256 = 256;
+    for (y = 0; y < s->height; y++) {
+        uint8_t *row = s->pixels + (size_t)y * s->stride;
+        for (x = 0; x < s->width; x++) {
+            uint32_t p;
+            uint32_t r, g, b;
+            memcpy(&p, row + (size_t)x * 4, 4);
+            r = ((p >> 16) & 0xFF) * factor_256 >> 8;
+            g = ((p >> 8) & 0xFF) * factor_256 >> 8;
+            b = (p & 0xFF) * factor_256 >> 8;
+            p = (r << 16) | (g << 8) | b;
+            memcpy(row + (size_t)x * 4, &p, 4);
+        }
+    }
+}
+
 /* ---- always in C: composed ops on top of plot/line ---- */
 
 void vge_line_thick(VgeSurface *s, int32_t x0, int32_t y0, int32_t x1, int32_t y1,

@@ -288,6 +288,13 @@ impl Framebuffer {
         let mut s = self.surface();
         unsafe { crate::vge_line_xf(&mut s, &m.0, x0, y0, x1, y1, color) };
     }
+
+    /// Present a system-RAM surface onto the frame buffer (one blit per frame).
+    /// Draw into RAM, then call this — much faster than per-primitive FB stores.
+    pub fn present_from(&mut self, src: &crate::Surface) {
+        let mut dst = self.surface();
+        src.blit_to_raw(&mut dst);
+    }
 }
 
 impl Drop for Framebuffer {
