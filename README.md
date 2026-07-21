@@ -24,27 +24,39 @@ A display layer (window, Kitty protocol, framebuffer) only needs the pixel buffe
 vge = { git = "https://github.com/theesfeld/vge" }
 ```
 
-## Terminal demo
+## Demo — draw on the glass
 
-The engine lights pixels. The present path maps that buffer into **any terminal**, including plain TTY:
+### Direct screen (Linux TTY / frame buffer)
+
+Assembly Bresenham stores **into video RAM** via `mmap(/dev/fb0)`.  
+No escape codes. No character cells. Pixels on the scanout buffer.
 
 ```bash
-cargo run --release --bin vge-demo
+# Prefer a real virtual console (clean TTY path):
+#   Ctrl+Alt+F3 → login → then:
+cargo run --release --bin vge-demo -- --fb
+# or:
+VGE_PRESENT=fb cargo run --release --bin vge-demo
+```
+
+Needs RW on `/dev/fb0` (override with `VGE_FB`). This host maps 32-bit XRGB (`0x00RRGGBB`) so the asm hot path writes dwords straight into the map.
+
+### Terminal emulator present
+
+When you are inside Ghostty/Kitty/xterm (not the Linux VT), use the protocol / cell present path:
+
+```bash
+cargo run --release --bin vge-demo -- --term
 ```
 
 | `VGE_TERM` | Path |
 |------------|------|
 | (auto) | Kitty graphics when Ghostty/Kitty/WezTerm is detected; else half-block |
-| `kitty` | Real RGB pixels via Kitty graphics protocol |
-| `half` | Unicode half-block + truecolor (most terminals and many TTYs) |
-| `ascii` | Density chars for dumb / mono TTY |
+| `kitty` | RGB pixels via Kitty graphics protocol |
+| `half` | Unicode half-block + truecolor |
+| `ascii` | Density chars for dumb hosts |
 
-```bash
-VGE_TERM=half cargo run --release --bin vge-demo
-VGE_TERM=ascii cargo run --release --bin vge-demo
-```
-
-Demo draws rotating star, orbiting circle, pitch ladder, radar sweep, spinning square. Quit: `q`, Esc, or Ctrl+C.
+Quit: `q`, Esc, or Ctrl+C.
 
 ## Quick use (Rust)
 
@@ -103,8 +115,9 @@ include/vge.h          C ABI
 asm/x86_64/vge.s       assembly hot path (plot/line/circle/clear)
 c/vge_portable.c       transforms + portable raster + export
 src/lib.rs             Rust safe API
-src/term.rs            terminal present (Kitty / half-block / ASCII)
-src/bin/vge-demo.rs    live terminal demo
+src/fb.rs              Linux /dev/fb0 mmap — direct video RAM
+src/term.rs            terminal emulator present (Kitty / half / ASCII)
+src/bin/vge-demo.rs    live demo (--fb or --term)
 ```
 
 ## SemVer
