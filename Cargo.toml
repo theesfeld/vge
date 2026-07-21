@@ -1,0 +1,37 @@
+[package]
+name = "vge"
+version = "0.1.0-dev.1"
+edition = "2021"
+license = "MIT"
+description = "True vector graphics engine: geometry to pixels (assembly hot path + C/Rust ABI)"
+repository = "https://github.com/theesfeld/vge"
+homepage = "https://theesfeld.github.io/vge/"
+authors = ["theesfeld"]
+rust-version = "1.74"
+readme = "README.md"
+keywords = ["vector", "graphics", "rasterizer", "bresenham", "assembly"]
+categories = ["graphics", "rendering", "no-std"]
+include = [
+    "src/**/*",
+    "asm/**/*",
+    "c/**/*",
+    "include/**/*",
+    "build.rs",
+    "LICENSE",
+    "README.md",
+    "CHANGELOG.md",
+]
+
+[lib]
+name = "vge"
+crate-type = ["rlib", "staticlib", "cdylib"]
+
+[[bin]]
+name = "vge-demo"
+path = "src/bin/vge-demo.rs"
+
+[dependencies]
+libc = "0.2"
+
+[build-dependencies]
+cc = "1"
