@@ -12,6 +12,7 @@
 
 #[cfg(target_os = "linux")]
 pub mod fb;
+pub mod frame;
 pub mod term;
 
 use std::f32::consts::PI;
@@ -87,6 +88,8 @@ extern "C" {
     );
     pub fn vge_polyline(s: *mut VgeSurface, xy: *const i32, n: i32, color: u32);
     pub fn vge_export_rgb24(s: *const VgeSurface, dest: *mut u8);
+    pub fn vge_blit(dst: *mut VgeSurface, src: *const VgeSurface);
+    pub fn vge_decay(s: *mut VgeSurface, factor_256: u32);
     pub fn vge_version() -> *const std::os::raw::c_char;
 }
 
@@ -147,6 +150,38 @@ impl Surface {
     pub fn clear(&mut self, color: Color) {
         let mut s = self.as_ffi();
         unsafe { vge_clear(&mut s, color) };
+    }
+
+    /// Phosphor fade: channels *= factor_256/256. Prefer this over hard clear
+    /// for smooth vector trails (classic CRT-style persistence).
+    pub fn decay(&mut self, factor_256: u32) {
+        let mut s = self.as_ffi();
+        unsafe { vge_decay(&mut s, factor_256) };
+    }
+
+    /// Copy this surface into `dst` (min size). Double-buffer present path.
+    pub fn blit_to(&self, dst: &mut Surface) {
+        let src = VgeSurface {
+            width: self.width,
+            height: self.height,
+            stride: self.stride,
+            _pad: 0,
+            pixels: self.pixels.as_ptr() as *mut u8,
+        };
+        let mut d = dst.as_ffi();
+        unsafe { vge_blit(&mut d, &src) };
+    }
+
+    /// Copy into a raw VgeSurface (e.g. mmap'd frame buffer).
+    pub fn blit_to_raw(&self, dst: &mut VgeSurface) {
+        let src = VgeSurface {
+            width: self.width,
+            height: self.height,
+            stride: self.stride,
+            _pad: 0,
+            pixels: self.pixels.as_ptr() as *mut u8,
+        };
+        unsafe { vge_blit(dst, &src) };
     }
 
     pub fn plot(&mut self, x: i32, y: i32, color: Color) {

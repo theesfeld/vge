@@ -24,32 +24,54 @@ A display layer (window, Kitty protocol, framebuffer) only needs the pixel buffe
 vge = { git = "https://github.com/theesfeld/vge" }
 ```
 
-## Demo — every terminal + TTY
+## Performance model (smooth + fast)
 
-Same engine (assembly geometry → pixels). Present path depends on the host:
+| Stage | What |
+|-------|------|
+| **Raster** | Geometry → pixels in **system RAM** (asm Bresenham, inlined stores, bulk clear) |
+| **Present** | One blit / protocol push per frame (never uncached FB writes per pixel) |
+| **Pace** | `FramePacer` locks target Hz (default 60; `VGE_HZ=120`) |
+
+Measured on this host (release, asm hot path):
+
+| Work | Size | FPS |
+|------|------|-----|
+| Draw-only | 1280×720 | ~10 000 |
+| Draw-only | 2560×1600 | ~1 700 |
+| Draw + blit to `/dev/fb0` | 2560×1600 | ~800 |
+
+```bash
+cargo run --release --example bench
+cargo run --release --example bench -- --fb
+```
+
+Optional CRT-style trail (vector phosphor): `VGE_PHOSPHOR=1` or `--phosphor`.
+
+## Demo — every terminal + TTY
 
 ### Terminal window (default) — Ghostty, Kitty, xterm, …
 
 ```bash
 cargo run --release --bin vge-demo
+VGE_HZ=120 cargo run --release --bin vge-demo
 ```
 
 | `VGE_TERM` | Present |
 |------------|---------|
 | (auto) | Kitty graphics on Ghostty/Kitty/WezTerm; else half-block truecolor |
 | `kitty` | RGB pixels via Kitty protocol |
-| `half` | Half-block truecolor (wide TTY/emulator support) |
+| `half` | Half-block truecolor (wide support) |
 | `ascii` | Density chars for dumb hosts |
 
 ### Direct glass (Linux VT / frame buffer)
 
 ```bash
-# Real virtual console recommended:
-#   Ctrl+Alt+F3 → login →
+# Real virtual console recommended: Ctrl+Alt+F3 → login →
 cargo run --release --bin vge-demo -- --fb
+VGE_HZ=120 cargo run --release --bin vge-demo -- --fb
 ```
 
-Assembly stores into `mmap(/dev/fb0)` video RAM. Needs RW on the FB device.
+Draws in RAM, **one blit** to `mmap(/dev/fb0)` per frame. Needs RW on the FB device.
 
 Quit: `q`, Esc, or Ctrl+C.
 
@@ -110,9 +132,11 @@ include/vge.h          C ABI
 asm/x86_64/vge.s       assembly hot path (plot/line/circle/clear)
 c/vge_portable.c       transforms + portable raster + export
 src/lib.rs             Rust safe API
-src/fb.rs              Linux /dev/fb0 mmap — direct video RAM
-src/term.rs            terminal emulator present (Kitty / half / ASCII)
-src/bin/vge-demo.rs    live demo (--fb or --term)
+src/fb.rs              Linux /dev/fb0 mmap + present_from blit
+src/frame.rs           FramePacer (smooth target Hz)
+src/term.rs            terminal present (Kitty / half / ASCII)
+src/bin/vge-demo.rs    live demo (RAM draw → present)
+examples/bench.rs      FPS bench
 ```
 
 ## SemVer
