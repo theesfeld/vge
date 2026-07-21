@@ -10,8 +10,9 @@
 - Affine transform helpers (translate, scale, rotate) + transformed lines
 - C ABI (`include/vge.h`) and Rust crate (`vge`)
 - RGB24 export for display protocols
-- Terminal present path: Kitty graphics, half-block truecolor (TTY-capable), ASCII fallback
-- `vge-demo` binary: live rotating vectors in the terminal
+- Terminal present path: Kitty graphics, half-block truecolor, ASCII fallback
+- **Linux framebuffer present:** `mmap(/dev/fb0)` — assembly stores into video RAM (real TTY)
+- `vge-demo --fb` / `VGE_PRESENT=fb` direct screen; `--term` for emulator path
 
 ## [0.1.0-dev.1] — 2026-07-21
 

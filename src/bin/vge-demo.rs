@@ -1,9 +1,15 @@
-//! Live terminal demo: true vector geometry (assembly engine) → pixels → terminal.
+//! Live vector demo.
 //!
+//! **Direct TTY / screen (Linux frame buffer — assembly stores into video RAM):**
 //! ```text
-//! cargo run --release --bin vge-demo
-//! VGE_TERM=half cargo run --release --bin vge-demo
-//! VGE_TERM=ascii cargo run --release --bin vge-demo
+//! cargo run --release --bin vge-demo -- --fb
+//! VGE_PRESENT=fb cargo run --release --bin vge-demo
+//! ```
+//! Use a real virtual console (Ctrl+Alt+F3) for a clean TTY path.
+//!
+//! **Terminal emulator present (Kitty / half-block / ASCII):**
+//! ```text
+//! cargo run --release --bin vge-demo -- --term
 //! ```
 //!
 //! Quit: `q` / Esc / Ctrl+C.
@@ -18,14 +24,214 @@ use vge::term::{
     detect_backend, enter_fullscreen, leave_fullscreen, present, suggested_surface_size,
     TermBackend,
 };
-use vge::{Surface, Xform, AMBER, BLACK, CYAN, GREEN, GREEN_DIM, RED, WHITE};
+use vge::{Color, Surface, Xform, AMBER, BLACK, CYAN, GREEN, GREEN_DIM, RED, WHITE};
 
 static RUNNING: AtomicBool = AtomicBool::new(true);
 
+trait Canvas {
+    fn width(&self) -> u32;
+    fn height(&self) -> u32;
+    fn clear(&mut self, c: Color);
+    fn line(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, c: Color);
+    fn line_thick(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, c: Color, t: i32);
+    fn circle(&mut self, cx: i32, cy: i32, r: i32, c: Color);
+    fn rect_fill(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, c: Color);
+    fn line_xf(&mut self, m: &Xform, x0: f32, y0: f32, x1: f32, y1: f32, c: Color);
+}
+
+impl Canvas for Surface {
+    fn width(&self) -> u32 {
+        Surface::width(self)
+    }
+    fn height(&self) -> u32 {
+        Surface::height(self)
+    }
+    fn clear(&mut self, c: Color) {
+        Surface::clear(self, c)
+    }
+    fn line(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, c: Color) {
+        Surface::line(self, x0, y0, x1, y1, c)
+    }
+    fn line_thick(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, c: Color, t: i32) {
+        Surface::line_thick(self, x0, y0, x1, y1, c, t)
+    }
+    fn circle(&mut self, cx: i32, cy: i32, r: i32, c: Color) {
+        Surface::circle(self, cx, cy, r, c)
+    }
+    fn rect_fill(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, c: Color) {
+        Surface::rect_fill(self, x0, y0, x1, y1, c)
+    }
+    fn line_xf(&mut self, m: &Xform, x0: f32, y0: f32, x1: f32, y1: f32, c: Color) {
+        Surface::line_xf(self, m, x0, y0, x1, y1, c)
+    }
+}
+
+#[cfg(target_os = "linux")]
+impl Canvas for vge::fb::Framebuffer {
+    fn width(&self) -> u32 {
+        vge::fb::Framebuffer::width(self)
+    }
+    fn height(&self) -> u32 {
+        vge::fb::Framebuffer::height(self)
+    }
+    fn clear(&mut self, c: Color) {
+        vge::fb::Framebuffer::clear(self, c)
+    }
+    fn line(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, c: Color) {
+        vge::fb::Framebuffer::line(self, x0, y0, x1, y1, c)
+    }
+    fn line_thick(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, c: Color, t: i32) {
+        vge::fb::Framebuffer::line_thick(self, x0, y0, x1, y1, c, t)
+    }
+    fn circle(&mut self, cx: i32, cy: i32, r: i32, c: Color) {
+        vge::fb::Framebuffer::circle(self, cx, cy, r, c)
+    }
+    fn rect_fill(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, c: Color) {
+        vge::fb::Framebuffer::rect_fill(self, x0, y0, x1, y1, c)
+    }
+    fn line_xf(&mut self, m: &Xform, x0: f32, y0: f32, x1: f32, y1: f32, c: Color) {
+        vge::fb::Framebuffer::line_xf(self, m, x0, y0, x1, y1, c)
+    }
+}
+
+#[derive(Clone, Copy, Debug)]
+enum PresentMode {
+    Framebuffer,
+    Terminal(TermBackend),
+}
+
 fn main() -> io::Result<()> {
     install_sigint();
+    match select_mode() {
+        PresentMode::Framebuffer => run_framebuffer(),
+        PresentMode::Terminal(backend) => run_terminal(backend),
+    }
+}
 
-    let backend = detect_backend();
+fn select_mode() -> PresentMode {
+    let args: Vec<String> = std::env::args().collect();
+    let flag_fb = args.iter().any(|a| a == "--fb" || a == "-f");
+    let flag_term = args.iter().any(|a| a == "--term" || a == "-t");
+    let env = std::env::var("VGE_PRESENT")
+        .unwrap_or_default()
+        .to_ascii_lowercase();
+
+    if flag_term {
+        return PresentMode::Terminal(detect_backend());
+    }
+    if flag_fb || env == "fb" || env == "framebuffer" || env == "tty" {
+        return PresentMode::Framebuffer;
+    }
+    if is_linux_vt() && fb_available() {
+        return PresentMode::Framebuffer;
+    }
+    PresentMode::Terminal(detect_backend())
+}
+
+fn fb_available() -> bool {
+    #[cfg(target_os = "linux")]
+    {
+        vge::fb::Framebuffer::available()
+    }
+    #[cfg(not(target_os = "linux"))]
+    {
+        false
+    }
+}
+
+fn is_linux_vt() -> bool {
+    let term = std::env::var("TERM").unwrap_or_default();
+    if term == "linux" {
+        return true;
+    }
+    #[cfg(unix)]
+    {
+        unsafe {
+            let mut buf = [0i8; 64];
+            if libc::ttyname_r(libc::STDIN_FILENO, buf.as_mut_ptr(), buf.len()) == 0 {
+                let name = std::ffi::CStr::from_ptr(buf.as_ptr());
+                if let Ok(s) = name.to_str() {
+                    if s.starts_with("/dev/tty")
+                        && s.as_bytes()
+                            .get(8)
+                            .map(|c| c.is_ascii_digit())
+                            .unwrap_or(false)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+    }
+    false
+}
+
+#[cfg(target_os = "linux")]
+fn run_framebuffer() -> io::Result<()> {
+    use vge::fb::Framebuffer;
+
+    let mut fb = Framebuffer::open_default().map_err(|e| {
+        io::Error::new(
+            e.kind(),
+            format!(
+                "open framebuffer failed: {e}\n\
+                 Need RW on /dev/fb0 (or VGE_FB). On a desktop, switch to a VT:\n\
+                   Ctrl+Alt+F3  →  login  →  vge-demo --fb\n\
+                 Add your user to the device group if open fails."
+            ),
+        )
+    })?;
+
+    eprintln!(
+        "VGE direct FB · {}x{} stride={} · asm={} · video RAM",
+        fb.width(),
+        fb.height(),
+        fb.stride(),
+        vge::using_assembly()
+    );
+    eprintln!("Assembly draws into mmap'd /dev/fb0. Quit: q / Ctrl+C");
+
+    let start = Instant::now();
+    let mut frame: u64 = 0;
+    let mut last_fps = Instant::now();
+    let mut fps_count = 0u32;
+    let mut fps = 0u32;
+
+    while RUNNING.load(Ordering::Relaxed) {
+        if poll_quit()? {
+            break;
+        }
+        let t = start.elapsed().as_secs_f32();
+        // No present step: pixels are already on the scanout buffer.
+        draw_scene(&mut fb, t, fps, 3);
+        frame += 1;
+        fps_count += 1;
+        if last_fps.elapsed() >= Duration::from_secs(1) {
+            fps = fps_count;
+            fps_count = 0;
+            last_fps = Instant::now();
+        }
+        thread::sleep(Duration::from_millis(16));
+    }
+
+    drop(fb);
+    let _ = writeln!(
+        io::stderr(),
+        "vge-demo FB done · frames={frame} · asm={}",
+        vge::using_assembly()
+    );
+    Ok(())
+}
+
+#[cfg(not(target_os = "linux"))]
+fn run_framebuffer() -> io::Result<()> {
+    Err(io::Error::new(
+        io::ErrorKind::Unsupported,
+        "direct framebuffer present is Linux-only",
+    ))
+}
+
+fn run_terminal(backend: TermBackend) -> io::Result<()> {
     let (w, h) = suggested_surface_size(backend);
     let mut surf = Surface::new(w, h);
 
@@ -36,16 +242,20 @@ fn main() -> io::Result<()> {
     let mut fps_count = 0u32;
     let mut fps = 0u32;
 
+    let be = match backend {
+        TermBackend::Kitty => 3,
+        TermBackend::HalfBlock => 2,
+        TermBackend::Ascii => 1,
+    };
+
     let result = (|| -> io::Result<()> {
         while RUNNING.load(Ordering::Relaxed) {
             if poll_quit()? {
                 break;
             }
-
             let t = start.elapsed().as_secs_f32();
-            draw_scene(&mut surf, t, backend, fps);
+            draw_scene(&mut surf, t, fps, be);
             present(&surf, backend)?;
-
             frame += 1;
             fps_count += 1;
             if last_fps.elapsed() >= Duration::from_secs(1) {
@@ -53,8 +263,6 @@ fn main() -> io::Result<()> {
                 fps_count = 0;
                 last_fps = Instant::now();
             }
-
-            // Engine is instant; sleep only paces the eyes (~60 Hz).
             thread::sleep(Duration::from_millis(16));
         }
         Ok(())
@@ -63,32 +271,31 @@ fn main() -> io::Result<()> {
     leave_fullscreen()?;
     let _ = writeln!(
         io::stderr(),
-        "vge-demo done · backend={backend:?} · surface={w}x{h} · asm={} · frames={frame}",
+        "vge-demo term done · backend={backend:?} · surface={w}x{h} · asm={} · frames={frame}",
         vge::using_assembly()
     );
     result
 }
 
-fn draw_scene(surf: &mut Surface, t: f32, backend: TermBackend, fps: u32) {
-    let w = surf.width() as i32;
-    let h = surf.height() as i32;
+fn draw_scene(c: &mut dyn Canvas, t: f32, fps: u32, backend_code: i32) {
+    let w = c.width() as i32;
+    let h = c.height() as i32;
     let cx = w / 2;
     let cy = h / 2;
-    surf.clear(BLACK);
+    c.clear(BLACK);
 
-    // FOV brackets
     let m = (w.min(h) / 40).max(8);
     let bracket = m * 2;
-    surf.line_thick(m, m, m + bracket, m, GREEN_DIM, 2);
-    surf.line_thick(m, m, m, m + bracket, GREEN_DIM, 2);
-    surf.line_thick(w - m, m, w - m - bracket, m, GREEN_DIM, 2);
-    surf.line_thick(w - m, m, w - m, m + bracket, GREEN_DIM, 2);
-    surf.line_thick(m, h - m, m + bracket, h - m, GREEN_DIM, 2);
-    surf.line_thick(m, h - m, m, h - m - bracket, GREEN_DIM, 2);
-    surf.line_thick(w - m, h - m, w - m - bracket, h - m, GREEN_DIM, 2);
-    surf.line_thick(w - m, h - m, w - m, h - m - bracket, GREEN_DIM, 2);
+    let th = if w > 1000 { 3 } else { 2 };
+    c.line_thick(m, m, m + bracket, m, GREEN_DIM, th);
+    c.line_thick(m, m, m, m + bracket, GREEN_DIM, th);
+    c.line_thick(w - m, m, w - m - bracket, m, GREEN_DIM, th);
+    c.line_thick(w - m, m, w - m, m + bracket, GREEN_DIM, th);
+    c.line_thick(m, h - m, m + bracket, h - m, GREEN_DIM, th);
+    c.line_thick(m, h - m, m, h - m - bracket, GREEN_DIM, th);
+    c.line_thick(w - m, h - m, w - m - bracket, h - m, GREEN_DIM, th);
+    c.line_thick(w - m, h - m, w - m, h - m - bracket, GREEN_DIM, th);
 
-    // Rotating star (transform → Bresenham pixels)
     let arm = (w.min(h) as f32) * 0.28;
     let rot = Xform::identity()
         .translate(cx as f32, cy as f32)
@@ -98,16 +305,14 @@ fn draw_scene(surf: &mut Surface, t: f32, backend: TermBackend, fps: u32) {
         let a = i as f32 * PI / 3.0;
         let x1 = cx as f32 + arm * a.cos();
         let y1 = cy as f32 + arm * a.sin();
-        surf.line_xf(&rot, cx as f32, cy as f32, x1, y1, GREEN);
+        c.line_xf(&rot, cx as f32, cy as f32, x1, y1, GREEN);
     }
 
-    // Orbiting circle
     let orbit_r = arm * 0.85;
     let ox = cx as f32 + orbit_r * (t * 2.0).cos();
     let oy = cy as f32 + orbit_r * (t * 2.0).sin();
-    surf.circle(ox as i32, oy as i32, (arm * 0.12).max(4.0) as i32, CYAN);
+    c.circle(ox as i32, oy as i32, (arm * 0.12).max(4.0) as i32, CYAN);
 
-    // Pitch ladder (synthetic roll)
     let roll = (t * 0.4).sin() * 12.0;
     let ladder = Xform::identity()
         .translate(cx as f32, cy as f32)
@@ -121,10 +326,10 @@ fn draw_scene(surf: &mut Surface, t: f32, backend: TermBackend, fps: u32) {
         let half = w as f32 * 0.12;
         let gap = w as f32 * 0.04;
         let col = if step > 0 { GREEN } else { GREEN_DIM };
-        surf.line_xf(&ladder, cx as f32 - half, y, cx as f32 - gap, y, col);
-        surf.line_xf(&ladder, cx as f32 + gap, y, cx as f32 + half, y, col);
+        c.line_xf(&ladder, cx as f32 - half, y, cx as f32 - gap, y, col);
+        c.line_xf(&ladder, cx as f32 + gap, y, cx as f32 + half, y, col);
     }
-    surf.line_xf(
+    c.line_xf(
         &ladder,
         cx as f32 - w as f32 * 0.2,
         cy as f32,
@@ -133,30 +338,27 @@ fn draw_scene(surf: &mut Surface, t: f32, backend: TermBackend, fps: u32) {
         AMBER,
     );
 
-    // Gun cross
     let g = (w.min(h) / 25).max(6);
-    surf.line(cx - g * 2, cy, cx - g / 2, cy, GREEN);
-    surf.line(cx + g / 2, cy, cx + g * 2, cy, GREEN);
-    surf.line(cx, cy - g, cx, cy - g / 3, GREEN);
+    c.line(cx - g * 2, cy, cx - g / 2, cy, GREEN);
+    c.line(cx + g / 2, cy, cx + g * 2, cy, GREEN);
+    c.line(cx, cy - g, cx, cy - g / 3, GREEN);
 
-    // Radar PPI
     let rcx = w - w / 5;
     let rcy = h - h / 5;
     let rr = (w.min(h) / 8).max(12);
     for ring in 1..=3 {
-        surf.circle(rcx, rcy, rr * ring / 3, GREEN_DIM);
+        c.circle(rcx, rcy, rr * ring / 3, GREEN_DIM);
     }
     let sweep = t * 2.5;
-    surf.line_thick(
+    c.line_thick(
         rcx,
         rcy,
         rcx + (rr as f32 * sweep.cos()) as i32,
         rcy + (rr as f32 * sweep.sin()) as i32,
         GREEN,
-        2,
+        th,
     );
 
-    // Spinning square
     let sq = (w.min(h) as f32) * 0.08;
     let bx = w as f32 * 0.18;
     let by = h as f32 * 0.22;
@@ -172,18 +374,12 @@ fn draw_scene(surf: &mut Surface, t: f32, backend: TermBackend, fps: u32) {
         (bx - sq, by - sq),
     ];
     for win in corners.windows(2) {
-        surf.line_xf(&box_xf, win[0].0, win[0].1, win[1].0, win[1].1, RED);
+        c.line_xf(&box_xf, win[0].0, win[0].1, win[1].0, win[1].1, RED);
     }
 
-    // Status bars: fps width + backend code
     let label_y = 4;
-    surf.rect_fill(4, label_y, 4 + (fps.min(120) as i32), label_y + 3, WHITE);
-    let be = match backend {
-        TermBackend::Kitty => 3,
-        TermBackend::HalfBlock => 2,
-        TermBackend::Ascii => 1,
-    };
-    surf.rect_fill(4, label_y + 6, 4 + be * 8, label_y + 9, CYAN);
+    c.rect_fill(4, label_y, 4 + (fps.min(120) as i32), label_y + 3, WHITE);
+    c.rect_fill(4, label_y + 6, 4 + backend_code * 8, label_y + 9, CYAN);
 }
 
 fn poll_quit() -> io::Result<bool> {

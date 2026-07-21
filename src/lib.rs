@@ -10,6 +10,8 @@
 
 #![allow(non_camel_case_types)]
 
+#[cfg(target_os = "linux")]
+pub mod fb;
 pub mod term;
 
 use std::f32::consts::PI;
