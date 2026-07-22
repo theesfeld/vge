@@ -167,6 +167,10 @@ fn terminal_winsize() -> Option<(u16, u16, u16, u16)> {
 /// Approximate pixel size of one character cell `(width, height)`.
 ///
 /// Prefer real `ws_xpixel`/`ws_ypixel`. Fallback **1∶2** (common mono fonts).
+///
+/// **Note:** On Ghostty/Kitty under fractional Wayland scale, these values are
+/// often **buffer** pixels, not panel device pixels. Use
+/// [`cell_pixel_size_device`] for ruler layout.
 pub fn cell_pixel_size() -> (f32, f32) {
     if let Some((cols, rows, xpix, ypix)) = terminal_winsize() {
         if xpix > 0 && ypix > 0 && cols > 0 && rows > 0 {
@@ -175,6 +179,296 @@ pub fn cell_pixel_size() -> (f32, f32) {
     }
     // Typical terminal cell: half as wide as tall → N×N cells look *tall*.
     (8.0, 16.0)
+}
+
+/// How `TIOCGWINSZ` pixels relate to **panel device pixels**.
+///
+/// Ghostty (and some other GPU terminals) report buffer size at their content
+/// scale. Compositor scale may differ (e.g. content ~2, niri scale 1.5). EDID
+/// PPI is always in panel device pixels. Mixing spaces understates the face.
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub struct PixelSpace {
+    /// Multiply winsize/buffer pixels by this to get panel device pixels.
+    pub winsize_to_device: f32,
+    pub source: PxSpaceSource,
+}
+
+#[derive(Clone, Copy, Debug, PartialEq, Eq)]
+pub enum PxSpaceSource {
+    /// `MFD_PX_SCALE` env (device px per winsize px).
+    Env,
+    /// Compositor window size × output scale vs winsize.
+    Compositor,
+    /// No correction (assume winsize already device).
+    Identity,
+}
+
+/// Detect winsize → device pixel scale.
+///
+/// Order:
+/// 1. `MFD_PX_SCALE` — manual (device_px = winsize_px × scale)
+/// 2. Compositor: window logical size × output scale / winsize
+/// 3. Identity `1.0`
+pub fn pixel_space() -> PixelSpace {
+    if let Ok(s) = std::env::var("MFD_PX_SCALE") {
+        if let Ok(v) = s.parse::<f32>() {
+            if v.is_finite() && (0.25..4.0).contains(&v) {
+                return PixelSpace {
+                    winsize_to_device: v,
+                    source: PxSpaceSource::Env,
+                };
+            }
+        }
+    }
+    if let Some(corr) = compositor_winsize_to_device() {
+        return PixelSpace {
+            winsize_to_device: corr,
+            source: PxSpaceSource::Compositor,
+        };
+    }
+    PixelSpace {
+        winsize_to_device: 1.0,
+        source: PxSpaceSource::Identity,
+    }
+}
+
+/// Cell size in **panel device pixels** (same space as EDID PPI).
+pub fn cell_pixel_size_device() -> (f32, f32) {
+    let (cw, ch) = cell_pixel_size();
+    let s = pixel_space().winsize_to_device;
+    (cw * s, ch * s)
+}
+
+/// Match this process's terminal window on the compositor; return
+/// `device_w / winsize_xpixel` (and average with height when both valid).
+fn compositor_winsize_to_device() -> Option<f32> {
+    let (_, _, xpix, ypix) = terminal_winsize()?;
+    if xpix == 0 || ypix == 0 {
+        return None;
+    }
+    let (dev_w, dev_h) = window_device_size_px()?;
+    let mut parts = Vec::with_capacity(2);
+    if xpix > 32 {
+        let r = dev_w / xpix as f32;
+        if (0.25..4.0).contains(&r) {
+            parts.push(r);
+        }
+    }
+    if ypix > 32 {
+        let r = dev_h / ypix as f32;
+        if (0.25..4.0).contains(&r) {
+            parts.push(r);
+        }
+    }
+    if parts.is_empty() {
+        return None;
+    }
+    Some(parts.iter().sum::<f32>() / parts.len() as f32)
+}
+
+/// Terminal window size in panel device pixels `(w, h)`.
+fn window_device_size_px() -> Option<(f32, f32)> {
+    let pids = process_ancestor_pids();
+    if let Some(v) = niri_window_device_size(&pids) {
+        return Some(v);
+    }
+    if let Some(v) = hypr_window_device_size(&pids) {
+        return Some(v);
+    }
+    if let Some(v) = sway_window_device_size(&pids) {
+        return Some(v);
+    }
+    None
+}
+
+fn process_ancestor_pids() -> Vec<u32> {
+    let mut out = Vec::new();
+    let mut pid = std::process::id();
+    out.push(pid);
+    for _ in 0..32 {
+        let path = format!("/proc/{pid}/status");
+        let Ok(text) = std::fs::read_to_string(&path) else {
+            break;
+        };
+        let mut ppid = None;
+        for line in text.lines() {
+            if let Some(rest) = line.strip_prefix("PPid:") {
+                ppid = rest.trim().parse().ok();
+                break;
+            }
+        }
+        let Some(p) = ppid else { break };
+        if p <= 1 || out.contains(&p) {
+            break;
+        }
+        out.push(p);
+        pid = p;
+    }
+    out
+}
+
+fn niri_window_device_size(pids: &[u32]) -> Option<(f32, f32)> {
+    let wins = cmd_stdout(&["niri", "msg", "--json", "windows"])?;
+    let outs = cmd_stdout(&["niri", "msg", "--json", "outputs"])?;
+    let scale = json_first_f32(&outs, "\"scale\"")
+        .or_else(|| json_first_f32(&outs, "\"scale\":"))
+        .unwrap_or(1.0)
+        .clamp(0.5, 4.0);
+    // Prefer a window whose pid is in our ancestry.
+    let (lw, lh) = niri_pick_window_logical(&wins, pids)?;
+    Some((lw * scale, lh * scale))
+}
+
+fn niri_pick_window_logical(json: &str, pids: &[u32]) -> Option<(f32, f32)> {
+    // Walk `"pid"` keys; prefer a window in our process ancestry.
+    let mut best: Option<(f32, f32)> = None;
+    let bytes = json.as_bytes();
+    let mut i = 0;
+    while i + 8 < bytes.len() {
+        let Some(rel) = find_subslice(&bytes[i..], b"\"pid\"") else {
+            break;
+        };
+        i += rel;
+        let Some(pid_f) = json_number_after(&json[i..], "\"pid\"") else {
+            i += 4;
+            continue;
+        };
+        let pid = pid_f as u32;
+        let slice = &json[i..json.len().min(i + 800)];
+        if let Some((w, h)) = json_window_size_pair(slice) {
+            if pids.contains(&pid) && w > 32.0 && h > 32.0 {
+                return Some((w, h));
+            }
+            if best.is_none() && w > 32.0 && h > 32.0 {
+                best = Some((w, h));
+            }
+        }
+        i += 4;
+    }
+    best
+}
+
+fn hypr_window_device_size(pids: &[u32]) -> Option<(f32, f32)> {
+    let clients = cmd_stdout(&["hyprctl", "clients", "-j"])?;
+    let mon = cmd_stdout(&["hyprctl", "monitors", "-j"])?;
+    let scale = json_first_f32(&mon, "\"scale\"")
+        .unwrap_or(1.0)
+        .clamp(0.5, 4.0);
+    // Hyprland size is often already in layout px; with scale, device = size * scale
+    // when size is logical. Hypr reports `size` as [w,h] in layout pixels.
+    let mut i = 0;
+    let bytes = clients.as_bytes();
+    while i + 8 < bytes.len() {
+        if let Some(rel) = find_subslice(&bytes[i..], b"\"pid\"") {
+            i += rel;
+            let pid = json_number_after(&clients[i..], "\"pid\"")? as u32;
+            let slice = &clients[i..clients.len().min(i + 1200)];
+            // "size": [w, h]
+            if let Some((w, h)) = json_size_array(slice, "\"size\"") {
+                if pids.contains(&pid) && w > 32.0 && h > 32.0 {
+                    // Hypr size is typically logical-ish; multiply by scale for device.
+                    return Some((w * scale, h * scale));
+                }
+            }
+            i += 4;
+        } else {
+            break;
+        }
+    }
+    None
+}
+
+fn sway_window_device_size(pids: &[u32]) -> Option<(f32, f32)> {
+    let tree = cmd_stdout(&["swaymsg", "-t", "get_tree"])?;
+    let outs = cmd_stdout(&["swaymsg", "-t", "get_outputs"])?;
+    let scale = json_first_f32(&outs, "\"scale\"")
+        .unwrap_or(1.0)
+        .clamp(0.5, 4.0);
+    let mut i = 0;
+    let bytes = tree.as_bytes();
+    while i + 8 < bytes.len() {
+        if let Some(rel) = find_subslice(&bytes[i..], b"\"pid\"") {
+            i += rel;
+            let pid = json_number_after(&tree[i..], "\"pid\"")? as u32;
+            let slice = &tree[i..tree.len().min(i + 1500)];
+            // sway: "rect":{"x":..,"y":..,"width":W,"height":H}
+            if let Some((w, h)) = json_rect_wh(slice) {
+                if pids.contains(&pid) && w > 32.0 && h > 32.0 {
+                    return Some((w * scale, h * scale));
+                }
+            }
+            i += 4;
+        } else {
+            break;
+        }
+    }
+    None
+}
+
+fn cmd_stdout(argv: &[&str]) -> Option<String> {
+    let (prog, args) = argv.split_first()?;
+    let out = std::process::Command::new(prog)
+        .args(args)
+        .stdout(std::process::Stdio::piped())
+        .stderr(std::process::Stdio::null())
+        .output()
+        .ok()?;
+    if !out.status.success() {
+        return None;
+    }
+    String::from_utf8(out.stdout).ok()
+}
+
+fn find_subslice(hay: &[u8], needle: &[u8]) -> Option<usize> {
+    hay.windows(needle.len()).position(|w| w == needle)
+}
+
+fn json_number_after(s: &str, key: &str) -> Option<f64> {
+    let idx = s.find(key)?;
+    let rest = s[idx + key.len()..].trim_start();
+    let rest = rest.strip_prefix(':')?.trim_start();
+    let end = rest
+        .find(|c: char| !c.is_ascii_digit() && c != '.' && c != '-' && c != '+')
+        .unwrap_or(rest.len());
+    rest[..end].parse().ok()
+}
+
+fn json_first_f32(s: &str, key: &str) -> Option<f32> {
+    json_number_after(s, key).map(|v| v as f32)
+}
+
+fn json_window_size_pair(s: &str) -> Option<(f32, f32)> {
+    json_size_array(s, "\"window_size\"")
+}
+
+fn json_size_array(s: &str, key: &str) -> Option<(f32, f32)> {
+    let idx = s.find(key)?;
+    let rest = s[idx + key.len()..].trim_start();
+    let rest = rest.strip_prefix(':')?.trim_start();
+    let rest = rest.strip_prefix('[')?.trim_start();
+    let (a, rest) = split_num(rest)?;
+    let rest = rest.trim_start().strip_prefix(',')?.trim_start();
+    let (b, _) = split_num(rest)?;
+    Some((a as f32, b as f32))
+}
+
+fn json_rect_wh(s: &str) -> Option<(f32, f32)> {
+    let idx = s.find("\"rect\"")?;
+    let slice = &s[idx..s.len().min(idx + 200)];
+    let w = json_number_after(slice, "\"width\"")? as f32;
+    let h = json_number_after(slice, "\"height\"")? as f32;
+    Some((w, h))
+}
+
+fn split_num(s: &str) -> Option<(f64, &str)> {
+    let end = s
+        .find(|c: char| !c.is_ascii_digit() && c != '.' && c != '-' && c != '+')
+        .unwrap_or(s.len());
+    if end == 0 {
+        return None;
+    }
+    let n = s[..end].parse().ok()?;
+    Some((n, &s[end..]))
 }
 
 fn max_pixels() -> (u32, u32) {
@@ -263,10 +557,14 @@ pub fn display_ppi_info() -> (f32, PpiSource) {
 pub struct PhysicalFace {
     /// Requested edge length (inches).
     pub inches_requested: f32,
-    /// PPI used for the calculation.
+    /// PPI used for the calculation (panel device pixels / inch).
     pub ppi: f32,
     pub ppi_source: PpiSource,
-    /// Framebuffer side (1∶1), after clamps.
+    /// Winsize → device correction applied to cell size.
+    pub pixel_space: PixelSpace,
+    /// Cell size in panel device pixels `(w, h)`.
+    pub cell_device: (f32, f32),
+    /// Framebuffer side (1∶1), after clamps — device-pixel resolution.
     pub side_px: u32,
     /// Present cell box (aspect-corrected).
     pub viewport: Viewport,
@@ -278,13 +576,17 @@ pub struct PhysicalFace {
 
 impl PhysicalFace {
     /// Compute a ruler-accurate square face for this host + backend.
+    ///
+    /// All length math uses **panel device pixels** (EDID PPI space). Cell
+    /// sizes from `TIOCGWINSZ` are converted via [`pixel_space`].
     pub fn layout(backend: TermBackend, inches: f32) -> Self {
         let inches = inches.clamp(1.0, 12.0);
         let (ppi, ppi_source) = display_ppi_info();
-        let (cw, ch) = cell_pixel_size();
+        let px = pixel_space();
+        let (cw, ch) = cell_pixel_size_device();
         let (tc, tr) = terminal_cells();
 
-        // Ideal screen pixels for N inches.
+        // Ideal panel device pixels for N inches.
         let want = inches * ppi;
 
         // Largest square that fits the terminal window (device pixels).
@@ -304,7 +606,7 @@ impl PhysicalFace {
         let side_px = (side_f.round() as u32).clamp(128, 4096);
         let clipped = side_f + 0.5 < want;
 
-        // Viewport must show the **same** side on glass (same pixel side).
+        // Viewport must show the **same** side on glass (device-pixel side).
         let (cols, rows) = cells_for_screen_square(tc, tr, cw, ch, side_px as f32);
         let col = tc.saturating_sub(cols) / 2;
         let row = tr.saturating_sub(rows) / 2;
@@ -324,6 +626,8 @@ impl PhysicalFace {
             inches_requested: inches,
             ppi,
             ppi_source,
+            pixel_space: px,
+            cell_device: (cw, ch),
             side_px,
             viewport,
             on_glass_in,
@@ -1050,5 +1354,38 @@ mod tests {
         let h = rows as f32 * 16.0;
         assert!((w - h).abs() < 20.0, "aspect w={w} h={h}");
         assert!((w - side).abs() < side * 0.08, "size w={w} want≈{side}");
+    }
+
+    #[test]
+    fn device_cell_scale_recovers_four_inch_face() {
+        // Ghostty buffer cell 19×42, compositor corr ~0.763 → device ~14.5×32.1
+        // 4" @ 191.25 ppi = 765 device px → ~53×24 cells, on-glass ≈ 4".
+        let ppi = 191.25_f32;
+        let corr = 0.763_f32;
+        let cw = 19.0 * corr;
+        let ch = 42.0 * corr;
+        let side = 4.0 * ppi;
+        let (cols, rows) = cells_for_screen_square(200, 80, cw, ch, side);
+        let og = (cols as f32 * cw).min(rows as f32 * ch) / ppi;
+        assert!(
+            (og - 4.0).abs() < 0.15,
+            "on-glass {og:.3}\" want ~4\" cells {cols}×{rows} cell {cw:.1}×{ch:.1}"
+        );
+        // Without correction, face would be ~corr× smaller.
+        let (cols_bad, rows_bad) = cells_for_screen_square(200, 80, 19.0, 42.0, side);
+        let og_bad = (cols_bad as f32 * 19.0 * corr).min(rows_bad as f32 * 42.0 * corr) / ppi;
+        assert!(
+            og_bad < 3.3,
+            "uncorrected on-glass should understate (got {og_bad:.2}\")"
+        );
+    }
+
+    #[test]
+    fn json_window_size_parses_niri_shape() {
+        let j = r#"[{"pid": 3183128, "layout": {"window_size": [1528, 1017]}}]"#;
+        let (w, h) = json_window_size_pair(j).expect("window_size");
+        assert!((w - 1528.0).abs() < 0.1 && (h - 1017.0).abs() < 0.1);
+        let pid = json_number_after(j, "\"pid\"").unwrap();
+        assert_eq!(pid as u32, 3183128);
     }
 }

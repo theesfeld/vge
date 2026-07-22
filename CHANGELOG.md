@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- Ruler face size on Ghostty/Wayland: convert terminal winsize **buffer** pixels to panel **device** pixels before layout (compositor window × scale, or `MFD_PX_SCALE`). Fixes ~2–2.5″ faces when EDID PPI and winsize were mixed. Refs #48.
 - **Present crawl** after long runs: square face, 30 Hz default, reusable `PresentScratch`, lower density
 - **OSB labels** clipped: reserved margin + short side legends
 - **Brightness** knob applies `Surface::apply_brightness`

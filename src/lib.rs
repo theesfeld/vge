@@ -45,7 +45,8 @@ pub use palette::{ColorMode, Palette};
 pub use surface::{engine_version, using_assembly, Surface, Xform};
 // term re-exports used by demos/integrators
 pub use term::{
-    display_ppi, display_ppi_info, mfd_face_inches, physical_mfd_layout, PhysicalFace, PpiSource,
+    cell_pixel_size_device, display_ppi, display_ppi_info, mfd_face_inches, physical_mfd_layout,
+    pixel_space, PhysicalFace, PixelSpace, PpiSource, PxSpaceSource,
 };
 pub use widget::{
     bearing_pointer, bezel_frame, bscope_grid, caution_box, content_after_osb, crosshair,
