@@ -33,8 +33,8 @@ impl RangeSnapshot {
         }
     }
 
-    /// Optional `MFD_RANGE= f,fl,fr,r,rl,rr` meters.
-    pub fn from_env_or_synthetic(t: f32) -> Self {
+    /// Optional `MFD_RANGE= f,fl,fr,r,rl,rr` meters. Else empty (no invent).
+    pub fn from_env_or_empty() -> Self {
         if let Ok(s) = std::env::var("MFD_RANGE") {
             let parts: Vec<f32> = s.split(',').filter_map(|p| p.trim().parse().ok()).collect();
             if parts.len() >= 3 {
@@ -49,7 +49,29 @@ impl RangeSnapshot {
                 };
             }
         }
-        Self::synthetic(t)
+        Self {
+            scale_m: 5.0,
+            ..Default::default()
+        }
+    }
+
+    /// Optional env or synthetic motion (lab only — not product glass).
+    pub fn from_env_or_synthetic(t: f32) -> Self {
+        let empty = Self::from_env_or_empty();
+        if empty.front.is_some() {
+            empty
+        } else {
+            Self::synthetic(t)
+        }
+    }
+
+    pub fn has_any(&self) -> bool {
+        self.front.is_some()
+            || self.front_left.is_some()
+            || self.front_right.is_some()
+            || self.rear.is_some()
+            || self.rear_left.is_some()
+            || self.rear_right.is_some()
     }
 }
 

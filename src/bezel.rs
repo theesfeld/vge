@@ -206,7 +206,9 @@ impl KeyboardBezel {
             _ => 0,
         };
         if osb != 0 {
+            // Lab keys are edges: Down then Up so SOI does not stick on last press.
             self.pending.push(BezelEvent::OsbDown(osb));
+            self.pending.push(BezelEvent::OsbUp(osb));
         }
     }
 

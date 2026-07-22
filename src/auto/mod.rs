@@ -738,18 +738,24 @@ fn chrome(
         &head,
         WHITE,
     );
-    // MLU nav cue + lab key map (POC). Production GPIO does not need key letters.
-    let nav = if menu {
-        "PICK FORMAT OSB 1-20  ·  SLOT KEY CLOSES MENU"
-    } else {
-        "LIT *SLOT = MENU  ·  [ ] PREV/NEXT  ·  KEYS 1234567890QWERTYUIOP = OSB 1-20"
-    };
-    page.label_centered(
-        c.center().0 as f32,
-        c.y as f32 + page.font_px * 1.35,
-        nav,
-        pal.dim,
+    // Lab-only nav cue (not MLU glass). Enable with MFD_LAB_CHROME=1.
+    let lab_chrome = matches!(
+        std::env::var("MFD_LAB_CHROME").ok().as_deref(),
+        Some("1") | Some("true") | Some("TRUE") | Some("yes")
     );
+    if lab_chrome {
+        let nav = if menu {
+            "PICK FORMAT OSB 1-20  ·  SLOT KEY CLOSES MENU"
+        } else {
+            "LIT *SLOT = MENU  ·  [ ] PREV/NEXT  ·  KEYS 1234567890QWERTYUIOP = OSB 1-20"
+        };
+        page.label_centered(
+            c.center().0 as f32,
+            c.y as f32 + page.font_px * 1.35,
+            nav,
+            pal.dim,
+        );
+    }
     if !v.vin.is_empty() && !menu {
         let os = format!("OS  {}", short_vin(&v.vin));
         page.label_centered(
@@ -1409,17 +1415,32 @@ pub fn draw_auto_with_video(
             }
         }
         AutoPage::Range => {
-            let rng = RangeSnapshot::from_env_or_synthetic(t);
-            range_display(
-                page.surface,
-                c.inset(4),
-                &rng,
-                pal.structure,
-                pal.primary,
-                pal.caution,
-                pal.warning,
-                pal.readout,
-            );
+            // No synthetic motion — empty range until real sensor GO.
+            let rng = RangeSnapshot::from_env_or_empty();
+            if rng.has_any() {
+                range_display(
+                    page.surface,
+                    c.inset(4),
+                    &rng,
+                    pal.structure,
+                    pal.primary,
+                    pal.caution,
+                    pal.warning,
+                    pal.readout,
+                );
+            } else {
+                value_readout(
+                    page.surface,
+                    c.center().0 as f32,
+                    c.y as f32 + c.h as f32 * 0.45,
+                    "RNG",
+                    "NO SENSOR",
+                    "",
+                    pal.dim,
+                    fh * 0.8,
+                    fh * 1.6,
+                );
+            }
         }
         AutoPage::Attitude => {
             // Dedicated ATT: horizon ball + compass/heading (hard requirement).
