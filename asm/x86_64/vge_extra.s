@@ -429,7 +429,8 @@ vge_polyline:
 .Lsc_neg:
         addss   xmm0, xmm4
 .Lsc_ok:
-        /* sin = x - x^3/6 + x^5/120 ; cos = 1 - x^2/2 + x^4/24 */
+        /* sin = x - x3/6 + x5/120 - x7/5040
+           cos = 1 - x2/2 + x4/24 - x6/720 */
         movss   xmm2, xmm0                     /* x */
         movss   xmm3, xmm0
         mulss   xmm3, xmm0                     /* x2 */
@@ -439,22 +440,32 @@ vge_polyline:
         mulss   xmm5, xmm0                     /* x4 */
         movss   xmm6, xmm5
         mulss   xmm6, xmm0                     /* x5 */
-        /* sin */
-        movss   xmm7, xmm4
-        mulss   xmm7, dword ptr [rip + .Linv6]
-        movss   xmm0, xmm2
-        subss   xmm0, xmm7
         movss   xmm7, xmm6
-        mulss   xmm7, dword ptr [rip + .Linv120]
-        addss   xmm0, xmm7                     /* sin in xmm0 */
+        mulss   xmm7, xmm0                     /* x6 */
+        movss   xmm8, xmm7
+        mulss   xmm8, xmm0                     /* x7 */
+        /* sin */
+        movss   xmm0, xmm2
+        movss   xmm9, xmm4
+        mulss   xmm9, dword ptr [rip + .Linv6]
+        subss   xmm0, xmm9
+        movss   xmm9, xmm6
+        mulss   xmm9, dword ptr [rip + .Linv120]
+        addss   xmm0, xmm9
+        movss   xmm9, xmm8
+        mulss   xmm9, dword ptr [rip + .Linv5040]
+        subss   xmm0, xmm9
         /* cos */
         movss   xmm1, dword ptr [rip + .Lone]
-        movss   xmm7, xmm3
-        mulss   xmm7, dword ptr [rip + .Linv2]
-        subss   xmm1, xmm7
-        movss   xmm7, xmm5
-        mulss   xmm7, dword ptr [rip + .Linv24]
-        addss   xmm1, xmm7                     /* cos in xmm1 */
+        movss   xmm9, xmm3
+        mulss   xmm9, dword ptr [rip + .Linv2]
+        subss   xmm1, xmm9
+        movss   xmm9, xmm5
+        mulss   xmm9, dword ptr [rip + .Linv24]
+        addss   xmm1, xmm9
+        movss   xmm9, xmm7
+        mulss   xmm9, dword ptr [rip + .Linv720]
+        subss   xmm1, xmm9
         ret
 
         .section .rodata
@@ -467,6 +478,8 @@ vge_polyline:
 .Linv6:     .float 0.166666666667
 .Linv24:    .float 0.0416666666667
 .Linv120:   .float 0.00833333333333
+.Linv720:   .float 0.00138888888889
+.Linv5040:  .float 0.00019841269841
         .text
 
 /*--------------------------------------------------------------------

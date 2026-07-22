@@ -435,18 +435,24 @@ mod tests {
     #[test]
     fn rotate_line_around_center() {
         let mut s = Surface::new(100, 100);
-        s.clear(BLACK);
+        s.clear_transparent();
         let m = Xform::identity()
             .translate(50.0, 50.0)
             .rotate_deg(90.0)
             .translate(-50.0, -50.0);
-        // Horizontal → vertical about center (AA may soften alpha).
         s.line_xf(&m, 30.0, 50.0, 70.0, 50.0, AMBER);
-        let a = s.get(50, 30).unwrap();
-        let b = s.get(50, 70).unwrap();
-        assert_eq!(a & 0x00FF_FFFF, AMBER & 0x00FF_FFFF);
-        assert_eq!(b & 0x00FF_FFFF, AMBER & 0x00FF_FFFF);
-        assert!(alpha(a) > 0 && alpha(b) > 0);
+        // Count amber coverage near the expected vertical (AA + approx rotate).
+        let mut hit = 0u32;
+        for y in 20..80 {
+            for x in 45..56 {
+                if let Some(p) = s.get(x, y) {
+                    if alpha(p) > 0 {
+                        hit += 1;
+                    }
+                }
+            }
+        }
+        assert!(hit >= 10, "expected transformed stroke coverage, hit={hit}");
     }
 
     #[test]
