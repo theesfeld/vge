@@ -1,7 +1,7 @@
 # VGE — pure assembly vector engine
 
 <!-- agents:status:begin -->
-> **Status:** active · Version: `0.1.0-dev.1` · **libvge = ASM only** · first use: needle + tape gauges · lifespan API · [#25](https://github.com/theesfeld/vge/issues/25) · MIT
+> **Status:** active · Version: `0.1.0-dev.1` · **libvge = ASM only** · demo: 2019 F-150 tach + tapes · [#27](https://github.com/theesfeld/vge/issues/27) · MIT
 <!-- agents:status:end -->
 
 ## This is assembly
@@ -31,14 +31,16 @@ make                    # build/libvge.a
 cargo run --release --bin vge-demo
 ```
 
-The demo **links pure-asm libvge** and calls several draw functions in one frame
-(needle gauges, tape gauges, a rotated mark). It does not reimplement the engine.
+The demo **links pure-asm libvge** and draws instruments each frame.
+It does not reimplement the engine.
 
 **Model:** call `vge_line` / `vge_circle` / … into a pixel surface, then present.
-That surface is only scanout for the terminal or FB. The product is the draw API,
-not a game framebuffer manager.
+That surface is only scanout for the terminal or FB. The product is the draw API.
 
-**First use:** instrument needles and tape gauges (not heavy scene effects).
+**Demo layout (1px strokes):**
+- Large **2019 Ford F-150** style tach: face **0–7000 RPM**, redline **arc** from **~5500** (cluster red zone; cut varies by engine)
+- **1px** bezel, **1px** needle, **tip trail** via lifespan (`VGE_TTL`, default 16)
+- Tapes: **fuel**, **coolant**, **transmission temp**, **battery**
 
 
 ## Performance (read this first)
@@ -170,11 +172,11 @@ fb.present_from(&back);
 ## Demo
 
 ```bash
-# Default: needle gauges + tape gauges + rotated mark (120 Hz)
+# Default: F-150 tach + four tapes (120 Hz, 1px, tip trail on)
 cargo run --release --bin vge-demo
 
-# Optional needle tip trail (library lifespan)
-VGE_TTL=10 cargo run --release --bin vge-demo
+# Longer / shorter needle tip trail (frames)
+VGE_TTL=24 cargo run --release --bin vge-demo
 
 # 60 Hz
 VGE_HZ=60 cargo run --release --bin vge-demo
@@ -185,18 +187,14 @@ cargo run --release --bin vge-demo -- --fb
 
 | Flag / env | Effect |
 |------------|--------|
-| (default) | Overlay; clear once, then draw gauges (several `vge_*` calls) |
-| `VGE_TTL=N` | Optional RPM needle tip trail (`N` frames, fade) |
+| (default) | Large F-150 tach + fuel / cool / trans / batt tapes |
+| `VGE_TTL=N` | Needle tip trail length in frames (default 16) |
 | `--fb` | RAM draw + blit to `/dev/fb0` |
 | `VGE_HZ=120` | Default: phase-lock 120 Hz |
 | `VGE_HZ=60` | Phase-lock 60 Hz |
 | `VGE_HZ=0` | Uncapped (throughput test) |
-| `VGE_WIDTH=N` | Stroke width in pixels (default 1) |
 | `VGE_TERM=kitty\|half\|ascii` | Force present backend |
 | `VGE_MAX_W` / `VGE_MAX_H` | Cap pixel buffer (default 960×540) |
-
-**Draw types in the demo:** `circle`, `line_aa`, `line_thick`, `line_fast`,
-`rect_fill`, `polyline`, `line_xf` + `xform_rotate`.
 
 Quit: `q`, Esc, or Ctrl+C.
 

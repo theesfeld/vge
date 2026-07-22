@@ -5,12 +5,11 @@
 ### Added
 
 - **Per-stroke lifespan** on `DisplayList`: `set_lifespan`, `tick`, `TimedStroke`, `stroke_life` / `refresh_life` (fade by remaining life)
-- Demo: **needle gauges + tape gauges** with several draw types; optional `VGE_TTL` needle tip trail
-- Center mark uses **`vge_xform_rotate` + `vge_line_xf`**
+- Demo: **2019 F-150 style tach** (0–7000 RPM, redline arc ~5500+, 1px needle + tip trail) and tapes: fuel, coolant, trans temp, battery
 
 ### Changed
 
-- Demo is instrument-oriented (clear → many independent draws → present), not a full HUD scene/sweep path
+- Demo is instrument-oriented (clear → independent draws → present); prefer 1px AA strokes
 
 ### Fixed
 
