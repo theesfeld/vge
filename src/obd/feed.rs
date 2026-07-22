@@ -34,6 +34,13 @@ struct Telemetry {
     dtc_loaded: bool,
     caps: VehicleCaps,
     capture_dir: Option<String>,
+    /// BT · SERIAL · REPLAY
+    link_kind: String,
+    /// MAC or path
+    link_addr: String,
+    link_channel: String,
+    adapter_id: String,
+    protocol: String,
 }
 
 /// Background OBD poller (native stack).
@@ -57,14 +64,20 @@ impl ObdFeed {
     }
 
     pub fn from_session(session: Session) -> Result<Self, String> {
+        let (kind, addr, channel) = link_from_env_and_name(session.name());
         let stop = Arc::new(AtomicBool::new(false));
         let tele = Arc::new(Mutex::new(Telemetry {
             status: format!("probe {}", session.name()),
             caps: VehicleCaps {
                 phase: "POWER ON".into(),
-                link: session.name().into(),
+                link: format!("{kind} {addr}"),
                 ..Default::default()
             },
+            link_kind: kind,
+            link_addr: addr,
+            link_channel: channel,
+            adapter_id: session.identity().to_string(),
+            protocol: session.protocol().to_string(),
             ..Default::default()
         }));
         let stop_t = Arc::clone(&stop);
@@ -97,10 +110,21 @@ impl ObdFeed {
         self.tele
             .lock()
             .map(|t| {
+                let addr = if t.link_addr.is_empty() {
+                    "—".into()
+                } else {
+                    t.link_addr.clone()
+                };
                 if !t.caps.ready {
-                    format!("BIT {:.0}% {}", t.caps.progress * 100.0, t.caps.phase)
+                    format!(
+                        "BIT {:.0}% {} · {} {}",
+                        t.caps.progress * 100.0,
+                        t.caps.phase,
+                        t.link_kind,
+                        addr
+                    )
                 } else if let Some(e) = &t.error {
-                    format!("OBD ERR {e}")
+                    format!("{} ERR {e} · {addr}", t.link_kind)
                 } else {
                     let d = if t.dtc_loaded {
                         format!(" DTC{}", t.dtcs.len())
@@ -112,11 +136,52 @@ impl ObdFeed {
                         .as_ref()
                         .map(|p| format!(" CAP {}", short_path(p)))
                         .unwrap_or_default();
-                    format!("{} · t{}{d}{cap}", t.status, t.ticks)
+                    format!(
+                        "{} LIVE · {addr} · {} · t{}{d}{cap}",
+                        t.link_kind,
+                        if t.protocol.is_empty() {
+                            "—"
+                        } else {
+                            &t.protocol
+                        },
+                        t.ticks
+                    )
                 }
             })
             .unwrap_or_else(|_| "OBD lock".into())
     }
+}
+
+/// Resolve link kind / address / channel for glass from env + transport name.
+fn link_from_env_and_name(transport_name: &str) -> (String, String, String) {
+    if let Ok(mac) = std::env::var("MFD_OBD_BT") {
+        if !mac.is_empty() {
+            let ch = std::env::var("MFD_OBD_BT_CHANNEL").unwrap_or_else(|_| "1".into());
+            return ("BT".into(), mac, ch);
+        }
+    }
+    if let Ok(port) = std::env::var("MFD_OBD_PORT") {
+        if !port.is_empty() {
+            return ("SERIAL".into(), port, "-".into());
+        }
+    }
+    if let Ok(rep) = std::env::var("MFD_OBD_REPLAY") {
+        if !rep.is_empty() {
+            return ("REPLAY".into(), rep, "-".into());
+        }
+    }
+    // Fallback: parse transport name (bt://MAC, path, …)
+    let n = transport_name.trim();
+    if let Some(rest) = n.strip_prefix("bt://") {
+        return ("BT".into(), rest.to_string(), "1".into());
+    }
+    if n.contains("replay") {
+        return ("REPLAY".into(), n.into(), "-".into());
+    }
+    if n.starts_with('/') {
+        return ("SERIAL".into(), n.into(), "-".into());
+    }
+    ("OBD".into(), n.into(), "-".into())
 }
 
 impl Drop for ObdFeed {
@@ -239,6 +304,24 @@ struct LiveDid {
 
 fn run_loop(mut session: Session, stop: Arc<AtomicBool>, tele: Arc<Mutex<Telemetry>>) {
     let adapter = format!("{} · {}", session.name(), session.protocol());
+    // Refresh adapter identity / protocol after session is live.
+    if let Ok(mut t) = tele.lock() {
+        if t.adapter_id.is_empty() {
+            t.adapter_id = session.identity().to_string();
+        }
+        if t.protocol.is_empty() {
+            t.protocol = session.protocol().to_string();
+        }
+        // Prefer ATI / ATDP once available
+        let id = session.identity().to_string();
+        let proto = session.protocol().to_string();
+        if !id.is_empty() {
+            t.adapter_id = id;
+        }
+        if !proto.is_empty() {
+            t.protocol = proto;
+        }
+    }
     let mut cap = open_capture(&adapter);
     if let Some(ref c) = cap {
         if let Ok(mut t) = tele.lock() {
@@ -252,6 +335,9 @@ fn run_loop(mut session: Session, stop: Arc<AtomicBool>, tele: Arc<Mutex<Telemet
     if let Ok(mut t) = tele.lock() {
         t.caps = caps;
         t.status = format!("live {}", session.name());
+        t.adapter_id = session.identity().to_string();
+        t.protocol = session.protocol().to_string();
+        t.caps.link = format!("{} {}", t.link_kind, t.link_addr);
     }
     if stop.load(Ordering::Relaxed) {
         finish_cap(cap);
@@ -547,6 +633,43 @@ fn finish_cap(cap: Option<CaptureWriter>) {
 }
 
 fn apply_telemetry(t: &Telemetry, v: &mut VehicleSnapshot) {
+    // Always refresh bus / Bluetooth block for OWN · SETUP · BUS glass.
+    v.bus_kind = if t.link_kind.is_empty() {
+        "OBD".into()
+    } else {
+        t.link_kind.clone()
+    };
+    v.bus_addr = t.link_addr.clone();
+    v.bus_channel = if t.link_channel.is_empty() {
+        "-".into()
+    } else {
+        t.link_channel.clone()
+    };
+    v.bus_adapter = if t.adapter_id.is_empty() {
+        "—".into()
+    } else {
+        t.adapter_id.clone()
+    };
+    v.bus_proto = if t.protocol.is_empty() {
+        "—".into()
+    } else {
+        t.protocol.clone()
+    };
+    v.bus_ticks = t.ticks;
+    v.bus_capture = t
+        .capture_dir
+        .as_ref()
+        .map(|p| short_path(p))
+        .unwrap_or_default();
+    if !t.caps.ready {
+        v.bus_state = "BIT".into();
+    } else if t.error.is_some() {
+        v.bus_state = "ERR".into();
+    } else {
+        v.bus_state = "LIVE".into();
+    }
+    v.bus_error = t.error.clone().unwrap_or_default();
+
     if let Some(rpm) = t.values.get("engine_rpm") {
         v.rpm = *rpm as f32;
     }

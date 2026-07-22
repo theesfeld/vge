@@ -82,8 +82,13 @@ Never clear DTCs, write DIDs, or security unlock.
 | FLUD | Four temp gauges (OIL/ECT/TFT/IAT) + matrix |
 | ELEC | Battery gauge + load tape |
 | DRV | Speed gauge + gear + RPM tape + matrix |
-| BUS | Full channel dump (2–3 columns) |
+| **OWN** | **Bluetooth / bus link** (state, MAC, channel, adapter, protocol, capture) |
+| SET | Link block + As-Built feature labels |
+| BUS | Link header + full channel dump (2–3 columns) |
 | DTC | Fault list (read-only) |
+
+Bottom status strip on every page: `BT LIVE · …MAC…` (or `BT ERR` / `DEMO`).  
+Open **OWN** (`o` / `w`) for the full link block.
 
 ## After work
 

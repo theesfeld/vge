@@ -241,6 +241,97 @@ pub struct VehicleSnapshot {
     pub roll_deg: f32,
     pub heading_deg: f32,
     pub vin: String,
+    // ── OBD / Bluetooth link (OWN · SETUP · BUS · status strip) ───────────
+    /// `BT` · `SERIAL` · `REPLAY` · `DEMO` · `OFF`
+    pub bus_kind: String,
+    /// MAC, serial path, or replay path.
+    pub bus_addr: String,
+    /// RFCOMM channel (BT) or `-`.
+    pub bus_channel: String,
+    /// ELM `ATI` identity string.
+    pub bus_adapter: String,
+    /// ELM `ATDP` protocol string.
+    pub bus_proto: String,
+    /// `LIVE` · `BIT` · `ERR` · `DEMO` · `OFF`
+    pub bus_state: String,
+    /// Last bus error (empty if none).
+    pub bus_error: String,
+    /// Poll tick count from feed.
+    pub bus_ticks: u64,
+    /// Short capture directory name when logging.
+    pub bus_capture: String,
+}
+
+impl VehicleSnapshot {
+    /// Dense lines for OWN / SETUP bus block.
+    pub fn bus_link_lines(&self) -> Vec<String> {
+        let mut lines = vec![
+            format!("LINK  {}  {}", self.bus_state, self.bus_kind),
+            format!(
+                "ADDR  {}",
+                if self.bus_addr.is_empty() {
+                    "—"
+                } else {
+                    &self.bus_addr
+                }
+            ),
+        ];
+        if self.bus_kind == "BT" || !self.bus_channel.is_empty() && self.bus_channel != "-" {
+            lines.push(format!("CH    {}", self.bus_channel));
+        }
+        lines.push(format!(
+            "ADPT  {}",
+            if self.bus_adapter.is_empty() {
+                "—"
+            } else {
+                &self.bus_adapter
+            }
+        ));
+        lines.push(format!(
+            "PROT  {}",
+            if self.bus_proto.is_empty() {
+                "—"
+            } else {
+                &self.bus_proto
+            }
+        ));
+        lines.push(format!("TICK  {}", self.bus_ticks));
+        if !self.bus_capture.is_empty() {
+            lines.push(format!("CAP   {}", self.bus_capture));
+        }
+        if !self.bus_error.is_empty() {
+            let err = if self.bus_error.len() > 36 {
+                format!("{}…", &self.bus_error[..35])
+            } else {
+                self.bus_error.clone()
+            };
+            lines.push(format!("ERR   {err}"));
+        }
+        lines.push("MODE  DISPLAY ONLY".into());
+        lines
+    }
+
+    /// One-line strip for bottom glass status.
+    pub fn bus_status_short(&self) -> String {
+        let addr = if self.bus_addr.len() > 17 {
+            // show last 8 of MAC-like strings when long
+            let s = &self.bus_addr;
+            if s.contains(':') && s.len() >= 8 {
+                s[s.len().saturating_sub(8)..].to_string()
+            } else {
+                format!("{}…", &s[..14.min(s.len())])
+            }
+        } else if self.bus_addr.is_empty() {
+            "—".into()
+        } else {
+            self.bus_addr.clone()
+        };
+        if !self.bus_error.is_empty() {
+            format!("BT ERR · {addr}")
+        } else {
+            format!("{} {} · {addr}", self.bus_kind, self.bus_state)
+        }
+    }
 }
 
 impl Default for VehicleSnapshot {
@@ -327,6 +418,15 @@ impl Default for VehicleSnapshot {
             roll_deg: 0.0,
             heading_deg: 0.0,
             vin: String::new(),
+            bus_kind: "DEMO".into(),
+            bus_addr: vehicle_profile::OBD_BT_MAC.into(),
+            bus_channel: "1".into(),
+            bus_adapter: "—".into(),
+            bus_proto: "—".into(),
+            bus_state: "DEMO".into(),
+            bus_error: String::new(),
+            bus_ticks: 0,
+            bus_capture: String::new(),
         }
     }
 }
@@ -1354,11 +1454,18 @@ pub fn draw_auto_with_video(
             }
         }
         AutoPage::Bus => {
-            // Everything: full channel dump (dense 3-col numerics).
-            let lines: Vec<String> = channels::all_channels(v)
+            // Link header + full channel dump.
+            let mut lines: Vec<String> = v
+                .bus_link_lines()
                 .into_iter()
-                .map(|ch| format!("{} {}", ch.group, ch.line()))
+                .map(|l| format!("LINK {l}"))
                 .collect();
+            lines.push("── CHANNELS ──".into());
+            lines.extend(
+                channels::all_channels(v)
+                    .into_iter()
+                    .map(|ch| format!("{} {}", ch.group, ch.line())),
+            );
             let cols = if lines.len() > 28 { 3 } else { 2 };
             let fsz = if lines.len() > 40 {
                 fh * 0.52
@@ -1369,34 +1476,51 @@ pub fn draw_auto_with_video(
         }
         AutoPage::Own => {
             let id = vehicle_profile::identity_line();
+            // Link state as hero status (LIVE / ERR / DEMO).
+            let link_col = match v.bus_state.as_str() {
+                "LIVE" => pal.primary,
+                "ERR" => pal.warning,
+                "BIT" => pal.caution,
+                _ => pal.dim,
+            };
             value_readout(
                 page.surface,
-                c.center().0 as f32,
-                c.y as f32 + c.h as f32 * 0.22,
-                "OWN",
-                if v.vin.is_empty() { "——" } else { &v.vin },
+                c.x as f32 + c.w as f32 * 0.28,
+                c.y as f32 + fh * 1.6,
+                "LINK",
+                &v.bus_state,
                 "",
-                pal.readout,
-                fh * 0.7,
-                fh * 1.4,
+                link_col,
+                fh * 0.65,
+                fh * 1.5,
             );
-            let lines = vec![
+            value_readout(
+                page.surface,
+                c.x as f32 + c.w as f32 * 0.72,
+                c.y as f32 + fh * 1.6,
+                "KIND",
+                &v.bus_kind,
+                "",
+                pal.nav,
+                fh * 0.65,
+                fh * 1.3,
+            );
+            let mut lines = vec![
                 id,
                 format!("VIN  {}", if v.vin.is_empty() { "—" } else { &v.vin }),
-                format!("BT   {}", vehicle_profile::OBD_BT_MAC),
-                "STACK J1979+UDS+FORD".into(),
-                "DISPLAY ONLY".into(),
             ];
+            lines.extend(v.bus_link_lines());
+            lines.push("STACK J1979+UDS+FORD".into());
             numeric_matrix(
                 page.surface,
                 Rect::new(
                     c.x,
-                    c.y + (c.h as f32 * 0.4) as i32,
+                    c.y + (fh * 3.4) as i32,
                     c.w,
-                    (c.h as f32 * 0.55) as i32,
+                    (c.h - (fh * 3.4) as i32).max(40),
                 ),
                 &lines,
-                fh * 0.7,
+                fh * 0.65,
                 pal.primary,
                 1,
             );
@@ -1407,11 +1531,20 @@ pub fn draw_auto_with_video(
             } else {
                 format!("VIN  {}", v.vin)
             };
-            let mut lines = vehicle_profile::setup_help_lines(16);
-            lines.insert(0, vin_s);
-            lines.insert(1, "OWN SHIP  = VIN".into());
-            lines.insert(2, format!("SPD {}", v.speed_unit.name()));
-            numeric_matrix(page.surface, c.inset(2), &lines, fh * 0.65, pal.readout, 1);
+            let mut lines = Vec::new();
+            lines.push(vin_s);
+            lines.push(format!("SPD {}", v.speed_unit.name()));
+            lines.extend(v.bus_link_lines());
+            lines.push("── FEATURES (ref) ──".into());
+            for lab in vehicle_profile::asbuilt_feature_labels().iter().take(10) {
+                let s = if lab.len() > 28 {
+                    format!("{}…", &lab[..27])
+                } else {
+                    lab.clone()
+                };
+                lines.push(s);
+            }
+            numeric_matrix(page.surface, c.inset(2), &lines, fh * 0.6, pal.readout, 1);
         }
     }
 }

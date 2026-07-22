@@ -152,6 +152,44 @@ pub fn all_channels(v: &VehicleSnapshot) -> Vec<Channel> {
         "",
     );
     push(&mut c, "BIT", "DTC", format!("{}", v.dtc_count), "");
+    // LINK / Bluetooth
+    push(&mut c, "LINK", "STATE", v.bus_state.clone(), "");
+    push(&mut c, "LINK", "KIND", v.bus_kind.clone(), "");
+    push(
+        &mut c,
+        "LINK",
+        "ADDR",
+        if v.bus_addr.is_empty() {
+            "—".into()
+        } else {
+            v.bus_addr.clone()
+        },
+        "",
+    );
+    push(&mut c, "LINK", "CH", v.bus_channel.clone(), "");
+    push(
+        &mut c,
+        "LINK",
+        "ADPT",
+        if v.bus_adapter.is_empty() {
+            "—".into()
+        } else {
+            v.bus_adapter.clone()
+        },
+        "",
+    );
+    push(
+        &mut c,
+        "LINK",
+        "PROT",
+        if v.bus_proto.is_empty() {
+            "—".into()
+        } else {
+            v.bus_proto.clone()
+        },
+        "",
+    );
+    push(&mut c, "LINK", "TICK", format!("{}", v.bus_ticks), "");
     let _ = (GearSelect::Park, DriveMode::TwoHigh);
     c
 }
