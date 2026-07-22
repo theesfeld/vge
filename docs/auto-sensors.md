@@ -10,17 +10,65 @@
 
 Live frames paint the **FLIR** auto page (green-hot). MJPEG-only webcams need host convert to YUYV/GREY.
 
-## OBD-II
+## OBD-II (native `mfd::obd`)
 
-Build with feature `obd` (default). Path dep: `../obdtui/crates/obd-io`.
+Build with feature `obd` (default). **No dependency on obdtui.** Stack is new in-tree:
+
+- Bluetooth classic SPP (Linux RFCOMM) or serial ELM327/STN
+- SAE J1979 Mode 01 PIDs
+- UDS: session `0x10`, tester present `0x3E`, ReadDataByIdentifier `0x22`, gated SecurityAccess `0x27`
+- ISO-TP multi-frame reassembly helpers
+- Capture + replay (`frames.ndjson`)
 
 | Env | Meaning |
 |-----|---------|
-| `MFD_OBD_PORT=/dev/ttyUSB0` | ELM327/STN serial |
-| `MFD_OBD_BAUD=115200` | Baud (optional) |
-| `MFD_OBD_REPLAY=path` | Capture replay |
+| `MFD_OBD_BT=AA:BB:CC:DD:EE:FF` | Bluetooth SPP MAC (truck example: `00:04:3E:96:B8:F1`) |
+| `MFD_OBD_BT_CHANNEL=1` | RFCOMM channel (default 1) |
+| `MFD_OBD_PORT=/dev/ttyUSB0` | Serial or bound rfcomm node |
+| `MFD_OBD_BAUD=115200` | Serial baud |
+| `MFD_OBD_REPLAY=docs/odbii-session` | Capture dir or `frames.ndjson` |
+| `MFD_OBD_ALLOW_WRITE=1` | Allow SecurityAccess / write-class UDS |
 
-Maps Mode 01 PIDs (RPM, speed, throttle, load, temps, fuel, voltage, MAF) into `VehicleSnapshot`.
+### Capture tool
+
+```sh
+# Live truck, Mode 01 + deep UDS probe
+cargo run --release --bin mfd-obd-capture -- \
+  --bt 00:04:3E:96:B8:F1 --uds --seconds 120 -o ./obd-cap
+
+# Replay known capture
+cargo run --release --bin mfd-obd-capture -- \
+  --replay docs/odbii-session --seconds 5 -o /tmp/replay-test
+```
+
+Writes: `frames.ndjson`, `signals.csv`, `meta.toml`, `session.json`.
+
+### What the truck capture already has
+
+`docs/odbii-session/` (VIN `1FTEW1EP9KFC73499`, ELM327 v1.4b, ISO 15765-4 CAN 11/500):
+
+| Mode | PID | Signal |
+|------|-----|--------|
+| 01 | 0C | engine RPM |
+| 01 | 0D | vehicle speed |
+| 01 | 05 | coolant temp |
+| 01 | 0F | intake air temp |
+| 01 | 11 | throttle |
+| 01 | 04 | engine load |
+| 03 / 07 | — | sparse DTC (empty in sample) |
+
+**Not in that capture:** UDS `0x22` DIDs, multi-frame raw ISO-TP logs, security session, body/chassis modules, TPM, doors, lights. Run `mfd-obd-capture --uds` on the live adapter to log those.
+
+### What J1979 can show vs needs UDS/OEM
+
+| Page / data | Typical source |
+|-------------|----------------|
+| RPM, speed, throttle, load, coolant, IAT, MAF, fuel %, voltage, oil temp, ambient | Mode 01 (often available) |
+| Gear, 4WD, lights, doors, belts, tire PSI | Body/chassis CAN or OEM UDS — **not** standard Mode 01 |
+| VIN | Mode 09 or DID `F190` |
+| Module-specific sensors | UDS `0x22` on correct CAN ID (e.g. `7E0` ECM) |
+
+Demo pages for body/lights/TPM stay synthetic until deep capture maps DIDs.
 
 ## Collision / park range
 
@@ -30,4 +78,4 @@ Auto page **RNG** (right OSB 10). Arcs + meters for F/FL/FR/R.
 |-----|---------|
 | `MFD_RANGE=2.1,3.0,2.8,1.2` | front, fl, fr, rear [,rl,rr] meters |
 
-Synthetic ranges animate when unset. Wire ultrasonic/radar/host depth here later.
+Synthetic ranges animate when unset.

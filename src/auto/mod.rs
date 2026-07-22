@@ -1,6 +1,7 @@
 //! Automotive **page layouts** — same bezel / OSB model as jet, vehicle data.
 //!
-//! Optional live OBD: feature `obd` + `MFD_OBD_PORT` / `MFD_OBD_REPLAY` (see `obd_feed`).
+//! Optional live OBD: feature `obd` + native [`crate::obd`] stack
+//! (`MFD_OBD_BT` / `MFD_OBD_PORT` / `MFD_OBD_REPLAY`).
 //!
 //! # Widget mapping (MFD equivalents)
 //! | Vehicle data | MFD widget |
@@ -13,9 +14,6 @@
 //! | TPM | tire_grid |
 //! | Forward camera / FLIR | greyscale blit + TGP overlays |
 //! | Collision / park range | range_display |
-
-#[cfg(feature = "obd")]
-pub mod obd_feed;
 
 use crate::bezel::BezelState;
 use crate::color::{rgb, CYAN};

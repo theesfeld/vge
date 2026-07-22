@@ -1,0 +1,16 @@
+format_version = 1
+software = "obdtui 0.1.0-dev.1"
+started_at = "2026-07-21T22:40:23.949619233Z"
+ended_at = "2026-07-21T22:43:16.215999799Z"
+vin = "1FTEW1EP9KFC73499"
+adapter_path = "bt://00:04:3E:96:B8:F1"
+profile_id = "generic_j1979"
+notes = ""
+
+[capabilities]
+elm_compatible = true
+stn = true
+ms_can = true
+link = "bluetooth_spp"
+identity = "ELM327 v1.4b"
+protocol = "AUTO, ISO 15765-4 (CAN 11/500)"

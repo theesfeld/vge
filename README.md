@@ -1,7 +1,7 @@
 # MFD — multi-function display library
 
 <!-- agents:status:begin -->
-> **Status:** active · `0.1.0-dev.1` · square ~4×4 in face · baked B612 · OSB bezel API · [#43](https://github.com/theesfeld/mfd/issues/43) · MIT
+> **Status:** active · `0.1.0-dev.1` · auto ATT/MAP + native OBD/BT · [#68](https://github.com/theesfeld/mfd/issues/68) · MIT
 <!-- agents:status:end -->
 
 ## What this is
@@ -53,12 +53,15 @@ Default demo: **AUTO vehicle MFD** (CLUSTER), **30 Hz**.
 | `8` | CLIMATE | Out/in temp, HVAC |
 | `9` | **FLIR** | Camera / FLIR glass |
 | `0` | **RANGE** | Collision / park arcs |
+| `v` | **ATT** | Horizon sphere + heading ° / N–NW |
+| `x` | **MAP** | Schematic topo (demo scroll) |
 | `o` / `s` | OBD / SETUP | PIDs · config |
-| `[` `]` | Prev/next page | |
+| `n` / `p` | Next / previous page | |
+| `[` `]` | **BRT** −/+ (real CMFD rocker) | |
 | `u` | Speed unit | MPH → KM/H → KT |
 | `a` / `j` / Tab | Auto / Jet / toggle | |
 
-OSB (auto): top CLST…LITE · right TPM/BODY/CLIM/FLIR/**RNG** · left OBD/SET.
+OSB (auto): top CLST…LITE · right TPM/BODY/CLIM/FLIR/**RNG** · left OBD/SET/**ATT**/**MAP**.
 
 ### Sensors (env)
 
@@ -66,7 +69,7 @@ OSB (auto): top CLST…LITE · right TPM/BODY/CLIM/FLIR/**RNG** · left OBD/SET.
 |-----|------|
 | `MFD_CAMERA=/dev/video0` or `auto` | Live V4L2 → FLIR |
 | `MFD_FLIR_PATH=grey.pgm` | Still greyscale |
-| `MFD_OBD_PORT` / `MFD_OBD_REPLAY` | Live OBD → tapes/cluster |
+| `MFD_OBD_BT` / `MFD_OBD_PORT` / `MFD_OBD_REPLAY` | Live OBD (native stack) → vehicle pages |
 | `MFD_RANGE=2.1,3,2.8,1.2` | Range page (m) |
 | `MFD_AUTO_PAGE=FLIR` | Start page |
 

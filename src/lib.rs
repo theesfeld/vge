@@ -24,6 +24,8 @@ pub mod font;
 pub mod frame;
 pub mod geom;
 pub mod jet;
+#[cfg(feature = "obd")]
+pub mod obd;
 pub mod page;
 pub mod palette;
 pub mod surface;
