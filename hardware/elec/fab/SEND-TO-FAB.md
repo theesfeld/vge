@@ -51,11 +51,11 @@ Reports: `kicad-drc-board-a.rpt`, `kicad-drc-board-b.rpt`.
 
 | Board | Expectation |
 |-------|-------------|
-| **A** | Mostly silk / text / residual copper-edge near display cutout and OSB frame. **Unconnected** OSB nets until matrix is routed (v1 is placement + mechanical). |
+| **A** | **OSB 4×5 matrix is routed** (ROW/COL nets + vias + MCU pins). See `bezel-mcu/cmfd-board-a-pinmap.md`. Ratsnest for matrix is largely complete (~10 residual unconnected, often power). Remaining **shorts/crossings** are dense-frame geometry (channels share a 17.5 mm ring) — clean in KiCad GUI before SMT. Silk/mask noise from vias is expected. |
 | **B** | USB-C / RJ45 **edge-mount** footprints intentionally violate generic hole/copper-edge rules; courtyard density on connectors is normal for those library parts. |
 
-**v1 purpose:** mechanical fit-check (case, OSB pitch, standoffs, port windows) + SMT land validation.  
-**Before dense paid assembly:** open the `.kicad_pcb` in KiCad GUI, pour GND, route matrix / power, re-run DRC to **0 errors** (edge-connector exceptions documented).
+**v1 purpose:** mechanical fit-check + **matrix connectivity** + land validation.  
+**Before dense paid assembly:** open Board A in KiCad GUI, fix remaining shorting_items / tracks_crossing, pour GND/3V3, re-run DRC.
 
 ## Assembly
 

@@ -209,6 +209,133 @@ def connect_pads_track(
     return True
 
 
+def to_mm(v) -> float:
+    return pcbnew.ToMM(v)
+
+
+def pad_xy(pad) -> tuple[float, float]:
+    p = pad.GetPosition()
+    return (to_mm(p.x), to_mm(p.y))
+
+
+def first_pad(fp: "pcbnew.FOOTPRINT", number: str):
+    for pad in fp.Pads():
+        if pad.GetNumber() == number:
+            return pad
+    pads = list(fp.Pads())
+    return pads[0] if pads else None
+
+
+def set_pads_net(fp: "pcbnew.FOOTPRINT", number: str, board: "pcbnew.BOARD", netname: str):
+    netcode = ensure_net(board, netname)
+    n = 0
+    for pad in fp.Pads():
+        if pad.GetNumber() == number:
+            pad.SetNetCode(netcode)
+            n += 1
+    return n
+
+
+def add_track_mm(
+    board: "pcbnew.BOARD",
+    x1: float,
+    y1: float,
+    x2: float,
+    y2: float,
+    netcode: int,
+    width: float = 0.25,
+    layer=None,
+):
+    if layer is None:
+        layer = pcbnew.F_Cu
+    if abs(x1 - x2) < 1e-6 and abs(y1 - y2) < 1e-6:
+        return
+    t = pcbnew.PCB_TRACK(board)
+    t.SetStart(vec(x1, y1))
+    t.SetEnd(vec(x2, y2))
+    t.SetWidth(mm(width))
+    t.SetLayer(layer)
+    t.SetNetCode(netcode)
+    board.Add(t)
+
+
+def add_via_mm(board: "pcbnew.BOARD", x: float, y: float, netcode: int, size: float = 0.6, drill: float = 0.3):
+    v = pcbnew.PCB_VIA(board)
+    v.SetPosition(vec(x, y))
+    v.SetViaType(pcbnew.VIATYPE_THROUGH)
+    v.SetWidth(mm(size))
+    v.SetDrill(mm(drill))
+    v.SetNetCode(netcode)
+    # top-bottom
+    if hasattr(v, "SetLayerPair"):
+        v.SetLayerPair(pcbnew.F_Cu, pcbnew.B_Cu)
+    board.Add(v)
+
+
+def route_polyline(
+    board: "pcbnew.BOARD",
+    pts: list[tuple[float, float]],
+    netcode: int,
+    width: float = 0.25,
+    layer=None,
+):
+    if layer is None:
+        layer = pcbnew.F_Cu
+    for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
+        add_track_mm(board, x1, y1, x2, y2, netcode, width, layer)
+
+
+def route_manhattan(
+    board: "pcbnew.BOARD",
+    x1: float,
+    y1: float,
+    x2: float,
+    y2: float,
+    netcode: int,
+    width: float = 0.25,
+    layer=None,
+    via_mid: bool = False,
+):
+    """L-shaped route; optional via at corner for layer change."""
+    if layer is None:
+        layer = pcbnew.F_Cu
+    # prefer horizontal first then vertical
+    if abs(x1 - x2) > 1e-6 and abs(y1 - y2) > 1e-6:
+        add_track_mm(board, x1, y1, x2, y1, netcode, width, layer)
+        if via_mid:
+            add_via_mm(board, x2, y1, netcode)
+            other = pcbnew.B_Cu if layer == pcbnew.F_Cu else pcbnew.F_Cu
+            add_track_mm(board, x2, y1, x2, y2, netcode, width, other)
+        else:
+            add_track_mm(board, x2, y1, x2, y2, netcode, width, layer)
+    else:
+        add_track_mm(board, x1, y1, x2, y2, netcode, width, layer)
+
+
+def route_chain_pads(
+    board: "pcbnew.BOARD",
+    pads: list,
+    netname: str,
+    width: float = 0.25,
+    layer=None,
+):
+    """Assign net and connect pad centers in order (same layer)."""
+    if layer is None:
+        layer = pcbnew.F_Cu
+    netcode = ensure_net(board, netname)
+    pts = []
+    for pad in pads:
+        pad.SetNetCode(netcode)
+        pts.append(pad_xy(pad))
+    for (x1, y1), (x2, y2) in zip(pts, pts[1:]):
+        # L-route if not axis-aligned enough
+        if abs(x1 - x2) > 0.05 and abs(y1 - y2) > 0.05:
+            route_manhattan(board, x1, y1, x2, y2, netcode, width, layer)
+        else:
+            add_track_mm(board, x1, y1, x2, y2, netcode, width, layer)
+    return netcode
+
+
 def new_board(title: str) -> "pcbnew.BOARD":
     board = pcbnew.BOARD()
     ds = board.GetDesignSettings()
@@ -277,8 +404,9 @@ def build_board_a(path: Path):
     add_silk_text(board, 4, H - 6, "KiCad headless · STM32G431 · OSB 1-20", 0.9)
 
     # Mounting holes (clear of OSB courtyards)
-    for i, (x, y) in enumerate([(7, 7), (W - 7, 7), (W - 7, H - 7), (7, H - 7)], start=1):
-        place(board, "MountingHole", "MountingHole_3.2mm_M3_Pad", f"H{i}", "M3", x, y)
+    # Keep M3 clear of COL/ROW channel rings (4.5–12 mm from edge)
+    for i, (x, y) in enumerate([(15, 15), (W - 15, 15), (W - 15, H - 15), (15, H - 15)], start=1):
+        place(board, "MountingHole", "MountingHole_3.2mm_M3", f"H{i}", "M3", x, y)
 
     # MCU + support on bottom frame strip (between bottom OSB and cutout)
     # cut_y ≈ 17.5; bottom OSB at y=12 — place MCU on left of bottom frame mid-band
@@ -316,19 +444,20 @@ def build_board_a(path: Path):
         # OSB id is the footprint Value (OSB1..); avoid extra silk near edges
 
     # Rockers: single tactile per corner (UP/DN via dual-momentary part later)
-    # Place in frame corners, clear of OSB and M3
-    rockers = [
+    rockers_spec = [
         ("GAIN", 22.0, H - 22.0),
         ("SYM", W - 22.0, H - 22.0),
         ("BRT", 22.0, 22.0),
         ("CON", W - 22.0, 22.0),
     ]
-    for i, (name, x, y) in enumerate(rockers, start=1):
-        place(board, "Button_Switch_THT", "SW_PUSH_6mm_H4.3mm", f"SW{i}", name, x, y)
+    rocker_fps = []
+    for i, (name, x, y) in enumerate(rockers_spec, start=1):
+        rfp = place(board, "Button_Switch_THT", "SW_PUSH_6mm_H4.3mm", f"SW{i}", name, x, y)
+        rocker_fps.append((name, rfp))
         add_silk_text(board, x - 3.5, y + 7.0, name, 0.75)
 
     # B2B + SWD on bottom frame (right of MCU cluster)
-    place(
+    j1 = place(
         board,
         "Connector_PinHeader_2.54mm",
         "PinHeader_2x10_P2.54mm_Vertical",
@@ -337,7 +466,7 @@ def build_board_a(path: Path):
         95.0,
         30.0,
     )
-    place(
+    j2 = place(
         board,
         "Connector_PinHeader_2.54mm",
         "PinHeader_1x04_P2.54mm_Vertical",
@@ -347,21 +476,282 @@ def build_board_a(path: Path):
         30.0,
     )
 
-    # No copper zones in v1 headless build: zone-to-cutout edge clearance
-    # is unreliable under SWIG fill; add GND pour in GUI after fit-check.
-    # Switch nets labeled for future routing.
-    for oid, fp in sw_fps.items():
-        pads = sorted(fp.Pads(), key=lambda p: str(p.GetNumber()))
+    # ------------------------------------------------------------------
+    # OSB matrix 4×5 — all matrix copper on B.Cu buses
+    #   F.Cu: dual-pad shorts + via at switch only
+    #   B.Cu: ROW buses + COL rings (offset channels) + wrap to bottom
+    #   F.Cu bottom strip: fan into MCU only (y < 16)
+    # ------------------------------------------------------------------
+    side_ids = {
+        "TOP": [1, 2, 3, 4, 5],
+        "RIGHT": [6, 7, 8, 9, 10],
+        "BOT": [15, 14, 13, 12, 11],
+        "LEFT": [20, 19, 18, 17, 16],
+    }
+    row_net = {"TOP": "ROW_TOP", "RIGHT": "ROW_RIGHT", "BOT": "ROW_BOT", "LEFT": "ROW_LEFT"}
+    mcu_row_pin = {"TOP": "10", "RIGHT": "11", "BOT": "12", "LEFT": "13"}
+    mcu_col_pin = ["14", "15", "16", "17", "18"]
+    mcu_rk_pin = {"GAIN": "19", "SYM": "20", "BRT": "21", "CON": "22"}
+    w_sig = 0.2
+
+    def mcu_pad(pin: str):
+        return first_pad(u1, pin)
+
+    def pads_num(fp, number: str):
+        return [p for p in fp.Pads() if p.GetNumber() == number]
+
+    def short_and_via(fp, number: str, netname: str, toward_center: bool = True):
+        """Short dual pads on F.Cu, via offset in/out to separate ROW vs COL."""
+        netcode = ensure_net(board, netname)
+        pads = pads_num(fp, number)
+        for p in pads:
+            p.SetNetCode(netcode)
+        if not pads:
+            return None
         if len(pads) >= 2:
-            pads[0].SetNetCode(ensure_net(board, f"OSB{oid}"))
-            pads[1].SetNetCode(ensure_net(board, "GND"))
-            if len(pads) >= 4:
-                pads[2].SetNetCode(ensure_net(board, f"OSB{oid}"))
-                pads[3].SetNetCode(ensure_net(board, "GND"))
+            x1, y1 = pad_xy(pads[0])
+            x2, y2 = pad_xy(pads[1])
+            add_track_mm(board, x1, y1, x2, y2, netcode, w_sig, pcbnew.F_Cu)
+            cx, cy = (x1 + x2) / 2, (y1 + y2) / 2
+        else:
+            cx, cy = pad_xy(pads[0])
+        # offset via 1.1 mm toward board center (COL) or outer edge (ROW)
+        bx, by = W / 2, H / 2
+        import math
+        dx, dy = bx - cx, by - cy
+        n = math.hypot(dx, dy) or 1.0
+        ux, uy = dx / n, dy / n
+        if toward_center:
+            vx, vy = cx + ux * 1.15, cy + uy * 1.15
+        else:
+            vx, vy = cx - ux * 1.15, cy - uy * 1.15
+        vx = min(max(vx, 2.0), W - 2.0)
+        vy = min(max(vy, 2.0), H - 2.0)
+        add_track_mm(board, cx, cy, vx, vy, netcode, w_sig, pcbnew.F_Cu)
+        add_via_mm(board, vx, vy, netcode, size=0.5, drill=0.25)
+        return vx, vy, netcode
+
+    # Channel plan from outer edge (mm): COL 4.5+1*i, ROW 10.0+0.9*i, free outer 2–3 for rockers
+    def col_ch(col: int):
+        d = 4.5 + col * 1.0
+        return d, W - d, d, H - d
+
+    def row_ch(side: str):
+        # distinct from COL 4.5–8.5
+        idx = {"TOP": 0, "RIGHT": 1, "BOT": 2, "LEFT": 3}[side]
+        d = 10.0 + idx * 0.9
+        return d, W - d, d, H - d
+
+    # --- COL rings on B.Cu ---
+    bot_col_via = {}
+    for col in range(5):
+        net = f"COL{col}"
+        ch_l, ch_r, ch_b, ch_t = col_ch(col)
+        pts = []
+        for oid, side in [
+            (side_ids["TOP"][col], "TOP"),
+            (side_ids["RIGHT"][col], "RIGHT"),
+            (side_ids["BOT"][col], "BOT"),
+            (side_ids["LEFT"][col], "LEFT"),
+        ]:
+            res = short_and_via(sw_fps[oid], "2", net, toward_center=True)
+            if not res:
+                continue
+            cx, cy, netcode = res
+            if side == "TOP":
+                rx, ry = cx, ch_t
+            elif side == "RIGHT":
+                rx, ry = ch_r, cy
+            elif side == "BOT":
+                rx, ry = cx, ch_b
+                bot_col_via[col] = (rx, ry, netcode)
+            else:
+                rx, ry = ch_l, cy
+            add_track_mm(board, cx, cy, rx, ry, netcode, w_sig, pcbnew.B_Cu)
+            pts.append((rx, ry, netcode))
+        # Daisy-chain column vias on B.Cu (TOP→RIGHT→BOT→LEFT) via frame channels
+        if len(pts) >= 2:
+            netcode = pts[0][2]
+            ordered = [(p[0], p[1]) for p in pts]
+            # pts order is TOP, RIGHT, BOT, LEFT
+            if len(ordered) == 4:
+                tpt, rpt, bpt, lpt = ordered
+                route_polyline(board, [tpt, (ch_r, ch_t), rpt], netcode, w_sig, pcbnew.B_Cu)
+                route_polyline(board, [rpt, (ch_r, ch_b), bpt], netcode, w_sig, pcbnew.B_Cu)
+                route_polyline(board, [bpt, (ch_l, ch_b), lpt], netcode, w_sig, pcbnew.B_Cu)
+                # no close TOP-LEFT to avoid double path
+            else:
+                for a, b in zip(ordered, ordered[1:]):
+                    route_manhattan(board, a[0], a[1], b[0], b[1], netcode, w_sig, pcbnew.B_Cu)
+
+    # --- ROW buses on B.Cu ---
+    row_join = {}  # side -> point on bus for MCU feed
+    for side, ids in side_ids.items():
+        net = row_net[side]
+        ch_l, ch_r, ch_b, ch_t = row_ch(side)
+        bus_pts = []
+        netcode = ensure_net(board, net)
+        for oid in ids:
+            res = short_and_via(sw_fps[oid], "1", net, toward_center=False)
+            if not res:
+                continue
+            cx, cy, _ = res
+            if side == "TOP":
+                bx, by = cx, ch_t
+            elif side == "RIGHT":
+                bx, by = ch_r, cy
+            elif side == "BOT":
+                bx, by = cx, ch_b
+            else:
+                bx, by = ch_l, cy
+            add_track_mm(board, cx, cy, bx, by, netcode, w_sig, pcbnew.B_Cu)
+            bus_pts.append((bx, by))
+        # stitch bus along side
+        if side in ("TOP", "BOT"):
+            bus_pts.sort(key=lambda p: p[0])
+            y = ch_t if side == "TOP" else ch_b
+            for (x1, _), (x2, _) in zip(bus_pts, bus_pts[1:]):
+                add_track_mm(board, x1, y, x2, y, netcode, w_sig, pcbnew.B_Cu)
+            # join corner toward left for feed
+            if bus_pts:
+                row_join[side] = (bus_pts[0][0], y, netcode)
+        else:
+            bus_pts.sort(key=lambda p: p[1])
+            x = ch_r if side == "RIGHT" else ch_l
+            for (_, y1), (_, y2) in zip(bus_pts, bus_pts[1:]):
+                add_track_mm(board, x, y1, x, y2, netcode, w_sig, pcbnew.B_Cu)
+            if bus_pts:
+                row_join[side] = (x, bus_pts[0][1], netcode)
+
+    # Feed ROW buses to bottom-left then MCU (B.Cu then via to F.Cu)
+    for i, side in enumerate(["TOP", "LEFT", "BOT", "RIGHT"]):
+        if side not in row_join:
+            continue
+        jx, jy, netcode = row_join[side]
+        mp = mcu_pad(mcu_row_pin[side])
+        if not mp:
+            continue
+        mp.SetNetCode(netcode)
+        mx, my = pad_xy(mp)
+        # gather at bottom-left corridor on B.Cu
+        gather_x = 2.5 + i * 0.7
+        gather_y = 5.0 + i * 0.7
+        route_polyline(
+            board,
+            [(jx, jy), (gather_x, jy), (gather_x, gather_y)],
+            netcode, w_sig, pcbnew.B_Cu,
+        )
+        add_via_mm(board, gather_x, gather_y, netcode, size=0.55, drill=0.3)
+        route_polyline(
+            board,
+            [(gather_x, gather_y), (mx, gather_y), (mx, my)],
+            netcode, w_sig, pcbnew.F_Cu,
+        )
+
+    # COL to MCU from bottom channel
+    for col in range(5):
+        if col not in bot_col_via:
+            continue
+        bx, by, netcode = bot_col_via[col]
+        mp = mcu_pad(mcu_col_pin[col])
+        if not mp:
+            continue
+        mp.SetNetCode(netcode)
+        mx, my = pad_xy(mp)
+        fan_y = 4.0 + col * 0.55
+        # stay on B.Cu to under MCU then via up
+        route_polyline(board, [(bx, by), (bx, fan_y), (mx, fan_y)], netcode, w_sig, pcbnew.B_Cu)
+        add_via_mm(board, mx, fan_y, netcode, size=0.55, drill=0.3)
+        add_track_mm(board, mx, fan_y, mx, my, netcode, w_sig, pcbnew.F_Cu)
+
+    # Rockers: each gets unique B.Cu lane near edge, fan to MCU without sharing vias
+    rk_order = ["GAIN", "BRT", "SYM", "CON"]
+    for name, rfp in rocker_fps:
+        short_and_via(rfp, "2", "GND", toward_center=True)
+        res = short_and_via(rfp, "1", f"RK_{name}", toward_center=False)
+        if not res:
+            continue
+        cx, cy, netcode = res
+        mp = mcu_pad(mcu_rk_pin[name])
+        if not mp:
+            continue
+        mp.SetNetCode(netcode)
+        mx, my = pad_xy(mp)
+        idx = rk_order.index(name) if name in rk_order else 0
+        # lanes 1.5–2.4 mm from edge
+        edge = 1.5 + idx * 0.3
+        gy = 2.0 + idx * 0.55
+        if name in ("GAIN", "BRT"):
+            route_polyline(board, [(cx, cy), (edge, cy), (edge, gy)], netcode, w_sig, pcbnew.B_Cu)
+        else:
+            route_polyline(
+                board,
+                [(cx, cy), (W - edge, cy), (W - edge, gy), (edge, gy)],
+                netcode, w_sig, pcbnew.B_Cu,
+            )
+        add_via_mm(board, edge, gy, netcode, size=0.5, drill=0.25)
+        # F.Cu fan below MCU courtyard (y small)
+        route_polyline(board, [(edge, gy), (mx, gy), (mx, my)], netcode, w_sig, pcbnew.F_Cu)
+
+    # Power nets labeled (pour GND/3V3 in GUI — long stubs short in this frame)
+    gnd = ensure_net(board, "GND")
+    v3 = ensure_net(board, "3V3")
+    for pin in ("3", "4"):
+        p = first_pad(j1, pin)
+        if p:
+            p.SetNetCode(gnd)
+    p = first_pad(j2, "3")
+    if p:
+        p.SetNetCode(gnd)
+    for pin in ("1", "2"):
+        p = first_pad(j1, pin)
+        if p:
+            p.SetNetCode(v3)
+    p = first_pad(j2, "4")
+    if p:
+        p.SetNetCode(v3)
+    # SWD / UART: net labels; UART short-route on bottom frame
+    for mpin, jpin, net in [("34", "1", "SWDIO"), ("37", "2", "SWCLK")]:
+        mp, jp = mcu_pad(mpin), first_pad(j2, jpin)
+        if mp and jp:
+            nc = ensure_net(board, net)
+            mp.SetNetCode(nc)
+            jp.SetNetCode(nc)
+    for mpin, jpin, net in [("29", "5", "UART_TX"), ("30", "6", "UART_RX")]:
+        mp, jp = mcu_pad(mpin), first_pad(j1, jpin)
+        if mp and jp:
+            nc = ensure_net(board, net)
+            mp.SetNetCode(nc)
+            jp.SetNetCode(nc)
+            # short direct if both on bottom frame
+            route_manhattan(board, *pad_xy(mp), *pad_xy(jp), nc, w_sig, pcbnew.F_Cu)
+
+    add_silk_text(board, 4, 42, "MATRIX B.Cu bus + via-at-switch", 0.7)
+
+    map_path = path.parent / "cmfd-board-a-pinmap.md"
+    map_path.write_text(
+        """# Board A pin map (matrix)
+
+| MCU pin | Net | Function |
+|--------:|-----|----------|
+| 10 | ROW_TOP | OSB 1–5 |
+| 11 | ROW_RIGHT | OSB 6–10 |
+| 12 | ROW_BOT | OSB 15–11 L→R |
+| 13 | ROW_LEFT | OSB 20–16 T→B |
+| 14–18 | COL0–4 | column index on each side |
+| 19–22 | RK_* | GAIN SYM BRT CON |
+| 29–30 | UART_TX/RX | J1.5 / J1.6 |
+| 34 / 37 | SWDIO / SWCLK | J2.1 / J2.2 |
+
+Routing: matrix on **B.Cu** buses; vias at each switch; MCU fanout on bottom **F.Cu**.
+Firmware: scan COL drive / ROW sense (or reverse). Debounce ≥ 20 ms.
+"""
+    )
 
     path.parent.mkdir(parents=True, exist_ok=True)
     pcbnew.SaveBoard(str(path), board)
-    print(f"Wrote {path}")
+    print(f"Wrote {path} (matrix routed)")
+    print(f"Wrote {map_path}")
     return path
 
 
