@@ -126,13 +126,16 @@ viewport cells chosen so on-glass width = height = side
 |-----|---------|
 | `MFD_FACE_IN=4` | Edge length in **inches** (default **4**) |
 | `MFD_PPI=190` | **Force** pixels/inch (use if EDID is wrong — put a ruler on the panel) |
+| `MFD_PX_SCALE=0.76` | **Force** device_px per terminal winsize px (use if the face is still wrong) |
 | `MFD_MAX_W` / `MFD_MAX_H` | Cap FB (default **1024**) |
 
 PPI detection: `MFD_PPI` → EDID detailed mm → EDID cm → 96 (not accurate).
 
+**Pixel space:** EDID PPI is panel **device** pixels. Ghostty `TIOCGWINSZ` is often **buffer** pixels at a different content scale than the compositor (e.g. content ~2, niri scale 1.5). The layout converts winsize cells to device pixels via the compositor window size when available (`niri` / `hyprctl` / `swaymsg`), or `MFD_PX_SCALE`.
+
 Startup example:
 ```text
-ruler face 4.00" @ 191.2 ppi (EDID-mm) → 765×765px  cells 48×24  on-glass 4.00"×4.00"
+ruler face 4.00" @ 191.2 ppi (EDID-cm)  px×0.763 (compositor)  cell 14.5×32.1dev  → 765×765px  cells 53×24  on-glass 4.00"×4.00"
 ```
 If the terminal is too small: `on-glass` drops and `[clipped to window]` is printed.
 

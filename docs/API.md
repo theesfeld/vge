@@ -69,11 +69,12 @@ s.apply_brightness(bezel.brightness);
 |------|--------|
 | F-16 MLU color MFD (Honeywell class) | **≈ 4×4 in (10×10 cm)** square LCD |
 | Default face | **4.0 inches** square on the **physical monitor** (`MFD_FACE_IN`) |
-| PPI | `MFD_PPI` env, else DRM **EDID** mm + mode, else 96 |
-| Framebuffer | `side_px = inches × PPI` (1∶1), capped by terminal + `MFD_MAX_*` |
+| PPI | `MFD_PPI` env, else DRM **EDID** mm + mode, else 96 (panel **device** pixels) |
+| Cell size | `TIOCGWINSZ` × `pixel_space()` → device px (`MFD_PX_SCALE` or compositor window × scale) |
+| Framebuffer | `side_px = inches × PPI` (1∶1 device px), capped by terminal + `MFD_MAX_*` |
 | Terminal box | Cell counts so **on-glass** width ≈ height ≈ face inches |
 
-**Ruler mode (any screen):** `PhysicalFace::layout(backend, 4.0)` sets both the 1∶1 framebuffer and the cell viewport from the same `side_px = inches × PPI`. PPI from `MFD_PPI` or EDID. Put a real ruler on the glass — it should read ~4"×4" when not clipped by a small terminal window.
+**Ruler mode (any screen):** `PhysicalFace::layout(backend, 4.0)` sets the 1∶1 framebuffer and the cell viewport from the same device-pixel side. Kitty places by **cells**; cell size must be in the same space as EDID PPI. Ghostty buffer winsize and Wayland fractional scale often disagree — auto-correct via compositor geometry, or set `MFD_PX_SCALE` (device_px / winsize_px). Put a real ruler on the glass — it should read ~4"×4" when not clipped by a small terminal window.
 
 ## 4. Bezel input ABI (plug-in hardware)
 

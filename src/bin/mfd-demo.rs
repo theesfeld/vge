@@ -19,7 +19,7 @@ use mfd::page::Page;
 use mfd::palette::{ColorMode, Palette};
 use mfd::term::{
     detect_backend, enter_fullscreen, leave_fullscreen, mfd_face_inches, physical_mfd_layout,
-    present_at_state_scratch, PpiSource, PresentScratch, RawStdin,
+    present_at_state_scratch, PpiSource, PresentScratch, PxSpaceSource, RawStdin,
 };
 use mfd::{engine_version, using_assembly, Surface};
 
@@ -58,12 +58,20 @@ fn main() -> io::Result<()> {
         PpiSource::EdidCm => "EDID-cm",
         PpiSource::Fallback96 => "fallback-96 (set MFD_PPI for ruler accuracy)",
     };
+    let pxsrc = match face.pixel_space.source {
+        PxSpaceSource::Env => "MFD_PX_SCALE",
+        PxSpaceSource::Compositor => "compositor",
+        PxSpaceSource::Identity => "identity",
+    };
     eprintln!(
-        "ruler face {req:.2}\" @ {ppi:.1} ppi ({src}) → {w}×{h}px  cells {}×{}  on-glass {og:.2}\"×{og:.2}\"{clip}",
+        "ruler face {req:.2}\" @ {ppi:.1} ppi ({src})  px×{pxs:.3} ({pxsrc})  cell {cw:.1}×{ch:.1}dev  → {w}×{h}px  cells {}×{}  on-glass {og:.2}\"×{og:.2}\"{clip}",
         vp.cols,
         vp.rows,
         req = face.inches_requested,
         ppi = face.ppi,
+        pxs = face.pixel_space.winsize_to_device,
+        cw = face.cell_device.0,
+        ch = face.cell_device.1,
         og = face.on_glass_in,
         clip = if face.clipped {
             "  [clipped to window — enlarge terminal or lower MFD_FACE_IN]"
