@@ -4,19 +4,24 @@
 > **Status:** active · Version: `0.1.0-dev.1` · License: MIT · [Issues](https://github.com/theesfeld/vge/issues)
 <!-- agents:status:end -->
 
-VGE is a **calligraphic stroke engine** for modern hosts.
+## Product: pure assembly library
 
-Aircraft HUDs and 1970s vector CRTs did not paint full bitmaps as their native model.  
-They held a **display list** of beam commands (MOVE / DRAW). A refresh processor retraced the list. Phosphor held the glow.
+**`libvge` is written in assembly.** It is not a Rust engine with an asm helper.
 
-VGE uses that model in 2026:
+| Artifact | Role |
+|----------|------|
+| `asm/x86_64/*.s` | **Implementation** |
+| `include/vge.h` | C ABI (any language) |
+| `build/libvge.a` / `.so` | Link: `-lvge -lm` |
+| Rust / demos | Optional thin consumers |
 
-1. **`DisplayList`** — live stroke commands (source of truth)
-2. **`refresh`** — phosphor decay + software beam through the list → scanout pixels
-3. **Present** — Kitty / half-block / Linux FB shows the scanout only
+```bash
+make && make test    # C smoke, no Rust
+make install         # ~/.local/{lib,include}
+```
 
-Hot path on **x86_64**: GNU assembly for beam pixel stores (`asm/x86_64/vge.s`).  
-Other targets use a portable C path with the same C ABI.
+Calligraphic model: stroke list → beam into pixels → present.  
+Raster/beam functions live in asm. Client languages may hold the display list.
 
 <p align="center">
   <img src="docs/demo-hud.png" alt="Vector HUD sample from VGE" width="640" />
