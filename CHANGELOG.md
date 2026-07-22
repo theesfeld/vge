@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Changed
+
+- **Bezel / lab OSB map:** numeric face map (`1`–`0`, bottom `yuiop` = OSB 15–11, left `asdfg` = 16–20). MLU kept: lit `*` format slot = Master Menu. On-glass nav cue + banner. Refs #129.
+
 ### Fixed
 
 - **Morning capture data path:** multi-line ELM VIN (`N:hex` / CR lines) → real `1FTEW1…`; Mode 01 preferred for glass (RPM/speed/fuel/voltage/temps); dead UDS DIDs demoted; unique `pid_XX` keys (no nibble collision); heavier Mode 01 poll weight. Refs #127.

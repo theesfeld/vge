@@ -158,7 +158,8 @@ pub fn parse_elm_hex_payload(raw: &str) -> Result<Vec<u8>> {
         if !saw_indexed
             && only_hex.len() <= 4
             && only_hex.len() >= 2
-            && t.chars().all(|c| c.is_ascii_hexdigit() || c.is_whitespace())
+            && t.chars()
+                .all(|c| c.is_ascii_hexdigit() || c.is_whitespace())
         {
             // Might be length or short SF — hold; if later lines are indexed, drop it.
             if length_prefix.is_none() && only_hex.len() <= 3 {

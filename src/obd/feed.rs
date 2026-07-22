@@ -1003,7 +1003,7 @@ fn apply_telemetry(t: &Telemetry, v: &mut VehicleSnapshot) {
         v.coolant = ((*c as f32 + 40.0) / 160.0).clamp(0.0, 1.0);
     } else if let Some(c) = t.values.get("coolant_temp_c") {
         let c = *c as f32;
-        if ( -40.0..150.0).contains(&c) {
+        if (-40.0..150.0).contains(&c) {
             v.coolant_c = c;
             v.coolant = ((c + 40.0) / 160.0).clamp(0.0, 1.0);
         }
