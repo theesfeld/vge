@@ -440,11 +440,13 @@ mod tests {
             .translate(50.0, 50.0)
             .rotate_deg(90.0)
             .translate(-50.0, -50.0);
-        // Horizontal segment through center becomes vertical after 90° about center.
+        // Horizontal → vertical about center (AA may soften alpha).
         s.line_xf(&m, 30.0, 50.0, 70.0, 50.0, AMBER);
-        // After 90° CCW about (50,50): (30,50)->(50,30), (70,50)->(50,70)
-        assert_eq!(s.get(50, 30), Some(AMBER));
-        assert_eq!(s.get(50, 70), Some(AMBER));
+        let a = s.get(50, 30).unwrap();
+        let b = s.get(50, 70).unwrap();
+        assert_eq!(a & 0x00FF_FFFF, AMBER & 0x00FF_FFFF);
+        assert_eq!(b & 0x00FF_FFFF, AMBER & 0x00FF_FFFF);
+        assert!(alpha(a) > 0 && alpha(b) > 0);
     }
 
     #[test]
