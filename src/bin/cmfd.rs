@@ -109,7 +109,6 @@ fn main() -> io::Result<()> {
     let mut caps_cached: Option<mfd::auto::VehicleCaps> = None;
     let mut fmt_sel = AutoFormatSelect::default();
     let mut warn_eng = WarningEngine::new();
-    let mut fog_ok = false;
 
     #[cfg(feature = "obd")]
     let obd_feed = mfd::obd::ObdFeed::try_start_from_env();
@@ -221,7 +220,8 @@ fn main() -> io::Result<()> {
                     // Lab: open Master Menu (production: press lit *format slot)
                     let allow = available_pages.as_slice();
                     if !allow.is_empty() {
-                        let _ = fmt_sel.handle_osb(fmt_sel.active.osb(), osb_tick, allow);
+                        let _ =
+                            fmt_sel.handle_osb(fmt_sel.active.osb(), osb_tick, allow, auto_page);
                     }
                 }
                 // Linear OSB: 1234567890qwertyuiop → 1..20 · BRT on -/=
@@ -245,7 +245,7 @@ fn main() -> io::Result<()> {
                 if allow.is_empty() {
                     continue;
                 }
-                match fmt_sel.handle_osb(osb, osb_tick, allow) {
+                match fmt_sel.handle_osb(osb, osb_tick, allow, auto_page) {
                     FormatSelectAction::Show(p) => {
                         auto_page = p;
                         fmt_sel.sync_active_to_page(p);
@@ -289,12 +289,8 @@ fn main() -> io::Result<()> {
                             ColorMode::HighVis => ColorMode::GreenMono,
                         };
                     }
-                    // Lights: status display toggles for glass rehearsal only (not body bus writes).
-                    (AutoPage::Lights, 1) => vehicle.light_low = !vehicle.light_low,
-                    (AutoPage::Lights, 2) => vehicle.light_high = !vehicle.light_high,
-                    (AutoPage::Lights, 3) if fog_ok => vehicle.light_fog = !vehicle.light_fog,
-                    (AutoPage::Lights, 4) => vehicle.light_drive = !vehicle.light_drive,
-                    (AutoPage::Lights, 5) => vehicle.light_interior = !vehicle.light_interior,
+                    // Lights: legends only until body/BCM DIDs exist — do not invent ON/OFF.
+                    (AutoPage::Lights, 1..=5) => {}
                     _ => {}
                 }
             }
@@ -329,7 +325,6 @@ fn main() -> io::Result<()> {
                     auto_page = available_pages[0];
                     fmt_sel.assign(fmt_sel.active, auto_page);
                 }
-                fog_ok = polled.features.fog_lights;
                 eprintln!(
                     "BIT COMPLETE · {} formats · {} · slots {:?}",
                     available_pages.len(),
@@ -338,7 +333,6 @@ fn main() -> io::Result<()> {
                 );
                 caps_cached = Some(polled);
             } else {
-                fog_ok = polled.features.fog_lights;
                 bit_caps = Some(polled);
             }
         }
@@ -388,24 +382,31 @@ fn main() -> io::Result<()> {
                 Some(&active),
                 Some(&fmt_sel),
             );
-            let cam = if cam_frame.is_some() { "CAM" } else { "SYN" };
-            let aw = if active.is_empty() {
-                String::new()
-            } else {
-                format!(" · {}", active[0].label)
-            };
-            let link = vehicle.bus_status_short();
-            let dcl = match fmt_sel.dclt {
-                0 => "D0",
-                1 => "D1",
-                _ => "D2",
-            };
-            let status = if fmt_sel.menu_open {
-                format!("MENU · {link} · {cam}{aw}")
-            } else {
-                format!("{} · {link} · {dcl} · {cam}{aw}", auto_page.title())
-            };
-            draw_demo_status(page.surface, &status, pal.dim, font_px * 0.55);
+            // Lab footer only (not MLU glass). Product: link state on OWN/BUS.
+            let lab_chrome = matches!(
+                std::env::var("MFD_LAB_CHROME").ok().as_deref(),
+                Some("1") | Some("true") | Some("TRUE") | Some("yes")
+            );
+            if lab_chrome {
+                let cam = if cam_frame.is_some() { "CAM" } else { "—" };
+                let aw = if active.is_empty() {
+                    String::new()
+                } else {
+                    format!(" · {}", active[0].label)
+                };
+                let link = vehicle.bus_status_short();
+                let dcl = match fmt_sel.dclt {
+                    0 => "D0",
+                    1 => "D1",
+                    _ => "D2",
+                };
+                let status = if fmt_sel.menu_open {
+                    format!("MENU · {link} · {cam}{aw}")
+                } else {
+                    format!("{} · {link} · {dcl} · {cam}{aw}", auto_page.title())
+                };
+                draw_demo_status(page.surface, &status, pal.dim, font_px * 0.55);
+            }
         }
 
         panel.apply_brightness(bezel.brightness.clamp(0.05, 1.0));

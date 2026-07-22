@@ -246,8 +246,23 @@ impl AutoFormatSelect {
         None
     }
 
+    /// Support formats that use permanent left/bottom OSBs (not format slots).
+    pub fn is_support_page(page: AutoPage) -> bool {
+        matches!(
+            page,
+            AutoPage::Own | AutoPage::Faults | AutoPage::Setup | AutoPage::Bus
+        )
+    }
+
     /// Handle global format-select OSBs. `allowed` = probe GO formats.
-    pub fn handle_osb(&mut self, osb: u8, tick: u32, allowed: &[AutoPage]) -> FormatSelectAction {
+    /// `glass` = page currently on the face (for return-from-support law).
+    pub fn handle_osb(
+        &mut self,
+        osb: u8,
+        tick: u32,
+        allowed: &[AutoPage],
+        glass: AutoPage,
+    ) -> FormatSelectAction {
         // Master Menu has priority: OSB 11 = RNG, 15 = OWN pick (not DCLT/OWN jump).
         if self.menu_open {
             if let Some(page) = page_from_master_menu_osb(osb) {
@@ -277,6 +292,16 @@ impl AutoFormatSelect {
         if let Some(slot) = FormatSlot::from_osb(osb) {
             let fmt = self.slots[slot as usize];
             if slot == self.active {
+                // Vehicle law: if glass is support (DTC/OWN/…) or not this slot's
+                // format, first press returns to the slot format. Second press
+                // (already on that format) opens Master Menu (MLU).
+                if let Some(page) = fmt {
+                    let on_slot = glass == page;
+                    let from_support = Self::is_support_page(glass);
+                    if from_support || !on_slot {
+                        return FormatSelectAction::Show(page);
+                    }
+                }
                 self.menu_open = true;
                 self.menu_target = slot;
                 return FormatSelectAction::OpenMenu { for_slot: slot };
@@ -376,7 +401,7 @@ mod tests {
     #[test]
     fn active_opens_menu() {
         let mut fs = AutoFormatSelect::default();
-        let a = fs.handle_osb(14, 1, AutoPage::ALL);
+        let a = fs.handle_osb(14, 1, AutoPage::ALL, AutoPage::Eng);
         assert!(matches!(a, FormatSelectAction::OpenMenu { .. }));
         assert!(fs.menu_open);
     }
@@ -384,7 +409,7 @@ mod tests {
     #[test]
     fn other_slot_switches() {
         let mut fs = AutoFormatSelect::default();
-        let a = fs.handle_osb(13, 1, AutoPage::ALL);
+        let a = fs.handle_osb(13, 1, AutoPage::ALL, AutoPage::Eng);
         assert_eq!(a, FormatSelectAction::Show(AutoPage::Drive));
         assert_eq!(fs.current(), AutoPage::Drive);
     }
@@ -400,8 +425,8 @@ mod tests {
     #[test]
     fn menu_pick_dedups() {
         let mut fs = AutoFormatSelect::default();
-        fs.handle_osb(14, 1, AutoPage::ALL);
-        let a = fs.handle_osb(5, 2, AutoPage::ALL); // DRV onto slot 14
+        fs.handle_osb(14, 1, AutoPage::ALL, AutoPage::Eng);
+        let a = fs.handle_osb(5, 2, AutoPage::ALL, AutoPage::Eng); // DRV onto slot 14
         assert_eq!(a, FormatSelectAction::Show(AutoPage::Drive));
         assert_eq!(fs.slots[0], Some(AutoPage::Drive));
         assert_eq!(fs.slots[1], None); // was Drive
@@ -410,17 +435,17 @@ mod tests {
     #[test]
     fn nogo_not_assigned() {
         let mut fs = AutoFormatSelect::default();
-        fs.handle_osb(14, 1, &[AutoPage::Eng, AutoPage::Fuel]);
-        let a = fs.handle_osb(10, 2, &[AutoPage::Eng, AutoPage::Fuel]); // CAM nogo
+        fs.handle_osb(14, 1, &[AutoPage::Eng, AutoPage::Fuel], AutoPage::Eng);
+        let a = fs.handle_osb(10, 2, &[AutoPage::Eng, AutoPage::Fuel], AutoPage::Eng); // CAM nogo
         assert_eq!(a, FormatSelectAction::Ignore);
     }
 
     #[test]
     fn empty_allowed_rejects_menu_pick() {
         let mut fs = AutoFormatSelect::default();
-        fs.handle_osb(14, 1, AutoPage::ALL);
+        fs.handle_osb(14, 1, AutoPage::ALL, AutoPage::Eng);
         assert!(fs.menu_open);
-        let a = fs.handle_osb(1, 2, &[]); // empty GO set
+        let a = fs.handle_osb(1, 2, &[], AutoPage::Eng); // empty GO set
         assert_eq!(a, FormatSelectAction::Ignore);
     }
 
@@ -428,9 +453,21 @@ mod tests {
     fn blank_double_tap_opens_menu() {
         let mut fs = AutoFormatSelect::default();
         fs.slots[1] = None; // OSB 13 blank
-        let a1 = fs.handle_osb(13, 10, AutoPage::ALL);
+        let a1 = fs.handle_osb(13, 10, AutoPage::ALL, AutoPage::Eng);
         assert_eq!(a1, FormatSelectAction::Ignore);
-        let a2 = fs.handle_osb(13, 20, AutoPage::ALL); // within window
+        let a2 = fs.handle_osb(13, 20, AutoPage::ALL, AutoPage::Eng); // within window
+        assert!(matches!(a2, FormatSelectAction::OpenMenu { .. }));
+    }
+
+    #[test]
+    fn support_page_active_slot_returns_format() {
+        let mut fs = AutoFormatSelect::default();
+        // On DTC with active still ENG slot: press 14 → ENG, not menu.
+        let a = fs.handle_osb(14, 1, AutoPage::ALL, AutoPage::Faults);
+        assert_eq!(a, FormatSelectAction::Show(AutoPage::Eng));
+        assert!(!fs.menu_open);
+        // On ENG already: press 14 → menu.
+        let a2 = fs.handle_osb(14, 2, AutoPage::ALL, AutoPage::Eng);
         assert!(matches!(a2, FormatSelectAction::OpenMenu { .. }));
     }
 }

@@ -64,7 +64,10 @@ Lab row: `1234567890qwertyuiop` = OSB 1–20. `[` `]` = prev/next · `-` `=` = B
 
 **Hard rule:** top/right are options / menu picks, not permanent format jumps.
 
-**MLU:** lit `*` format slot = Master Menu. Other slots = select.
+**MLU:** lit `*` format slot = Master Menu **when already on that format**.  
+If glass is OWN/DTC/SET/BUS (or other than the slot), first press of active slot **returns to slot format**; second press opens Master Menu.
+
+Lab chrome on glass: only if `MFD_LAB_CHROME=1`.
 
 **Example — LIGHTS:** `1`=LO · `2`=HI · `3`=FOG · `4`=DRL · `5`=INT. Not ENG/FUEL.
 

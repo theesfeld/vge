@@ -4,6 +4,7 @@
 
 ### Changed
 
+- **CMFD design P0 (Lockheed review):** support-page return (DTC→ENG via active slot); lab `OsbUp` so SOI does not stick; lab key map off glass unless `MFD_LAB_CHROME=1`; RNG no synthetic; LITE OSBs do not invent lamps. Refs #133.
 - **Lab OSB keys (linear):** `1234567890qwertyuiop` = OSB 1–20. `[` `]` = format prev/next. `-` `=` = brightness. MLU: lit `*` slot = Master Menu. Refs #129 #131.
 
 ### Fixed
