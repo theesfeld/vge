@@ -53,8 +53,13 @@ Build with feature `obd` (default). **No dependency on obdtui.** Stack is new in
 
 ### Ford F-150 UDS (read-only)
 
-Protocol + DID catalog: [`docs/reference/ford-f150-uds-readonly.md`](reference/ford-f150-uds-readonly.md)  
-Code: `mfd::obd::ford` (PCM `7E0`, Mode `0x22` DIDs, extended session for reads).
+| Doc | Role |
+|-----|------|
+| [`reference/ford-f150-uds-readonly.md`](reference/ford-f150-uds-readonly.md) | Protocol, allow-list, packets |
+| [`reference/ford-f150-forscan/`](reference/ford-f150-forscan/) | FORScan As-Built CSV export (55 tabs) + **`live_parameters.csv`** |
+| `mfd::obd::ford` | Rust DID catalog + decode |
+
+**Note:** The public FORScan Google Sheet is **As-Built config**, not a complete live DID dump. Live glass signals are in `live_parameters.csv` and `ford.rs`.
 
 ### Capture tool
 
