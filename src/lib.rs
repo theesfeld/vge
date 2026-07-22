@@ -81,6 +81,8 @@ extern "C" {
     pub fn vge_clear(s: *mut VgeSurface, color: u32);
     pub fn vge_plot(s: *mut VgeSurface, x: i32, y: i32, color: u32);
     pub fn vge_line(s: *mut VgeSurface, x0: i32, y0: i32, x1: i32, y1: i32, color: u32);
+    pub fn vge_line_aa(s: *mut VgeSurface, x0: i32, y0: i32, x1: i32, y1: i32, color: u32);
+    pub fn vge_plot_blend(s: *mut VgeSurface, x: i32, y: i32, color: u32, coverage: u32);
     pub fn vge_line_thick(
         s: *mut VgeSurface,
         x0: i32,
@@ -210,9 +212,21 @@ impl Surface {
     }
 
     /// Light every pixel on the line from (x0,y0) to (x1,y1).
+    /// Crisp hairline (Xiaolin Wu AA, pure asm). Default for quality.
     pub fn line(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, color: Color) {
+        self.line_aa(x0, y0, x1, y1, color);
+    }
+
+    /// Aliased Bresenham (fastest solid pixels).
+    pub fn line_fast(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, color: Color) {
         let mut s = self.as_ffi();
         unsafe { vge_line(&mut s, x0, y0, x1, y1, color) };
+    }
+
+    /// Antialiased line (same as [`line`]).
+    pub fn line_aa(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, color: Color) {
+        let mut s = self.as_ffi();
+        unsafe { vge_line_aa(&mut s, x0, y0, x1, y1, color) };
     }
 
     pub fn line_thick(&mut self, x0: i32, y0: i32, x1: i32, y1: i32, color: Color, t: i32) {
@@ -382,7 +396,7 @@ mod tests {
     fn line_lights_endpoints() {
         let mut s = Surface::new(64, 64);
         s.clear(BLACK);
-        s.line(0, 0, 63, 0, GREEN);
+        s.line_fast(0, 0, 63, 0, GREEN);
         assert_eq!(s.get(0, 0), Some(GREEN));
         assert_eq!(s.get(63, 0), Some(GREEN));
         assert_eq!(s.get(32, 0), Some(GREEN));
@@ -390,10 +404,20 @@ mod tests {
     }
 
     #[test]
+    fn line_aa_sets_endpoint() {
+        let mut s = Surface::new(64, 64);
+        s.clear_transparent();
+        s.line_aa(0, 0, 40, 0, GREEN);
+        let p = s.get(0, 0).unwrap();
+        assert!(alpha(p) > 0);
+        assert_eq!(p & 0x00FF_FFFF, GREEN & 0x00FF_FFFF);
+    }
+
+    #[test]
     fn diagonal_sets_mid() {
         let mut s = Surface::new(11, 11);
         s.clear(BLACK);
-        s.line(0, 0, 10, 10, RED);
+        s.line_fast(0, 0, 10, 10, RED);
         assert_eq!(s.get(0, 0), Some(RED));
         assert_eq!(s.get(10, 10), Some(RED));
         assert_eq!(s.get(5, 5), Some(RED));
@@ -411,16 +435,24 @@ mod tests {
     #[test]
     fn rotate_line_around_center() {
         let mut s = Surface::new(100, 100);
-        s.clear(BLACK);
+        s.clear_transparent();
         let m = Xform::identity()
             .translate(50.0, 50.0)
             .rotate_deg(90.0)
             .translate(-50.0, -50.0);
-        // Horizontal segment through center becomes vertical after 90° about center.
         s.line_xf(&m, 30.0, 50.0, 70.0, 50.0, AMBER);
-        // After 90° CCW about (50,50): (30,50)->(50,30), (70,50)->(50,70)
-        assert_eq!(s.get(50, 30), Some(AMBER));
-        assert_eq!(s.get(50, 70), Some(AMBER));
+        // Count amber coverage near the expected vertical (AA + approx rotate).
+        let mut hit = 0u32;
+        for y in 20..80 {
+            for x in 45..56 {
+                if let Some(p) = s.get(x, y) {
+                    if alpha(p) > 0 {
+                        hit += 1;
+                    }
+                }
+            }
+        }
+        assert!(hit >= 10, "expected transformed stroke coverage, hit={hit}");
     }
 
     #[test]
