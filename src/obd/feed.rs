@@ -855,13 +855,13 @@ fn run_session(
                     if hard_fails >= 8 {
                         return SessionEnd::LinkLost(msg);
                     }
-                } else {
-                    hard_fails = 0;
-                }
-                if let Ok(mut t) = tele.lock() {
-                    if !msg.contains("NO DATA") {
+                    // Hard link fault only → glass ERR / RECONN path.
+                    if let Ok(mut t) = tele.lock() {
                         t.error = Some(msg);
                     }
+                } else {
+                    hard_fails = 0;
+                    // Soft: NO DATA / UDS NRC / decode — keep LIVE; do not paint bus ERR.
                 }
             }
         }
@@ -887,6 +887,18 @@ fn is_hard_link_error(e: &ObdError) -> bool {
             | ObdError::Adapter(_)
             | ObdError::Serial(_)
     )
+}
+
+fn looks_hard_error_msg(msg: &str) -> bool {
+    let u = msg.to_ascii_uppercase();
+    u.contains("RFCOMM")
+        || u.contains("TIMEOUT")
+        || u.contains("NOT OPEN")
+        || u.contains("ADAPTER")
+        || u.contains("SERIAL")
+        || u.contains("IO:")
+        || u.contains("HOST IS DOWN")
+        || u.contains("CONNECTION RESET")
 }
 
 fn finish_cap(cap: Option<CaptureWriter>) {
@@ -950,12 +962,14 @@ fn apply_telemetry(t: &Telemetry, v: &mut VehicleSnapshot) {
         .map(|p| short_path(p))
         .unwrap_or_default();
     assign_str(&mut v.bus_capture, &cap);
+    // Soft OBD misses must not look like a link drop.
     let state = match t.link_phase.as_str() {
         "SEARCH" => "SEARCH",
         "RECONN" => "RECONN",
         "CONN" => "CONN",
         _ if !t.caps.ready => "BIT",
-        _ if t.error.is_some() => "ERR",
+        "LIVE" => "LIVE",
+        _ if t.error.as_ref().is_some_and(|e| looks_hard_error_msg(e)) => "ERR",
         _ => "LIVE",
     };
     assign_str(&mut v.bus_state, state);
