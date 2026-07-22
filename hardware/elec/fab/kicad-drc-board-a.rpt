@@ -1,0 +1,689 @@
+** Drc report for cmfd-board-a.kicad_pcb **
+** Created on 2026-07-22T13:49:52 **
+** Report includes: Errors, Warnings **
+
+** Found 165 DRC violations **
+[tracks_crossing]: Tracks crossing
+    Local override; error
+    @(74.0000 mm, 18.5000 mm): Track [GND] on F.Cu, length 10.5000 mm
+    @(74.0000 mm, 14.0000 mm): Track [OSB13] on F.Cu, length 6.5000 mm
+[tracks_crossing]: Tracks crossing
+    Local override; error
+    @(138.5000 mm, 132.0000 mm): Track [RK_SYM] on F.Cu, length 5.5902 mm
+    @(132.0000 mm, 136.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.2750 mm)
+    Rule: board setup constraints hole; error
+    @(134.0000 mm, 93.5000 mm): Track [OSB7] on F.Cu, length 6.5000 mm
+    @(136.0000 mm, 98.0000 mm): NPTH pad of H3
+[shorting_items]: Items shorting two nets (nets RK_SYM and GND)
+    Local override; error
+    @(138.5000 mm, 132.0000 mm): Track [RK_SYM] on F.Cu, length 5.5902 mm
+    @(138.5000 mm, 136.5000 mm): PTH pad 2 [GND] of SW2
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.2750 mm)
+    Rule: board setup constraints hole; error
+    @(14.0000 mm, 54.5000 mm): Track [OSB17] on F.Cu, length 6.5000 mm
+    @(12.0000 mm, 50.0000 mm): NPTH pad of H1
+[shorting_items]: Items shorting two nets (nets OSB13 and GND)
+    Local override; error
+    @(74.0000 mm, 14.0000 mm): Track [OSB13] on F.Cu, length 5.5000 mm
+    @(74.0000 mm, 8.0000 mm): PTH pad 1 [GND] of J_GND
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.2284 mm)
+    Rule: board setup constraints hole; error
+    @(134.0000 mm, 100.0000 mm): PTH pad 1 [OSB7] of S7
+    @(136.0000 mm, 98.0000 mm): NPTH pad of H3
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.2284 mm)
+    Rule: board setup constraints hole; error
+    @(14.0000 mm, 48.0000 mm): PTH pad 1 [OSB17] of S17
+    @(12.0000 mm, 50.0000 mm): NPTH pad of H1
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.2284 mm)
+    Rule: board setup constraints hole; error
+    @(134.0000 mm, 100.0000 mm): PTH pad 1 [OSB7] of S7
+    @(136.0000 mm, 98.0000 mm): NPTH pad of H3
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.2284 mm)
+    Rule: board setup constraints hole; error
+    @(14.0000 mm, 48.0000 mm): PTH pad 1 [OSB17] of S17
+    @(12.0000 mm, 50.0000 mm): NPTH pad of H1
+[shorting_items]: Items shorting two nets (nets GND and OSB13)
+    Local override; error
+    @(74.0000 mm, 8.0000 mm): PTH pad 1 [GND] of J_GND
+    @(74.0000 mm, 8.5000 mm): PTH pad 1 [OSB13] of J13
+[shorting_items]: Items shorting two nets (nets GND and OSB13)
+    Local override; error
+    @(74.0000 mm, 8.0000 mm): PTH pad 1 [GND] of J_GND
+    @(74.0000 mm, 8.5000 mm): PTH pad 1 [OSB13] of J13
+[shorting_items]: Items shorting two nets (nets RK_SYM and GND)
+    Local override; error
+    @(137.5000 mm, 137.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+    @(138.5000 mm, 136.5000 mm): PTH pad 2 [GND] of SW2
+[shorting_items]: Items shorting two nets (nets RK_SYM and GND)
+    Local override; error
+    @(137.5000 mm, 137.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+    @(138.5000 mm, 136.5000 mm): PTH pad 2 [GND] of SW2
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(74.0000 mm, 8.0000 mm): Footprint J_GND
+    @(74.0000 mm, 8.5000 mm): Footprint J13
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(74.0000 mm, 8.5000 mm): PTH pad 1 [OSB13] of J13
+    @(74.0000 mm, 8.0000 mm): Footprint J_GND
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(74.0000 mm, 8.0000 mm): PTH pad 1 [GND] of J_GND
+    @(74.0000 mm, 8.5000 mm): Footprint J13
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(74.0000 mm, 8.0000 mm): Footprint J_GND
+    @(74.0000 mm, 14.0000 mm): Footprint S13
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(74.0000 mm, 14.0000 mm): PTH pad 1 [OSB13] of S13
+    @(74.0000 mm, 8.0000 mm): Footprint J_GND
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(74.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S13
+    @(74.0000 mm, 8.0000 mm): Footprint J_GND
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(93.5000 mm, 8.5000 mm): Footprint J12
+    @(93.5000 mm, 14.0000 mm): Footprint S12
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(93.5000 mm, 14.0000 mm): PTH pad 1 [OSB12] of S12
+    @(93.5000 mm, 8.5000 mm): Footprint J12
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(93.5000 mm, 18.5000 mm): PTH pad 2 [GND] of S12
+    @(93.5000 mm, 8.5000 mm): Footprint J12
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(35.0000 mm, 14.0000 mm): Footprint S15
+    @(35.0000 mm, 8.5000 mm): Footprint J15
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(35.0000 mm, 14.0000 mm): PTH pad 1 [OSB15] of S15
+    @(35.0000 mm, 8.5000 mm): Footprint J15
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(35.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S15
+    @(35.0000 mm, 8.5000 mm): Footprint J15
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(137.5000 mm, 137.5000 mm): Footprint J_SYM
+    @(132.0000 mm, 132.0000 mm): Footprint SW2
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(138.5000 mm, 136.5000 mm): PTH pad 2 [GND] of SW2
+    @(137.5000 mm, 137.5000 mm): Footprint J_SYM
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(137.5000 mm, 137.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+    @(132.0000 mm, 132.0000 mm): Footprint SW2
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(12.0000 mm, 50.0000 mm): Footprint H1
+    @(14.0000 mm, 54.5000 mm): Footprint S17
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(14.0000 mm, 48.0000 mm): PTH pad 1 [OSB17] of S17
+    @(12.0000 mm, 50.0000 mm): Footprint H1
+[npth_inside_courtyard]: NPTH inside courtyard
+    Local override; error
+    @(12.0000 mm, 50.0000 mm): NPTH pad of H1
+    @(14.0000 mm, 54.5000 mm): Footprint S17
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(12.0000 mm, 50.0000 mm): Footprint H1
+    @(8.5000 mm, 54.5000 mm): Footprint J17
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(93.5000 mm, 139.5000 mm): Footprint J4
+    @(93.5000 mm, 134.0000 mm): Footprint S4
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(93.5000 mm, 134.0000 mm): PTH pad 1 [OSB4] of S4
+    @(93.5000 mm, 139.5000 mm): Footprint J4
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(93.5000 mm, 129.5000 mm): PTH pad 2 [GND] of S4
+    @(93.5000 mm, 139.5000 mm): Footprint J4
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(136.0000 mm, 50.0000 mm): Footprint H2
+    @(134.0000 mm, 54.5000 mm): Footprint S9
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(136.0000 mm, 50.0000 mm): Footprint H2
+    @(139.5000 mm, 54.5000 mm): Footprint J9
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(8.5000 mm, 93.5000 mm): Footprint J19
+    @(12.0000 mm, 98.0000 mm): Footprint H4
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(74.0000 mm, 134.0000 mm): Footprint S3
+    @(74.0000 mm, 139.5000 mm): Footprint J3
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(74.0000 mm, 134.0000 mm): PTH pad 1 [OSB3] of S3
+    @(74.0000 mm, 139.5000 mm): Footprint J3
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(74.0000 mm, 129.5000 mm): PTH pad 2 [GND] of S3
+    @(74.0000 mm, 139.5000 mm): Footprint J3
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(113.0000 mm, 8.5000 mm): Footprint J11
+    @(113.0000 mm, 14.0000 mm): Footprint S11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(113.0000 mm, 14.0000 mm): PTH pad 1 [OSB11] of S11
+    @(113.0000 mm, 8.5000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(113.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S11
+    @(113.0000 mm, 8.5000 mm): Footprint J11
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(14.0000 mm, 93.5000 mm): Footprint S19
+    @(12.0000 mm, 98.0000 mm): Footprint H4
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(113.0000 mm, 139.5000 mm): Footprint J5
+    @(113.0000 mm, 134.0000 mm): Footprint S5
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(113.0000 mm, 134.0000 mm): PTH pad 1 [OSB5] of S5
+    @(113.0000 mm, 139.5000 mm): Footprint J5
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(113.0000 mm, 129.5000 mm): PTH pad 2 [GND] of S5
+    @(113.0000 mm, 139.5000 mm): Footprint J5
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(35.0000 mm, 139.5000 mm): Footprint J1
+    @(35.0000 mm, 134.0000 mm): Footprint S1
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(35.0000 mm, 134.0000 mm): PTH pad 1 [OSB1] of S1
+    @(35.0000 mm, 139.5000 mm): Footprint J1
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(35.0000 mm, 129.5000 mm): PTH pad 2 [GND] of S1
+    @(35.0000 mm, 139.5000 mm): Footprint J1
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(54.5000 mm, 14.0000 mm): Footprint S14
+    @(54.5000 mm, 8.5000 mm): Footprint J14
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(54.5000 mm, 14.0000 mm): PTH pad 1 [OSB14] of S14
+    @(54.5000 mm, 8.5000 mm): Footprint J14
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(54.5000 mm, 18.5000 mm): PTH pad 2 [GND] of S14
+    @(54.5000 mm, 8.5000 mm): Footprint J14
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(136.0000 mm, 98.0000 mm): Footprint H3
+    @(139.5000 mm, 93.5000 mm): Footprint J7
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(136.0000 mm, 98.0000 mm): Footprint H3
+    @(134.0000 mm, 93.5000 mm): Footprint S7
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(134.0000 mm, 100.0000 mm): PTH pad 1 [OSB7] of S7
+    @(136.0000 mm, 98.0000 mm): Footprint H3
+[npth_inside_courtyard]: NPTH inside courtyard
+    Local override; error
+    @(136.0000 mm, 98.0000 mm): NPTH pad of H3
+    @(134.0000 mm, 93.5000 mm): Footprint S7
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(54.5000 mm, 139.5000 mm): Footprint J2
+    @(54.5000 mm, 134.0000 mm): Footprint S2
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(54.5000 mm, 134.0000 mm): PTH pad 1 [OSB2] of S2
+    @(54.5000 mm, 139.5000 mm): Footprint J2
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(54.5000 mm, 129.5000 mm): PTH pad 2 [GND] of S2
+    @(54.5000 mm, 139.5000 mm): Footprint J2
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(74.0000 mm, 8.5000 mm): Footprint J13
+    @(74.0000 mm, 14.0000 mm): Footprint S13
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(74.0000 mm, 14.0000 mm): PTH pad 1 [OSB13] of S13
+    @(74.0000 mm, 8.5000 mm): Footprint J13
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(74.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S13
+    @(74.0000 mm, 8.5000 mm): Footprint J13
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(74.0000 mm, 18.5000 mm): Track [GND] on F.Cu, length 10.5000 mm
+    @(74.0000 mm, 8.5000 mm): PTH pad 1 [OSB13] of J13
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(74.0000 mm, 18.5000 mm): Track [GND] on F.Cu, length 10.5000 mm
+    @(74.0000 mm, 14.0000 mm): PTH pad 1 [OSB13] of S13
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(74.0000 mm, 8.5000 mm): PTH pad 1 [OSB13] of J13
+    @(74.0000 mm, 8.0000 mm): PTH pad 1 [GND] of J_GND
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(74.0000 mm, 8.0000 mm): PTH pad 1 [GND] of J_GND
+    @(74.0000 mm, 8.5000 mm): PTH pad 1 [OSB13] of J13
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(137.5000 mm, 137.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+    @(138.5000 mm, 136.5000 mm): PTH pad 2 [GND] of SW2
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(74.0000 mm, 14.0000 mm): Track [OSB13] on F.Cu, length 5.5000 mm
+    @(74.0000 mm, 8.0000 mm): PTH pad 1 [GND] of J_GND
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(138.5000 mm, 136.5000 mm): PTH pad 2 [GND] of SW2
+    @(137.5000 mm, 137.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(138.5000 mm, 132.0000 mm): Track [RK_SYM] on F.Cu, length 5.5902 mm
+    @(138.5000 mm, 136.5000 mm): PTH pad 2 [GND] of SW2
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; warning
+    @(148.0000 mm, 0.0000 mm): Segment on Edge.Cuts
+    @(143.6500 mm, 112.5700 mm): Rectangle of J6 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; warning
+    @(0.0000 mm, 148.0000 mm): Segment on Edge.Cuts
+    @(4.3500 mm, 93.9300 mm): Rectangle of J19 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; warning
+    @(0.0000 mm, 148.0000 mm): Segment on Edge.Cuts
+    @(4.3500 mm, 54.9300 mm): Rectangle of J17 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; warning
+    @(148.0000 mm, 0.0000 mm): Segment on Edge.Cuts
+    @(143.6500 mm, 54.0700 mm): Rectangle of J9 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; warning
+    @(0.0000 mm, 148.0000 mm): Segment on Edge.Cuts
+    @(4.3500 mm, 113.4300 mm): Rectangle of J20 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; warning
+    @(0.0000 mm, 148.0000 mm): Segment on Edge.Cuts
+    @(4.3500 mm, 74.4300 mm): Rectangle of J18 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; warning
+    @(148.0000 mm, 0.0000 mm): Segment on Edge.Cuts
+    @(143.6500 mm, 93.0700 mm): Rectangle of J7 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; warning
+    @(0.0000 mm, 148.0000 mm): Segment on Edge.Cuts
+    @(4.3500 mm, 35.4300 mm): Rectangle of J16 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; warning
+    @(148.0000 mm, 0.0000 mm): Segment on Edge.Cuts
+    @(143.6500 mm, 73.5700 mm): Rectangle of J8 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
+    Rule: board setup constraints silk; warning
+    @(148.0000 mm, 0.0000 mm): Segment on Edge.Cuts
+    @(143.6500 mm, 34.5700 mm): Rectangle of J10 on F.Silkscreen
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.4995 mm; actual 0.0000 mm)
+    Rule: board setup constraints; warning
+    @(74.0000 mm, 8.5000 mm): PTH pad 1 [OSB13] of J13
+    @(74.0000 mm, 8.0000 mm): PTH pad 1 [GND] of J_GND
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.4995 mm; actual 0.3642 mm)
+    Rule: board setup constraints; warning
+    @(137.5000 mm, 137.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+    @(138.5000 mm, 136.5000 mm): PTH pad 2 [GND] of SW2
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.6500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(22.0000 mm, 140.0000 mm): PCB text 'RA headers outward — under frame' on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7000 mm)
+    Rule: board setup constraints silk text height; warning
+    @(12.0000 mm, 23.5000 mm): PCB text 'BRT' on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7000 mm)
+    Rule: board setup constraints silk text height; warning
+    @(12.0000 mm, 139.5000 mm): PCB text 'GAIN' on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7000 mm)
+    Rule: board setup constraints silk text height; warning
+    @(128.0000 mm, 23.5000 mm): PCB text 'CON' on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7000 mm)
+    Rule: board setup constraints silk text height; warning
+    @(128.0000 mm, 139.5000 mm): PCB text 'SYM' on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(32.7300 mm, 135.1150 mm): Reference field of J1
+    @(31.7500 mm, 136.0000 mm): Reference field of S1
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(32.7300 mm, 135.1150 mm): Reference field of J1
+    @(29.5000 mm, 135.0000 mm): Segment of S1 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(34.5700 mm, 135.3500 mm): Rectangle of J1 on F.Silkscreen
+    @(35.2500 mm, 132.5000 mm): Segment of S1 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(52.2300 mm, 135.1150 mm): Reference field of J2
+    @(49.0000 mm, 135.0000 mm): Segment of S2 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(52.2300 mm, 135.1150 mm): Reference field of J2
+    @(51.2500 mm, 136.0000 mm): Reference field of S2
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(76.2700 mm, 12.8850 mm): Reference field of J13
+    @(76.2700 mm, 12.3850 mm): Reference field of J_GND
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(79.5000 mm, 13.0000 mm): Segment of S13 on F.Silkscreen
+    @(76.2700 mm, 12.3850 mm): Reference field of J_GND
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(76.2700 mm, 12.8850 mm): Reference field of J13
+    @(79.5000 mm, 13.0000 mm): Segment of S13 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(77.2500 mm, 12.0000 mm): Reference field of S13
+    @(76.2700 mm, 12.3850 mm): Reference field of J_GND
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(76.2700 mm, 12.8850 mm): Reference field of J13
+    @(77.2500 mm, 12.0000 mm): Reference field of S13
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(74.4300 mm, 12.1500 mm): Rectangle of J_GND on F.Silkscreen
+    @(73.7500 mm, 15.5000 mm): Segment of S13 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(74.4300 mm, 12.6500 mm): Rectangle of J13 on F.Silkscreen
+    @(74.4300 mm, 12.1500 mm): Rectangle of J_GND on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(74.4300 mm, 12.1500 mm): Rectangle of J_GND on F.Silkscreen
+    @(75.3800 mm, 9.8900 mm): Rectangle of J13 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(74.4300 mm, 12.6500 mm): Rectangle of J13 on F.Silkscreen
+    @(73.7500 mm, 15.5000 mm): Segment of S13 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(60.0000 mm, 13.0000 mm): Segment of S14 on F.Silkscreen
+    @(56.7700 mm, 12.8850 mm): Reference field of J14
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(54.2500 mm, 15.5000 mm): Segment of S14 on F.Silkscreen
+    @(54.9300 mm, 12.6500 mm): Rectangle of J14 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(56.7700 mm, 12.8850 mm): Reference field of J14
+    @(57.7500 mm, 12.0000 mm): Reference field of S14
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(38.2500 mm, 12.0000 mm): Reference field of S15
+    @(37.2700 mm, 12.8850 mm): Reference field of J15
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(40.5000 mm, 13.0000 mm): Segment of S15 on F.Silkscreen
+    @(37.2700 mm, 12.8850 mm): Reference field of J15
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(75.3800 mm, 9.3900 mm): Rectangle of J_GND on F.Silkscreen
+    @(75.3800 mm, 9.8900 mm): Rectangle of J13 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(72.7300 mm, 9.3900 mm): Segment of J_GND on F.Silkscreen
+    @(75.3800 mm, 9.8900 mm): Rectangle of J13 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(74.0000 mm, 7.2300 mm): Segment of J13 on F.Silkscreen
+    @(75.2700 mm, 6.7300 mm): Segment of J_GND on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(75.2700 mm, 7.2300 mm): Segment of J13 on F.Silkscreen
+    @(75.2700 mm, 6.7300 mm): Segment of J_GND on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(115.2700 mm, 12.8850 mm): Reference field of J11
+    @(118.5000 mm, 13.0000 mm): Segment of S11 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(112.7500 mm, 15.5000 mm): Segment of S11 on F.Silkscreen
+    @(113.4300 mm, 12.6500 mm): Rectangle of J11 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(95.7700 mm, 12.8850 mm): Reference field of J12
+    @(99.0000 mm, 13.0000 mm): Segment of S12 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(93.2500 mm, 15.5000 mm): Segment of S12 on F.Silkscreen
+    @(93.9300 mm, 12.6500 mm): Rectangle of J12 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(96.7500 mm, 12.0000 mm): Reference field of S12
+    @(95.7700 mm, 12.8850 mm): Reference field of J12
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(115.2700 mm, 12.8850 mm): Reference field of J11
+    @(116.2500 mm, 12.0000 mm): Reference field of S11
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(35.4300 mm, 12.6500 mm): Rectangle of J15 on F.Silkscreen
+    @(34.7500 mm, 15.5000 mm): Segment of S15 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(133.0000 mm, 137.5000 mm): Segment of SW2 on F.Silkscreen
+    @(136.2300 mm, 137.5000 mm): Segment of J_SYM on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(91.2300 mm, 135.1150 mm): Reference field of J4
+    @(90.2500 mm, 136.0000 mm): Reference field of S4
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(91.2300 mm, 135.1150 mm): Reference field of J4
+    @(88.0000 mm, 135.0000 mm): Segment of S4 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(93.7500 mm, 132.5000 mm): Segment of S4 on F.Silkscreen
+    @(93.0700 mm, 135.3500 mm): Rectangle of J4 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(109.7500 mm, 136.0000 mm): Reference field of S5
+    @(110.7300 mm, 135.1150 mm): Reference field of J5
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(110.7300 mm, 135.1150 mm): Reference field of J5
+    @(107.5000 mm, 135.0000 mm): Segment of S5 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(113.2500 mm, 132.5000 mm): Segment of S5 on F.Silkscreen
+    @(112.5700 mm, 135.3500 mm): Rectangle of J5 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(71.7300 mm, 135.1150 mm): Reference field of J3
+    @(70.7500 mm, 136.0000 mm): Reference field of S3
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(54.7500 mm, 132.5000 mm): Segment of S2 on F.Silkscreen
+    @(54.0700 mm, 135.3500 mm): Rectangle of J2 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(68.5000 mm, 135.0000 mm): Segment of S3 on F.Silkscreen
+    @(71.7300 mm, 135.1150 mm): Reference field of J3
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(74.2500 mm, 132.5000 mm): Segment of S3 on F.Silkscreen
+    @(73.5700 mm, 135.3500 mm): Rectangle of J3 on F.Silkscreen
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(34.5700 mm, 135.3500 mm): Rectangle of J1 on F.Silkscreen
+    @(35.0000 mm, 134.0000 mm): PTH pad 1 [OSB1] of S1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(34.5700 mm, 135.3500 mm): Rectangle of J1 on F.Silkscreen
+    @(35.0000 mm, 129.5000 mm): PTH pad 2 [GND] of S1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(12.0000 mm, 51.2500 mm): Reference field of S17
+    @(12.0000 mm, 50.0000 mm): NPTH pad of H1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(13.0000 mm, 49.0000 mm): Segment of S17 on F.Silkscreen
+    @(12.0000 mm, 50.0000 mm): NPTH pad of H1
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(74.4300 mm, 12.1500 mm): Rectangle of J_GND on F.Silkscreen
+    @(74.0000 mm, 14.0000 mm): PTH pad 1 [OSB13] of S13
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(74.4300 mm, 12.1500 mm): Rectangle of J_GND on F.Silkscreen
+    @(74.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S13
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(74.4300 mm, 12.6500 mm): Rectangle of J13 on F.Silkscreen
+    @(74.0000 mm, 14.0000 mm): PTH pad 1 [OSB13] of S13
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(74.4300 mm, 12.6500 mm): Rectangle of J13 on F.Silkscreen
+    @(74.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S13
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(54.9300 mm, 12.6500 mm): Rectangle of J14 on F.Silkscreen
+    @(54.5000 mm, 14.0000 mm): PTH pad 1 [OSB14] of S14
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(54.9300 mm, 12.6500 mm): Rectangle of J14 on F.Silkscreen
+    @(54.5000 mm, 18.5000 mm): PTH pad 2 [GND] of S14
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(75.3800 mm, 9.3900 mm): Rectangle of J_GND on F.Silkscreen
+    @(74.0000 mm, 8.5000 mm): PTH pad 1 [OSB13] of J13
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(73.5700 mm, 9.1600 mm): Segment of J_GND on F.Silkscreen
+    @(74.0000 mm, 8.5000 mm): PTH pad 1 [OSB13] of J13
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(74.4300 mm, 9.1600 mm): Segment of J_GND on F.Silkscreen
+    @(74.0000 mm, 8.5000 mm): PTH pad 1 [OSB13] of J13
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(74.0000 mm, 7.2300 mm): Segment of J13 on F.Silkscreen
+    @(74.0000 mm, 8.0000 mm): PTH pad 1 [GND] of J_GND
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(113.4300 mm, 12.6500 mm): Rectangle of J11 on F.Silkscreen
+    @(113.0000 mm, 14.0000 mm): PTH pad 1 [OSB11] of S11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(113.4300 mm, 12.6500 mm): Rectangle of J11 on F.Silkscreen
+    @(113.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(93.9300 mm, 12.6500 mm): Rectangle of J12 on F.Silkscreen
+    @(93.5000 mm, 14.0000 mm): PTH pad 1 [OSB12] of S12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(93.9300 mm, 12.6500 mm): Rectangle of J12 on F.Silkscreen
+    @(93.5000 mm, 18.5000 mm): PTH pad 2 [GND] of S12
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(138.6600 mm, 137.0700 mm): Segment of J_SYM on F.Silkscreen
+    @(138.5000 mm, 136.5000 mm): PTH pad 2 [GND] of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(138.8900 mm, 136.1200 mm): Rectangle of J_SYM on F.Silkscreen
+    @(138.5000 mm, 136.5000 mm): PTH pad 2 [GND] of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(35.4300 mm, 12.6500 mm): Rectangle of J15 on F.Silkscreen
+    @(35.0000 mm, 14.0000 mm): PTH pad 1 [OSB15] of S15
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(35.4300 mm, 12.6500 mm): Rectangle of J15 on F.Silkscreen
+    @(35.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S15
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(136.2300 mm, 136.2300 mm): Segment of J_SYM on F.Silkscreen
+    @(138.5000 mm, 136.5000 mm): PTH pad 2 [GND] of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(133.0000 mm, 137.5000 mm): Segment of SW2 on F.Silkscreen
+    @(137.5000 mm, 137.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(93.0700 mm, 135.3500 mm): Rectangle of J4 on F.Silkscreen
+    @(93.5000 mm, 134.0000 mm): PTH pad 1 [OSB4] of S4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(93.0700 mm, 135.3500 mm): Rectangle of J4 on F.Silkscreen
+    @(93.5000 mm, 129.5000 mm): PTH pad 2 [GND] of S4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(112.5700 mm, 135.3500 mm): Rectangle of J5 on F.Silkscreen
+    @(113.0000 mm, 134.0000 mm): PTH pad 1 [OSB5] of S5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(112.5700 mm, 135.3500 mm): Rectangle of J5 on F.Silkscreen
+    @(113.0000 mm, 129.5000 mm): PTH pad 2 [GND] of S5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(136.0000 mm, 96.7500 mm): Reference field of S7
+    @(136.0000 mm, 98.0000 mm): NPTH pad of H3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(135.0000 mm, 99.0000 mm): Segment of S7 on F.Silkscreen
+    @(136.0000 mm, 98.0000 mm): NPTH pad of H3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(54.0700 mm, 135.3500 mm): Rectangle of J2 on F.Silkscreen
+    @(54.5000 mm, 134.0000 mm): PTH pad 1 [OSB2] of S2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(54.0700 mm, 135.3500 mm): Rectangle of J2 on F.Silkscreen
+    @(54.5000 mm, 129.5000 mm): PTH pad 2 [GND] of S2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(73.5700 mm, 135.3500 mm): Rectangle of J3 on F.Silkscreen
+    @(74.0000 mm, 129.5000 mm): PTH pad 2 [GND] of S3
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(73.5700 mm, 135.3500 mm): Rectangle of J3 on F.Silkscreen
+    @(74.0000 mm, 134.0000 mm): PTH pad 1 [OSB3] of S3
+
+** Found 4 unconnected pads **
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(18.5000 mm, 35.0000 mm): Track [GND] on F.Cu, length 6.5000 mm
+    @(16.0000 mm, 20.5000 mm): Track [GND] on F.Cu, length 19.1050 mm
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(74.0000 mm, 18.5000 mm): Track [GND] on F.Cu, length 10.5000 mm
+    @(71.4600 mm, 8.0000 mm): PTH pad 2 [GND] of J_GND
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(129.5000 mm, 54.5000 mm): Track [GND] on F.Cu, length 19.5000 mm
+    @(132.0000 mm, 20.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(129.5000 mm, 113.0000 mm): Track [GND] on F.Cu, length 6.5000 mm
+    @(132.0000 mm, 136.5000 mm): Track [GND] on F.Cu, length 20.2485 mm
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Footprint component type doesn't match footprint pads
+
+** End of Report **

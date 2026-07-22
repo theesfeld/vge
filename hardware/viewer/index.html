@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CMFD #137 — assembly (build-accurate)</title>
+  <style>
+    :root { --panel:#121722; --text:#eef2f8; --muted:#8b9bb4; --accent:#3d8bfd; --err:#ff6b6b; }
+    * { box-sizing: border-box; }
+    html, body { margin:0; height:100%; background:#050608; color:var(--text);
+      font-family: system-ui, "Segoe UI", sans-serif; overflow:hidden; }
+    #app { display:grid; grid-template-columns:300px 1fr; height:100%; }
+    aside { background:var(--panel); border-right:1px solid #2a3348; padding:1rem; overflow:auto; z-index:2; }
+    h1 { font-size:1.05rem; margin:0 0 .35rem; }
+    .sub { color:var(--muted); font-size:.78rem; line-height:1.4; margin-bottom:.8rem; }
+    .dims { font: .7rem ui-monospace, monospace; background:#0c1018; padding:.55rem .65rem;
+      border-radius:6px; color:#a8b8d0; line-height:1.5; margin-bottom:.8rem; }
+    .ctrl { margin:.75rem 0; }
+    .ctrl h2 { font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; color:var(--muted); margin:0 0 .35rem; }
+    input[type=range] { width:100%; accent-color:var(--accent); }
+    label.row { display:flex; gap:.45rem; align-items:center; font-size:.8rem; margin:.25rem 0; cursor:pointer; }
+    button { background:#243049; color:var(--text); border:1px solid #3a4a66; border-radius:6px;
+      padding:.4rem .65rem; cursor:pointer; font-size:.78rem; margin:.12rem .12rem .12rem 0; }
+    button.primary { background:var(--accent); border-color:var(--accent); color:#fff; }
+    button:hover { filter:brightness(1.08); }
+    #stage { position:relative; width:100%; height:100%; }
+    #c { width:100%; height:100%; display:block; }
+    #err {
+      display:none; position:absolute; inset:12% 10%; background:#1a1010; border:1px solid var(--err);
+      border-radius:10px; padding:1.25rem 1.5rem; color:#ffd0d0; font-size:.9rem; line-height:1.5; z-index:5;
+      max-width:520px; margin:auto; height:fit-content;
+    }
+    #err h2 { color:var(--err); margin:0 0 .5rem; font-size:1rem; }
+    #err code { background:#2a1818; padding:.1rem .35rem; border-radius:3px; }
+    #hud { position:absolute; left:12px; bottom:12px; font-size:.72rem; color:var(--muted);
+      text-shadow:0 1px 4px #000; pointer-events:none; }
+    a { color:var(--accent); }
+    @media (max-width:900px) {
+      #app { grid-template-columns:1fr; grid-template-rows:auto 1fr; }
+      aside { max-height:36vh; }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <aside>
+      <h1>CMFD platform</h1>
+      <p class="sub">Issue <a href="https://github.com/theesfeld/mfd/issues/137">#137</a> ·
+        geometry from <code>kicad_build.py</code> + <code>cmfd_enclosure.scad</code> · BOM parts</p>
+      <div class="dims">
+        Case 148×148×58 mm<br/>
+        Board A 148×148×1.6 · <b>cutout 102</b> (LCD sits in hole)<br/>
+        Board B 120×90×1.6 under Board A<br/>
+        Glass/LCD 102 mm · OSB inset 14 · span 78<br/>
+        Stack: rear → battery → B → LCD-in-A-hole → A frame → bezel → caps
+      </div>
+      <div class="ctrl"><h2>Explode</h2>
+        <input id="explode" type="range" min="0" max="100" value="55" /></div>
+      <div class="ctrl"><h2>View</h2>
+        <button type="button" class="primary" id="spin">Toggle spin</button>
+        <button type="button" id="reset">Reset camera</button>
+        <button type="button" id="uhd">4K screenshot</button>
+      </div>
+      <div class="ctrl"><h2>Presets</h2>
+        <button type="button" id="p-exp">Exploded</button>
+        <button type="button" id="p-closed">Closed</button>
+        <button type="button" id="p-elec">Electronics</button>
+      </div>
+      <div class="ctrl"><h2>Layers</h2>
+        <label class="row"><input type="checkbox" data-l="bumpers" checked/> TPU bumpers</label>
+        <label class="row"><input type="checkbox" data-l="rear" checked/> Rear shell</label>
+        <label class="row"><input type="checkbox" data-l="battery" checked/> 18650 tray</label>
+        <label class="row"><input type="checkbox" data-l="boardB" checked/> Board B carrier</label>
+        <label class="row"><input type="checkbox" data-l="lcd" checked/> LCD (in Board A cutout)</label>
+        <label class="row"><input type="checkbox" data-l="boardA" checked/> Board A frame PCB</label>
+        <label class="row"><input type="checkbox" data-l="wires" checked/> Dupont wires</label>
+        <label class="row"><input type="checkbox" data-l="front" checked/> Front bezel</label>
+        <label class="row"><input type="checkbox" data-l="caps" checked/> OSB caps + rockers</label>
+        <label class="row"><input type="checkbox" data-l="labels" checked/> Labels</label>
+      </div>
+      <p class="sub" style="margin-top:1rem">Works offline if Three.js is cached. Needs network once for CDN.
+        Prefer: <code>python3 -m http.server</code> in this folder — also works as <code>file://</code> (layout is inlined).</p>
+    </aside>
+    <div id="stage">
+      <canvas id="c"></canvas>
+      <div id="err"><h2>3D failed to load</h2><div id="errMsg"></div></div>
+      <div id="hud">Build-accurate mm stack · Board A is a FRAME · LCD is not under a solid board</div>
+    </div>
+  </div>
+
+  <!-- layout inlined so file:// works (no local ES import) -->
+  <script>
+  window.CMFD_LAYOUT = (function () {
+    const CMFD = {
+      outer_xy: 148, outer_z: 58, wall: 3.2, corner_r: 8, glass_xy: 102,
+      bezel_front_z: 14, rear_z: 44,
+      boardA: {
+        w: 148, h: 148, thickness: 1.6, cut: 102, cut_x: 23, cut_y: 23,
+        holes: [[16,16],[132,16],[132,132],[16,132]],
+        gnd_header: [74, 20],
+        switch_xy: 6, switch_z: 4.3,
+      },
+      boardB: {
+        w: 120, h: 90, thickness: 1.6,
+        holes: [[8,8],[112,8],[112,82],[8,82]],
+        // ports on y≈0 front edge (case shell_x ≈ board_x + 14)
+        j_bezel: [40, 78], som_a: [30, 45], som_b: [30, 62],
+        usbc: [16, 6.5], usbc2: [34, 6.5], rj45: [56, 12],
+        m12_harness: [81, 5], can: [96, 5], audio: [108, 5],
+      },
+      osb_inset: 14, osb_span: 78,
+      rockers: { GAIN:[16,132], SYM:[132,132], BRT:[16,16], CON:[132,16] },
+      bom: {
+        lcd: { xy: 102, z: 3.2 }, cell_d: 18.2, cell_h: 65,
+        tray: { w: 42, h: 78, z: 22 },
+        osb_cap: { xy: 12, z: 6 }, rocker_cap: { w: 12, h: 9, z: 5 },
+      },
+      colors: {
+        silver: 0xb8c6d6, blue: 0x2a6db5, grey: 0x6a7585,
+        fr4: 0x1b4d2e, fr4d: 0x0d3b24, gold: 0xd4af37,
+        copper: 0xb87333, silk: 0xe8eef5, cap: 0xe8ecf0,
+        tpu: 0x222222, lcd: 0x05080a, pin: 0xc0c5cc, sw: 0x1a1a1a,
+      },
+    };
+    function osbCenters(W, H) {
+      W = W || CMFD.boardA.w; H = H || CMFD.boardA.h;
+      const inset = CMFD.osb_inset, span = CMFD.osb_span, step = span / 4, c = W / 2, out = [];
+      for (let i = 0; i < 5; i++) out.push({ id: 1+i, x: c - span/2 + i*step, y: H - inset, side: "TOP" });
+      for (let i = 0; i < 5; i++) out.push({ id: 6+i, x: W - inset, y: c + span/2 - i*step, side: "RIGHT" });
+      for (let i = 0; i < 5; i++) out.push({ id: 15-i, x: c - span/2 + i*step, y: inset, side: "BOT" });
+      for (let i = 0; i < 5; i++) out.push({ id: 20-i, x: inset, y: c + span/2 - i*step, side: "LEFT" });
+      return out;
+    }
+    function pinOffset(side, x, y, dist) {
+      dist = dist == null ? 5.5 : dist;
+      let hx = x, hy = y;
+      if (side === "TOP") hy = y + dist;
+      else if (side === "BOT") hy = y - dist;
+      else if (side === "LEFT") hx = x - dist;
+      else hx = x + dist;
+      const W = CMFD.boardA.w, H = CMFD.boardA.h;
+      return { x: Math.min(Math.max(hx, 3.5), W-3.5), y: Math.min(Math.max(hy, 3.5), H-3.5) };
+    }
+    return { CMFD, osbCenters, pinOffset };
+  })();
+  </script>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.170.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/"
+    }
+  }
+  </script>
+  <script type="module">
+    const errBox = document.getElementById("err");
+    const errMsg = document.getElementById("errMsg");
+    function fail(e) {
+      console.error(e);
+      errBox.style.display = "block";
+      errMsg.innerHTML =
+        "<p>" + (e && e.message ? e.message : String(e)) + "</p>" +
+        "<p>Try:</p><ol>" +
+        "<li><code>cd hardware/viewer && python3 -m http.server 8765</code></li>" +
+        "<li>Open <code>http://127.0.0.1:8765/</code></li>" +
+        "<li>Need network once for Three.js CDN</li></ol>";
+    }
+
+    let THREE, OrbitControls, RoomEnvironment;
+    try {
+      THREE = await import("three");
+      ({ OrbitControls } = await import("three/addons/controls/OrbitControls.js"));
+      ({ RoomEnvironment } = await import("three/addons/environments/RoomEnvironment.js"));
+    } catch (e) {
+      fail(e);
+      throw e;
+    }
+
+    const { CMFD, osbCenters, pinOffset } = window.CMFD_LAYOUT;
+    const COL = CMFD.colors;
+    const half = CMFD.outer_xy / 2;
+
+    /*
+     * CLOSED STACK (Y up, face toward +Y for user looking down slightly):
+     *   rear shell sits on ground (bottom)
+     *   battery inside rear
+     *   Board B above battery
+     *   LCD centered — sits IN Board A cutout (not under solid PCB)
+     *   Board A FRAME around LCD (same height band as LCD rim)
+     *   front bezel
+     *   OSB caps / rockers on face
+     */
+    /* Closed stack (Y up). When explode=0 these nest as a real product:
+       rear shell bottom → battery → Board B → LCD sits in Board A hole →
+       Board A is only a FR4 frame around the LCD → front bezel → OSB caps.
+       LCD is NEVER under a solid board. */
+    const Y = {
+      rear: 0,
+      battery: 11,
+      boardB: 24,
+      lcd: 36,      // LCD body (visible through Board A cutout)
+      boardA: 37.2, // FR4 frame ring around LCD (same band, not covering glass)
+      front: 41,
+      caps: 56,
+    };
+
+    const canvas = document.getElementById("c");
+    const renderer = new THREE.WebGLRenderer({
+      canvas, antialias: true, alpha: false, preserveDrawingBuffer: true,
+      powerPreference: "high-performance",
+    });
+    renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.1;
+    renderer.shadowMap.enabled = true;
+    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+    const scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x080a0e);
+    scene.fog = new THREE.Fog(0x080a0e, 250, 700);
+
+    const camera = new THREE.PerspectiveCamera(35, 1, 0.5, 2000);
+    camera.position.set(200, 150, 240);
+
+    const controls = new OrbitControls(camera, canvas);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.07;
+    controls.target.set(0, 30, 0);
+    controls.minDistance = 60;
+    controls.maxDistance = 550;
+
+    try {
+      const pmrem = new THREE.PMREMGenerator(renderer);
+      scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+    } catch (_) { /* ok without env */ }
+
+    scene.add(new THREE.AmbientLight(0xc0d0e8, 0.35));
+    const key = new THREE.DirectionalLight(0xfff6ea, 2.0);
+    key.position.set(140, 200, 100);
+    key.castShadow = true;
+    key.shadow.mapSize.set(2048, 2048);
+    key.shadow.camera.near = 20;
+    key.shadow.camera.far = 500;
+    key.shadow.camera.left = -180;
+    key.shadow.camera.right = 180;
+    key.shadow.camera.top = 180;
+    key.shadow.camera.bottom = -180;
+    scene.add(key);
+    scene.add(new THREE.DirectionalLight(0x7090ff, 0.5).translateX(-120).translateY(60).translateZ(-80));
+    scene.add(new THREE.HemisphereLight(0xddeeff, 0x1a1512, 0.4));
+
+    const ground = new THREE.Mesh(
+      new THREE.CircleGeometry(260, 64),
+      new THREE.MeshStandardMaterial({ color: 0x0a0c10, roughness: 0.9, metalness: 0.2 })
+    );
+    ground.rotation.x = -Math.PI / 2;
+    ground.position.y = -2;
+    ground.receiveShadow = true;
+    scene.add(ground);
+
+    function M(color, opts = {}) {
+      return new THREE.MeshPhysicalMaterial({
+        color, metalness: opts.m ?? 0.3, roughness: opts.r ?? 0.4,
+        clearcoat: opts.cc ?? 0.2, clearcoatRoughness: opts.ccr ?? 0.3,
+        transparent: !!opts.t, opacity: opts.o ?? 1,
+        transmission: opts.tr ?? 0, thickness: opts.th ?? 0, ior: opts.ior ?? 1.5,
+      });
+    }
+    const mat = {
+      silver: M(COL.silver, { m: 0.55, r: 0.28, cc: 0.4 }),
+      blue: M(COL.blue, { m: 0.35, r: 0.32, cc: 0.45 }),
+      grey: M(COL.grey, { m: 0.4, r: 0.42 }),
+      fr4: M(COL.fr4, { m: 0.06, r: 0.55 }),
+      fr4d: M(COL.fr4d, { m: 0.08, r: 0.5 }),
+      gold: M(COL.gold, { m: 1, r: 0.28 }),
+      copper: M(COL.copper, { m: 1, r: 0.35 }),
+      cap: M(COL.cap, { m: 0.08, r: 0.38, cc: 0.3 }),
+      tpu: M(COL.tpu, { m: 0.05, r: 0.92, cc: 0 }),
+      lcd: M(COL.lcd, { m: 0.75, r: 0.12 }),
+      glass: M(COL.silk, { m: 0.05, r: 0.05, t: true, o: 0.35, tr: 0.6, th: 1.2, ior: 1.5 }),
+      pin: M(COL.pin, { m: 0.95, r: 0.22 }),
+      sw: M(COL.sw, { m: 0.15, r: 0.55 }),
+      cell: M(0x1a1a1a, { m: 0.85, r: 0.25 }),
+      cellBand: M(COL.blue, { m: 0.4, r: 0.35 }),
+      som: M(0xc5a04a, { m: 0.5, r: 0.35 }),
+      shield: M(0x9aa3ad, { m: 0.85, r: 0.3 }),
+    };
+
+    function mesh(geo, m, cast = true) {
+      const o = new THREE.Mesh(geo, m);
+      o.castShadow = cast;
+      o.receiveShadow = true;
+      return o;
+    }
+    function box(w, h, d, m) {
+      return mesh(new THREE.BoxGeometry(w, h, d), m);
+    }
+
+    const layers = {};
+    const home = {};
+    const dir = {};
+    // note: box() defined above before all geometry builders
+
+    function addLayer(name, group, hy, dvec) {
+      layers[name] = group;
+      home[name] = new THREE.Vector3(0, hy, 0);
+      dir[name] = dvec.clone().normalize();
+      group.position.copy(home[name]);
+      scene.add(group);
+    }
+
+    // PCB local (origin BL of board, Y on board up) → group local centered, Y=thickness up
+    function pcbXZ(x, y, W, H) {
+      return { x: x - W / 2, z: -(y - H / 2) };
+    }
+
+    // ========== REAR SHELL ==========
+    {
+      const g = new THREE.Group();
+      const shell = box(CMFD.outer_xy, CMFD.rear_z, CMFD.outer_xy, mat.grey);
+      shell.position.y = CMFD.rear_z / 2;
+      g.add(shell);
+      // cavity hint (darker inset top of rear cavity)
+      const cav = box(CMFD.outer_xy - 2 * CMFD.wall, 2, CMFD.outer_xy - 2 * CMFD.wall, mat.fr4d);
+      cav.position.y = CMFD.rear_z - 2;
+      g.add(cav);
+      // ports on rear face (-Z of product when face is +Y... we use ports on -Z wall)
+      for (const [x, w, h, y] of [[-35, 9, 3.5, 12], [-20, 9, 3.5, 12], [5, 15, 10, 12], [28, 12, 6, 12]]) {
+        const p = box(w, h, 3, mat.pin);
+        p.position.set(x, y, -CMFD.outer_xy / 2 + 1.2);
+        g.add(p);
+      }
+      addLayer("rear", g, Y.rear, new THREE.Vector3(0, -1, 0));
+    }
+
+    // ========== BATTERY ==========
+    {
+      const g = new THREE.Group();
+      const tray = box(42, 22, 78, mat.grey);
+      g.add(tray);
+      for (let i = 0; i < 2; i++) {
+        const cell = mesh(new THREE.CylinderGeometry(9.1, 9.1, 65, 28), mat.cell);
+        cell.rotation.x = Math.PI / 2;
+        cell.position.set(-10 + i * 20, 1, 0);
+        g.add(cell);
+        const band = mesh(new THREE.CylinderGeometry(9.25, 9.25, 14, 28), mat.cellBand);
+        band.rotation.x = Math.PI / 2;
+        band.position.copy(cell.position);
+        g.add(band);
+      }
+      addLayer("battery", g, Y.battery, new THREE.Vector3(0, -0.85, 0.1));
+    }
+
+    // ========== BOARD B ==========
+    {
+      const g = new THREE.Group();
+      const B = CMFD.boardB;
+      const pcb = box(B.w, B.thickness, B.h, mat.fr4);
+      g.add(pcb);
+      // SoM
+      const som = box(45, 3.5, 32, mat.som);
+      const sa = pcbXZ(B.som_a[0], B.som_a[1], B.w, B.h);
+      som.position.set(sa.x, B.thickness / 2 + 2, sa.z);
+      g.add(som);
+      const sh = box(32, 2, 22, mat.shield);
+      sh.position.set(sa.x, B.thickness / 2 + 4.2, sa.z);
+      g.add(sh);
+      // USB-C ×2 on front edge (not board center)
+      for (const key of ["usbc", "usbc2"]) {
+        const usb = box(9, 3.2, 7, mat.pin);
+        const u = pcbXZ(B[key][0], B[key][1], B.w, B.h);
+        usb.position.set(u.x, B.thickness / 2 + 1.8, u.z);
+        g.add(usb);
+      }
+      // RJ45 on front edge
+      const rj = box(16, 12, 14, mat.sw);
+      const r = pcbXZ(B.rj45[0], B.rj45[1], B.w, B.h);
+      rj.position.set(r.x, B.thickness / 2 + 6.5, r.z);
+      g.add(rj);
+      // M12 harness land (wires to panel bulkheads on case)
+      const m12h = box(14, 2.5, 2.5, mat.sw);
+      const mh = pcbXZ(B.m12_harness[0], B.m12_harness[1], B.w, B.h);
+      m12h.position.set(mh.x, B.thickness / 2 + 1.5, mh.z);
+      g.add(m12h);
+      // bezel wire header 1x20 (back of board)
+      for (let i = 0; i < 20; i++) {
+        const pin = mesh(new THREE.CylinderGeometry(0.32, 0.32, 6, 6), mat.pin);
+        const bx = B.j_bezel[0] - 10 + i * 2.54;
+        const p = pcbXZ(bx, B.j_bezel[1], B.w, B.h);
+        pin.position.set(p.x, B.thickness / 2 + 3.2, p.z);
+        g.add(pin);
+      }
+      // silk label plane
+      const cnv = document.createElement("canvas");
+      cnv.width = 512; cnv.height = 384;
+      const ctx = cnv.getContext("2d");
+      ctx.fillStyle = "#1b4d2e";
+      ctx.fillRect(0, 0, 512, 384);
+      ctx.fillStyle = "#e8eef5";
+      ctx.font = "bold 28px sans-serif";
+      ctx.fillText("BOARD B  CARRIER", 24, 48);
+      ctx.font = "18px monospace";
+      ctx.fillText("120 x 90 x 1.6 mm", 24, 80);
+      ctx.fillText("SoM · USB-C · RJ45 · J_BEZEL", 24, 110);
+      const tex = new THREE.CanvasTexture(cnv);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      const lab = mesh(new THREE.PlaneGeometry(B.w * 0.7, B.h * 0.35),
+        new THREE.MeshBasicMaterial({ map: tex }));
+      lab.rotation.x = -Math.PI / 2;
+      lab.position.set(15, B.thickness / 2 + 0.05, 10);
+      g.add(lab);
+      addLayer("boardB", g, Y.boardB, new THREE.Vector3(0, -0.4, 0));
+    }
+
+    // ========== LCD — sits IN Board A cutout ==========
+    {
+      const g = new THREE.Group();
+      const L = CMFD.bom.lcd;
+      const body = box(L.xy, L.z, L.xy, mat.lcd);
+      g.add(body);
+      // symbology
+      const cnv = document.createElement("canvas");
+      cnv.width = cnv.height = 1024;
+      const ctx = cnv.getContext("2d");
+      ctx.fillStyle = "#020403";
+      ctx.fillRect(0, 0, 1024, 1024);
+      ctx.strokeStyle = "#1a5c3a";
+      ctx.lineWidth = 2;
+      for (let i = 1; i < 10; i++) {
+        ctx.beginPath();
+        ctx.arc(512, 512, i * 40, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      ctx.strokeStyle = "#2ee6a0";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(512, 100); ctx.lineTo(512, 924);
+      ctx.moveTo(100, 512); ctx.lineTo(924, 512);
+      ctx.stroke();
+      ctx.fillStyle = "#7dffc8";
+      ctx.font = "32px monospace";
+      ctx.fillText("ENG · DRV · ATT", 340, 90);
+      ctx.fillStyle = "#3d9cff";
+      ctx.beginPath(); ctx.arc(512, 580, 10, 0, Math.PI * 2); ctx.fill();
+      const tex = new THREE.CanvasTexture(cnv);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      const face = mesh(
+        new THREE.PlaneGeometry(96, 96),
+        new THREE.MeshBasicMaterial({ map: tex })
+      );
+      face.rotation.x = -Math.PI / 2;
+      face.position.y = L.z / 2 + 0.15;
+      g.add(face);
+      const glass = box(L.xy + 1, 1.0, L.xy + 1, mat.glass);
+      glass.position.y = L.z / 2 + 0.9;
+      g.add(glass);
+      // explode more than Board A so the panel is obviously in the hole, not under a slab
+      addLayer("lcd", g, Y.lcd, new THREE.Vector3(0, 0.95, 0));
+    }
+
+    // ========== BOARD A — FRAME ONLY (cutout for LCD) ==========
+    {
+      const g = new THREE.Group();
+      const A = CMFD.boardA;
+      const shape = new THREE.Shape();
+      const o = A.w / 2, ci = A.cut / 2;
+      shape.moveTo(-o, -o); shape.lineTo(o, -o); shape.lineTo(o, o); shape.lineTo(-o, o); shape.closePath();
+      const hole = new THREE.Path();
+      hole.moveTo(-ci, -ci); hole.lineTo(-ci, ci); hole.lineTo(ci, ci); hole.lineTo(ci, -ci); hole.closePath();
+      shape.holes.push(hole);
+      const geo = new THREE.ExtrudeGeometry(shape, { depth: A.thickness, bevelEnabled: false });
+      geo.rotateX(-Math.PI / 2);
+      g.add(mesh(geo, mat.fr4));
+
+      // silk / pad texture on top of frame
+      const cnv = document.createElement("canvas");
+      cnv.width = cnv.height = 1024;
+      const ctx = cnv.getContext("2d");
+      ctx.fillStyle = "#1b4d2e";
+      ctx.fillRect(0, 0, 1024, 1024);
+      // punch cutout
+      const sc = 1024 / 148;
+      ctx.fillStyle = "#000";
+      ctx.fillRect(23 * sc, 23 * sc, 102 * sc, 102 * sc);
+      ctx.fillStyle = "#e8eef5";
+      ctx.font = "bold 22px sans-serif";
+      ctx.fillText("BOARD A  FRAME  ·  SWITCH PANEL", 22 * sc, 18 * sc);
+      ctx.font = "14px monospace";
+      ctx.fillText("cutout 102 mm  ·  LCD lives HERE (not under board)", 22 * sc, 30 * sc);
+      const centers = osbCenters();
+      for (const s of centers) {
+        const px = s.x * sc, py = (148 - s.y) * sc;
+        ctx.fillStyle = "#c9a227";
+        ctx.fillRect(px - 2.5 * sc, py - 2.5 * sc, 5 * sc, 5 * sc);
+        const p = pinOffset(s.side, s.x, s.y);
+        ctx.fillStyle = "#d0d5dc";
+        ctx.beginPath();
+        ctx.arc(p.x * sc, (148 - p.y) * sc, 0.8 * sc, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = "#b87333";
+        ctx.lineWidth = 0.4 * sc;
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(p.x * sc, (148 - p.y) * sc);
+        ctx.stroke();
+        ctx.fillStyle = "#e8eef5";
+        ctx.font = `${Math.floor(1.5 * sc)}px monospace`;
+        ctx.fillText(String(s.id), px + 3 * sc, py);
+      }
+      const tex = new THREE.CanvasTexture(cnv);
+      tex.colorSpace = THREE.SRGBColorSpace;
+      // top face textured — ShapeGeometry with hole
+      const topGeo = new THREE.ShapeGeometry(shape);
+      topGeo.rotateX(-Math.PI / 2);
+      const uv = topGeo.attributes.uv;
+      const pos = topGeo.attributes.position;
+      for (let i = 0; i < uv.count; i++) {
+        const x = pos.getX(i), z = pos.getZ(i);
+        uv.setXY(i, (x + o) / A.w, 1 - (z + o) / A.h);
+      }
+      const top = new THREE.Mesh(topGeo, new THREE.MeshPhysicalMaterial({
+        map: tex, metalness: 0.08, roughness: 0.42, clearcoat: 0.1,
+      }));
+      top.position.y = A.thickness + 0.02;
+      top.receiveShadow = true;
+      g.add(top);
+
+      // switches + right-angle headers (plastic low, pin outward — not taller than switch)
+      function raHeader(side, px, pz) {
+        const body = box(2.5, 2.5, 2.5, mat.sw);
+        body.position.set(px, A.thickness + 1.25, pz);
+        g.add(body);
+        let pin;
+        if (side === "TOP") { pin = box(0.6, 0.6, 6, mat.pin); pin.position.set(px, A.thickness + 1.25, pz - 3.5); }
+        else if (side === "BOT") { pin = box(0.6, 0.6, 6, mat.pin); pin.position.set(px, A.thickness + 1.25, pz + 3.5); }
+        else if (side === "LEFT") { pin = box(6, 0.6, 0.6, mat.pin); pin.position.set(px - 3.5, A.thickness + 1.25, pz); }
+        else { pin = box(6, 0.6, 0.6, mat.pin); pin.position.set(px + 3.5, A.thickness + 1.25, pz); }
+        g.add(pin);
+      }
+      for (const s of centers) {
+        const lx = s.x - half, lz = -(s.y - half);
+        const body = box(6, A.switch_z, 6, mat.sw);
+        body.position.set(lx, A.thickness + A.switch_z / 2, lz);
+        g.add(body);
+        const p = pinOffset(s.side, s.x, s.y);
+        raHeader(s.side, p.x - half, -(p.y - half));
+      }
+      for (const [name, [rx, ry]] of Object.entries(CMFD.rockers)) {
+        const lx = rx - half, lz = -(ry - half);
+        const body = box(6, A.switch_z, 6, mat.sw);
+        body.position.set(lx, A.thickness + A.switch_z / 2, lz);
+        g.add(body);
+        const hx = Math.min(Math.max(rx + (rx < half ? -5.5 : 5.5), 3.5), 144.5);
+        const hy = Math.min(Math.max(ry + (ry < half ? -5.5 : 5.5), 3.5), 144.5);
+        const side = Math.abs(hx - rx) >= Math.abs(hy - ry)
+          ? (hx < rx ? "LEFT" : "RIGHT")
+          : (hy > ry ? "TOP" : "BOT");
+        raHeader(side, hx - half, -(hy - half));
+      }
+
+      addLayer("boardA", g, Y.boardA, new THREE.Vector3(0, 0.5, 0));
+    }
+
+    // ========== WIRES Board A pins → Board B ==========
+    {
+      const g = new THREE.Group();
+      const colors = [0xc0392b, 0x2980b9, 0x27ae60, 0xf1c40f, 0x8e44ad, 0xe67e22, 0x1abc9c, 0xbdc3c7];
+      const centers = osbCenters();
+      centers.forEach((s, i) => {
+        const p = pinOffset(s.side, s.x, s.y);
+        const x1 = p.x - half, z1 = -(p.y - half);
+        const y1 = Y.boardA + CMFD.boardA.thickness + 8;
+        const x2 = CMFD.boardB.j_bezel[0] - CMFD.boardB.w / 2 - 24 + (i % 20) * 2.54;
+        const y2 = Y.boardB + 6;
+        const z2 = 0;
+        const curve = new THREE.CatmullRomCurve3([
+          new THREE.Vector3(x1, y1, z1),
+          new THREE.Vector3((x1 + x2) / 2, (y1 + y2) / 2 + 8, (z1 + z2) / 2),
+          new THREE.Vector3(x2, y2, z2),
+        ]);
+        const tube = mesh(
+          new THREE.TubeGeometry(curve, 20, 0.32, 5, false),
+          new THREE.MeshStandardMaterial({ color: colors[i % colors.length], roughness: 0.55 }),
+          false
+        );
+        g.add(tube);
+      });
+      // wires layer uses absolute Y in curve — parent at 0
+      layers.wires = g;
+      home.wires = new THREE.Vector3(0, 0, 0);
+      dir.wires = new THREE.Vector3(0, 0.1, 0);
+      scene.add(g);
+    }
+
+    // ========== FRONT BEZEL ==========
+    {
+      const g = new THREE.Group();
+      const o = half, gi = CMFD.glass_xy / 2, r = 6;
+      const shape = new THREE.Shape();
+      shape.moveTo(-o + r, -o);
+      shape.lineTo(o - r, -o);
+      shape.quadraticCurveTo(o, -o, o, -o + r);
+      shape.lineTo(o, o - r);
+      shape.quadraticCurveTo(o, o, o - r, o);
+      shape.lineTo(-o + r, o);
+      shape.quadraticCurveTo(-o, o, -o, o - r);
+      shape.lineTo(-o, -o + r);
+      shape.quadraticCurveTo(-o, -o, -o + r, -o);
+      const hole = new THREE.Path();
+      hole.moveTo(-gi, -gi); hole.lineTo(-gi, gi); hole.lineTo(gi, gi); hole.lineTo(gi, -gi); hole.closePath();
+      shape.holes.push(hole);
+      const geo = new THREE.ExtrudeGeometry(shape, { depth: CMFD.bezel_front_z, bevelEnabled: false });
+      geo.rotateX(-Math.PI / 2);
+      g.add(mesh(geo, mat.silver));
+      // Walkman blue ring
+      const blue = box(CMFD.outer_xy - 12, 0.7, CMFD.outer_xy - 12, mat.blue);
+      blue.position.y = CMFD.bezel_front_z - 0.9;
+      g.add(blue);
+      const cutBlue = box(CMFD.glass_xy + 6, 0.9, CMFD.glass_xy + 6, mat.silver);
+      cutBlue.position.y = CMFD.bezel_front_z - 0.85;
+      g.add(cutBlue);
+      // OSB wells
+      for (const s of osbCenters()) {
+        const lx = s.x - half, lz = -(s.y - half);
+        const well = mesh(new THREE.CylinderGeometry(4.5, 4.5, CMFD.bezel_front_z - 1, 16), mat.sw);
+        well.position.set(lx, CMFD.bezel_front_z / 2, lz);
+        g.add(well);
+      }
+      addLayer("front", g, Y.front, new THREE.Vector3(0, 1, 0));
+    }
+
+    // ========== CAPS ==========
+    {
+      const g = new THREE.Group();
+      for (const s of osbCenters()) {
+        const lx = s.x - half, lz = -(s.y - half);
+        const cap = box(CMFD.bom.osb_cap.xy, CMFD.bom.osb_cap.z, CMFD.bom.osb_cap.xy, mat.cap);
+        cap.position.set(lx, CMFD.bom.osb_cap.z / 2, lz);
+        g.add(cap);
+        const dish = box(8, 0.35, 8, mat.blue);
+        dish.position.set(lx, CMFD.bom.osb_cap.z - 0.15, lz);
+        g.add(dish);
+      }
+      for (const [name, [rx, ry]] of Object.entries(CMFD.rockers)) {
+        const lx = rx - half, lz = -(ry - half);
+        const rk = box(CMFD.bom.rocker_cap.w, CMFD.bom.rocker_cap.z, CMFD.bom.rocker_cap.h, mat.cap);
+        rk.position.set(lx, 3, lz);
+        g.add(rk);
+      }
+      addLayer("caps", g, Y.caps, new THREE.Vector3(0, 1.15, 0));
+    }
+
+    // ========== BUMPERS ==========
+    {
+      const g = new THREE.Group();
+      const s = half - 4;
+      for (const [x, z] of [[-s, -s], [s, -s], [s, s], [-s, s]]) {
+        const b = box(22, 54, 22, mat.tpu);
+        b.position.set(x, 27, z);
+        g.add(b);
+      }
+      addLayer("bumpers", g, 0, new THREE.Vector3(0, 0, 0));
+    }
+
+    // ========== LABELS ==========
+    {
+      const g = new THREE.Group();
+      function lab(text, x, y, z) {
+        const cnv = document.createElement("canvas");
+        cnv.width = 640; cnv.height = 128;
+        const ctx = cnv.getContext("2d");
+        ctx.fillStyle = "rgba(8,12,20,0.82)";
+        ctx.fillRect(0, 20, 640, 90);
+        ctx.strokeStyle = "#3d8bfd";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(2, 22, 636, 86);
+        ctx.fillStyle = "#eef2f8";
+        ctx.font = "bold 36px sans-serif";
+        ctx.fillText(text, 24, 80);
+        const tex = new THREE.CanvasTexture(cnv);
+        tex.colorSpace = THREE.SRGBColorSpace;
+        const m = new THREE.Mesh(
+          new THREE.PlaneGeometry(56, 11),
+          new THREE.MeshBasicMaterial({ map: tex, transparent: true, depthTest: false })
+        );
+        m.position.set(x, y, z);
+        m.renderOrder = 20;
+        return m;
+      }
+      g.add(lab("1 rear shell", 85, 8, -40));
+      g.add(lab("2 battery 18650×2", 90, Y.battery + 8, 40));
+      g.add(lab("3 Board B carrier", 95, Y.boardB + 6, 35));
+      g.add(lab("4 LCD in Board A HOLE", 95, Y.lcd + 10, -15));
+      g.add(lab("5 Board A FRAME only", 95, Y.boardA + 8, 25));
+      g.add(lab("6 front bezel + caps", 90, Y.front + 14, 40));
+      layers.labels = g;
+      home.labels = new THREE.Vector3(0, 0, 0);
+      dir.labels = new THREE.Vector3(0.15, 0.05, 0);
+      scene.add(g);
+    }
+
+    let explode = 0.55;
+    const _p = new URLSearchParams(location.search);
+    let spinning = _p.get("spin") === "1";
+    const _shot = _p.get("shot") || "";
+    if (_shot === "closed" || _shot === "front") { explode = 0; }
+    if (_shot === "exploded") { explode = 0.75; }
+    if (_shot === "elec") { explode = 0.6; }
+    if (_shot === "hero") { explode = 0.12; }
+
+
+    function applyExplode() {
+      // larger separation so LCD is unmistakable between Board B and Board A frame
+      const e = explode * 70;
+      for (const n of Object.keys(layers)) {
+        if (!home[n] || !dir[n]) continue;
+        const h = home[n], d = dir[n];
+        layers[n].position.set(h.x + d.x * e, h.y + d.y * e, h.z + d.z * e);
+      }
+    }
+
+    function faceLabels() {
+      if (!layers.labels || !layers.labels.visible) return;
+      layers.labels.traverse((c) => {
+        if (c.isMesh) c.quaternion.copy(camera.quaternion);
+      });
+    }
+
+    document.getElementById("explode").oninput = (ev) => {
+      explode = Number(ev.target.value) / 100;
+      applyExplode();
+    };
+    document.querySelectorAll("input[data-l]").forEach((el) => {
+      el.onchange = () => {
+        const n = el.getAttribute("data-l");
+        if (layers[n]) layers[n].visible = el.checked;
+      };
+    });
+    document.getElementById("spin").onclick = () => { spinning = !spinning; };
+    document.getElementById("reset").onclick = () => {
+      camera.position.set(200, 150, 240);
+      controls.target.set(0, 30, 0);
+    };
+    document.getElementById("p-exp").onclick = () => {
+      explode = 0.7; document.getElementById("explode").value = 70;
+      Object.keys(layers).forEach((n) => { layers[n].visible = true; });
+      document.querySelectorAll("input[data-l]").forEach((el) => { el.checked = true; });
+      applyExplode();
+    };
+    document.getElementById("p-closed").onclick = () => {
+      explode = 0; document.getElementById("explode").value = 0; applyExplode();
+    };
+    document.getElementById("p-elec").onclick = () => {
+      explode = 0.55; document.getElementById("explode").value = 55;
+      const show = new Set(["boardA", "boardB", "lcd", "battery", "wires", "labels"]);
+      Object.keys(layers).forEach((n) => { layers[n].visible = show.has(n); });
+      document.querySelectorAll("input[data-l]").forEach((el) => {
+        el.checked = show.has(el.getAttribute("data-l"));
+      });
+      applyExplode();
+    };
+    document.getElementById("uhd").onclick = () => {
+      const w = 3840, h = 2160;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+      faceLabels();
+      renderer.render(scene, camera);
+      const a = document.createElement("a");
+      a.download = "cmfd-build-accurate-4k.png";
+      a.href = canvas.toDataURL("image/png");
+      a.click();
+      resize();
+    };
+
+    function resize() {
+      const w = canvas.clientWidth, h = canvas.clientHeight;
+      renderer.setSize(w, h, false);
+      camera.aspect = w / h;
+      camera.updateProjectionMatrix();
+    }
+
+    applyExplode();
+    if (typeof _shot !== "undefined" && _shot) {
+      if (_shot === "closed") { camera.position.set(170, 125, 210); controls.target.set(0, 28, 0); }
+      if (_shot === "hero") { camera.position.set(185, 135, 205); controls.target.set(0, 30, 0); }
+      if (_shot === "exploded") { camera.position.set(220, 170, 260); controls.target.set(0, 40, 0); }
+      if (_shot === "elec") {
+        camera.position.set(190, 145, 190); controls.target.set(0, 34, 0);
+        const show = new Set(["boardA","boardB","lcd","battery","wires","labels"]);
+        Object.keys(layers).forEach((n) => { layers[n].visible = show.has(n); });
+      }
+      if (_shot === "front") { camera.position.set(5, 90, 230); controls.target.set(0, 46, 0); }
+      const el = document.getElementById("explode");
+      if (el) el.value = String(Math.round(explode * 100));
+      applyExplode();
+    }
+    let t0 = performance.now();
+    function frame(t) {
+      resize();
+      if (spinning) scene.rotation.y = (t - t0) * 0.00007;
+      faceLabels();
+      controls.update();
+      renderer.render(scene, camera);
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  </script>
+</body>
+</html>
