@@ -13,10 +13,12 @@
 pub mod effects;
 #[cfg(target_os = "linux")]
 pub mod fb;
+pub mod font;
 pub mod frame;
 pub mod stroke;
 pub mod term;
 
+pub use font::{draw_text, draw_text_centered, text_height, text_width};
 pub use stroke::{DisplayList, Stroke, TimedStroke};
 
 use std::f32::consts::PI;
