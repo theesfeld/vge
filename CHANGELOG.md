@@ -5,11 +5,12 @@
 ### Added
 
 - **Per-stroke lifespan** on `DisplayList`: `set_lifespan`, `tick`, `TimedStroke`, `stroke_life` / `refresh_life` (fade by remaining life)
-- Demo trial: `VGE_TTL=N` leaves motion trails; static HUD stays crisp
+- Demo: **needle gauges + tape gauges** with several draw types; optional `VGE_TTL` needle tip trail
+- Center mark uses **`vge_xform_rotate` + `vge_line_xf`**
 
 ### Changed
 
-- Default demo update is **refresh** (clear + one stroke). Full-list **sweep** is ~2× beam work; use `VGE_SWEEP=1` only for sparse motion
+- Demo is instrument-oriented (clear → many independent draws → present), not a full HUD scene/sweep path
 
 ### Fixed
 

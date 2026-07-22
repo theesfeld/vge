@@ -1,7 +1,7 @@
 # VGE — pure assembly vector engine
 
 <!-- agents:status:begin -->
-> **Status:** active · Version: `0.1.0-dev.1` · **libvge = ASM only** · lifespan API + demo `VGE_TTL` trial · [#25](https://github.com/theesfeld/vge/issues/25) · MIT
+> **Status:** active · Version: `0.1.0-dev.1` · **libvge = ASM only** · first use: needle + tape gauges · lifespan API · [#25](https://github.com/theesfeld/vge/issues/25) · MIT
 <!-- agents:status:end -->
 
 ## This is assembly
@@ -31,7 +31,14 @@ make                    # build/libvge.a
 cargo run --release --bin vge-demo
 ```
 
-The demo **links pure-asm libvge** and calls `vge_*` through thin FFI. It does not reimplement the engine.
+The demo **links pure-asm libvge** and calls several draw functions in one frame
+(needle gauges, tape gauges, a rotated mark). It does not reimplement the engine.
+
+**Model:** call `vge_line` / `vge_circle` / … into a pixel surface, then present.
+That surface is only scanout for the terminal or FB. The product is the draw API,
+not a game framebuffer manager.
+
+**First use:** instrument needles and tape gauges (not heavy scene effects).
 
 
 ## Performance (read this first)
@@ -163,17 +170,14 @@ fb.present_from(&back);
 ## Demo
 
 ```bash
-# Default: smooth 120 Hz overlay; full clear + stroke (refresh)
+# Default: needle gauges + tape gauges + rotated mark (120 Hz)
 cargo run --release --bin vge-demo
 
-# Lifespan trial: motion strokes keep a TTL trail (library option)
-VGE_TTL=12 cargo run --release --bin vge-demo
+# Optional needle tip trail (library lifespan)
+VGE_TTL=10 cargo run --release --bin vge-demo
 
-# 60 Hz (often smoothest on 60 Hz panels)
+# 60 Hz
 VGE_HZ=60 cargo run --release --bin vge-demo
-
-# Uncapped (max throughput; can look choppier in terminals)
-VGE_HZ=0 cargo run --release --bin vge-demo
 
 # Linux video RAM path
 cargo run --release --bin vge-demo -- --fb
@@ -181,17 +185,18 @@ cargo run --release --bin vge-demo -- --fb
 
 | Flag / env | Effect |
 |------------|--------|
-| (default) | Overlay; **refresh** (clear + stroke once per frame) |
-| `VGE_TTL=N` | Lifespan trial: motion trails for `N` frames (fade by remaining life) |
-| `VGE_SWEEP=1` | Erase previous path + stroke new (sparse motion only) |
+| (default) | Overlay; clear once, then draw gauges (several `vge_*` calls) |
+| `VGE_TTL=N` | Optional RPM needle tip trail (`N` frames, fade) |
 | `--fb` | RAM draw + blit to `/dev/fb0` |
-| `--full` | Alternate screen, full area |
-| `VGE_HZ=120` | Default: phase-lock 120 Hz (smooth) |
+| `VGE_HZ=120` | Default: phase-lock 120 Hz |
 | `VGE_HZ=60` | Phase-lock 60 Hz |
-| `VGE_HZ=0` | Uncapped (throughput test; can stutter) |
-| `VGE_WIDTH=N` | Stroke width in pixels (default 1; no artificial max) |
+| `VGE_HZ=0` | Uncapped (throughput test) |
+| `VGE_WIDTH=N` | Stroke width in pixels (default 1) |
 | `VGE_TERM=kitty\|half\|ascii` | Force present backend |
 | `VGE_MAX_W` / `VGE_MAX_H` | Cap pixel buffer (default 960×540) |
+
+**Draw types in the demo:** `circle`, `line_aa`, `line_thick`, `line_fast`,
+`rect_fill`, `polyline`, `line_xf` + `xform_rotate`.
 
 Quit: `q`, Esc, or Ctrl+C.
 
