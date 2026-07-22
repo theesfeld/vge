@@ -190,14 +190,14 @@ The public Google Sheet
 [1uDSQ1Z5a2Wt8-kjrSiVSlDFGFHnfeuhb3RTMVz95730](https://docs.google.com/spreadsheets/d/1uDSQ1Z5a2Wt8-kjrSiVSlDFGFHnfeuhb3RTMVz95730/edit)  
 is a **FORScan As-Built / feature-config** workbook (module addresses like `726-48-02`), **not** a full Mode `0x22` live-data dump.
 
-Exported under **`docs/reference/ford-f150-forscan/`**:
+Exported under **`docs/reference/ford-f150-forscan/`** (**2019-only** filter):
 
 | File | Contents |
 |------|----------|
-| `INDEX.md` | All 55 tabs |
-| `NN_*.csv` | Per-module As-Built sheets |
+| `INDEX.md` | Kept tabs for **2019** F-150 (32 sheets; 2015–17 / -old dropped) |
+| `NN_*.csv` | Per-module As-Built sheets in 2019 scope |
 | `modules_index.csv` / `modules_can.csv` | Module ↔ CAN hint |
-| `asbuilt_address_prefixes.csv` | Address prefixes seen |
+| `asbuilt_address_prefixes.csv` | Address prefixes from kept sheets only |
 | **`live_parameters.csv`** | Live glass parameters (Mode 01 + Mode 22) for the CMFD |
 
 **No public raw FORScan live-data dump** for the exact 2019 Crew Cab 2.7L XLT was found online (logs are usually private / VIN-bound).  
