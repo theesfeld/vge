@@ -25,6 +25,25 @@ pub fn status_grid(
     on_color: Color,
     off_color: Color,
 ) {
+    status_grid_flash(
+        s, rect, items, cols, font_px, on_color, off_color, None, false,
+    );
+}
+
+/// Status grid with optional red **flash** on matching labels (park brake, etc.).
+#[allow(clippy::too_many_arguments)]
+pub fn status_grid_flash(
+    s: &mut Surface,
+    rect: Rect,
+    items: &[StatusItem],
+    cols: i32,
+    font_px: f32,
+    on_color: Color,
+    off_color: Color,
+    // When Some, cells whose label is in this list flash red when `flash_on`.
+    flash_labels: Option<&[&str]>,
+    flash_on: bool,
+) {
     if items.is_empty() || rect.w < 8 || rect.h < 8 {
         return;
     }
@@ -38,13 +57,22 @@ pub fn status_grid(
         let col = (i as i32) % cols;
         let row = (i as i32) / cols;
         let r = Rect::new(rect.x + col * cw + 1, rect.y + row * ch + 1, cw - 2, ch - 2);
+        let should_flash = flash_on
+            && it.on
+            && flash_labels
+                .map(|labs| labs.iter().any(|l| *l == it.label || it.label.contains(l)))
+                .unwrap_or(false);
+        if should_flash {
+            crate::widget::alert::status_cell_flash(
+                s, r, it.label, it.on, true, on_color, off_color, fh,
+            );
+            continue;
+        }
         let c = if it.on { on_color } else { off_color };
-        // Cell frame
         s.line_aa(r.x, r.y, r.right(), r.y, c);
         s.line_aa(r.right(), r.y, r.right(), r.bottom(), c);
         s.line_aa(r.right(), r.bottom(), r.x, r.bottom(), c);
         s.line_aa(r.x, r.bottom(), r.x, r.y, c);
-        // Fill bar on left when ON
         if it.on {
             s.line_aa(r.x + 2, r.y + 2, r.x + 2, r.bottom() - 2, c);
             s.line_aa(r.x + 3, r.y + 2, r.x + 3, r.bottom() - 2, c);

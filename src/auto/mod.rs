@@ -34,11 +34,12 @@ use crate::geom::Rect;
 use crate::page::Page;
 use crate::palette::Palette;
 use crate::video::{blit_grey_flir, GreyFrame};
+use crate::warn::{self, ActiveWarn, WarnId, WarnLevel};
 use crate::widget::{
-    attitude_ball, content_after_osb, crosshair, heading_display, label, osb_chrome,
-    progress_strip, range_display, round_gauge, schematic_topo_map, status_grid, tape_gauge,
-    tire_grid, track_gate, value_readout, RangeSnapshot, RoundGaugeOpts, StatusItem, TapeOpts,
-    TapeOrientation, TireReading,
+    attitude_ball, content_after_osb, crosshair, heading_display, label, master_warn_strip,
+    osb_chrome, progress_strip, range_display, round_gauge, schematic_topo_map, status_grid,
+    status_grid_flash, tape_gauge, tire_grid, track_gate, value_readout, RangeSnapshot,
+    RoundGaugeOpts, StatusItem, TapeOpts, TapeOrientation, TireReading,
 };
 use crate::Surface;
 
@@ -722,11 +723,12 @@ pub fn draw_auto(
     v: &VehicleSnapshot,
     t: f32,
 ) {
-    draw_auto_with_video(page, which, pal, bezel, v, t, None, None);
+    draw_auto_with_video(page, which, pal, bezel, v, t, None, None, None);
 }
 
 /// Draw auto page; optional live greyscale camera frame for FLIR.
 /// `caps` omits equipment that did not probe GO (fog, HSWM, …).
+/// `warns` drives master strip + flash fields.
 #[allow(clippy::too_many_arguments)]
 pub fn draw_auto_with_video(
     page: &mut Page,
@@ -737,14 +739,37 @@ pub fn draw_auto_with_video(
     t: f32,
     cam_frame: Option<&GreyFrame>,
     caps: Option<&VehicleCaps>,
+    warns: Option<&[ActiveWarn]>,
 ) {
     page.clear();
     page.surface.clear(pal.glass);
     page.bezel();
     chrome(page, pal, which, bezel, v);
-    let c = content(page);
+    let mut c = content(page);
     let fh = page.font_px;
     let feat = caps.map(|c| &c.features);
+    let flash = warn::flash_warn_on(t);
+
+    // Master caution / warning strip (top of content)
+    if let Some(ws) = warns {
+        if !ws.is_empty() {
+            let has_w = ws.iter().any(|w| w.level == WarnLevel::Warning);
+            let text = if ws.len() == 1 {
+                ws[0].label.to_string()
+            } else {
+                format!("{} +{}", ws[0].label, ws.len() - 1)
+            };
+            let strip_h = (fh * 1.2) as i32 + 4;
+            master_warn_strip(
+                page.surface,
+                Rect::new(c.x, c.y, c.w, strip_h),
+                &text,
+                if has_w { flash } else { warn::flash_on(t) },
+                fh * 0.85,
+            );
+            c = Rect::new(c.x, c.y + strip_h + 2, c.w, (c.h - strip_h - 2).max(20));
+        }
+    }
 
     match which {
         AutoPage::Eng => {
@@ -781,15 +806,23 @@ pub fn draw_auto_with_video(
                 .chain(channels::channels_in_group(v, "ELEC").into_iter().take(2))
                 .map(|ch| ch.line())
                 .collect::<Vec<_>>();
+            let bingo = warns
+                .map(|w| w.iter().any(|x| x.id == WarnId::Bingo))
+                .unwrap_or(false);
+            let fuel_col = if bingo && flash {
+                pal.warning
+            } else {
+                pal.primary
+            };
             // Big numerics + small fuel tape
             value_readout(
                 page.surface,
                 c.x as f32 + c.w as f32 * 0.28,
                 c.y as f32 + c.h as f32 * 0.28,
-                "FUEL",
+                if bingo { "BINGO" } else { "FUEL" },
                 &format!("{:.0}", v.fuel * 100.0),
                 "%",
-                pal.primary,
+                fuel_col,
                 fh * 0.75,
                 fh * 2.0,
             );
@@ -869,7 +902,7 @@ pub fn draw_auto_with_video(
             value_readout(
                 page.surface,
                 c.x as f32 + c.w as f32 * 0.3,
-                c.y as f32 + c.h as f32 * 0.25,
+                c.y as f32 + c.h as f32 * 0.2,
                 "SPD",
                 &format!("{:.0}", v.speed_unit.from_mph(v.speed_mph)),
                 v.speed_unit.name(),
@@ -880,13 +913,29 @@ pub fn draw_auto_with_video(
             value_readout(
                 page.surface,
                 c.x as f32 + c.w as f32 * 0.72,
-                c.y as f32 + c.h as f32 * 0.25,
+                c.y as f32 + c.h as f32 * 0.2,
                 "GEAR",
                 v.gear.label(),
                 "",
                 pal.nav,
                 fh * 0.75,
                 fh * 1.8,
+            );
+            // Park brake: red flash field when on
+            let park_items = [StatusItem {
+                label: "PARK",
+                on: v.park_brake,
+            }];
+            status_grid_flash(
+                page.surface,
+                Rect::new(c.x + c.w / 4, c.y + (c.h as f32 * 0.4) as i32, c.w / 2, 30),
+                &park_items,
+                1,
+                fh * 0.95,
+                pal.warning,
+                pal.dim,
+                Some(&["PARK"]),
+                v.park_brake && flash,
             );
             let lines = channels::channels_in_group(v, "DRV")
                 .into_iter()
@@ -896,9 +945,9 @@ pub fn draw_auto_with_video(
                 page.surface,
                 Rect::new(
                     c.x,
-                    c.y + (c.h as f32 * 0.48) as i32,
+                    c.y + (c.h as f32 * 0.55) as i32,
                     c.w,
-                    (c.h as f32 * 0.5) as i32,
+                    (c.h as f32 * 0.42) as i32,
                 ),
                 &lines,
                 fh * 0.85,
@@ -1288,7 +1337,7 @@ pub fn draw_auto_obd(
     v.throttle = obd.throttle;
     v.load = obd.load;
     v.dtc_count = obd.dtc_count;
-    draw_auto_with_video(page, which, pal, bezel, &v, t, None, None);
+    draw_auto_with_video(page, which, pal, bezel, &v, t, None, None, None);
 }
 
 pub fn rpm_norm(rpm: f32, redline: f32) -> f32 {
