@@ -1,1453 +1,209 @@
 ** Drc report for cmfd-board-a.kicad_pcb **
-** Created on 2026-07-22T09:59:48 **
+** Created on 2026-07-22T10:10:34 **
 ** Report includes: Errors, Warnings **
 
-** Found 368 DRC violations **
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1375 mm)
-    Local override; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(34.0000 mm, 18.0000 mm): Track [COL0] on F.Cu, length 6.5000 mm
-[shorting_items]: Items shorting two nets (nets  and UART_TX)
-    Local override; error
-    @(60.8625 mm, 30.9500 mm): Pad 3 [<no net>] of U4 on F.Cu
-    @(49.1625 mm, 30.7500 mm): Track [UART_TX] on F.Cu, length 45.8375 mm
-[shorting_items]: Items shorting two nets (nets UART_TX and 3V3)
-    Local override; error
-    @(95.0000 mm, 30.7500 mm): Track [UART_TX] on F.Cu, length 4.3300 mm
-    @(95.0000 mm, 30.0000 mm): PTH pad 1 [3V3] of J1
-[shorting_items]: Items shorting two nets (nets  and RK_CON)
-    Local override; error
-    @(46.7500 mm, 25.8375 mm): Pad 39 [<no net>] of U1 on F.Cu
-    @(46.7500 mm, 3.6500 mm): Track [RK_CON] on F.Cu, length 30.5125 mm
-[shorting_items]: Items shorting two nets (nets ROW_TOP and COL0)
-    Local override; error
-    @(36.6733 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.2862 mm
-    @(37.7940 mm, 129.9868 mm): Via [COL0] on F.Cu - B.Cu
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(46.2500 mm, 2.5500 mm): Track [RK_BRT] on F.Cu, length 31.6125 mm
-    @(2.4000 mm, 3.6500 mm): Track [RK_CON] on F.Cu, length 44.3500 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1000 mm)
-    Local override; error
-    @(137.6000 mm, 21.2139 mm): Track [RK_CON] on B.Cu, length 17.5639 mm
-    @(137.9000 mm, 118.7861 mm): Track [RK_SYM] on B.Cu, length 115.6861 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1000 mm)
-    Local override; error
-    @(1.8000 mm, 21.1588 mm): Track [RK_BRT] on B.Cu, length 18.6088 mm
-    @(137.9000 mm, 3.1000 mm): Track [RK_SYM] on B.Cu, length 135.8000 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1265 mm)
-    Local override; error
-    @(2.1000 mm, 3.1000 mm): Via [RK_SYM] on F.Cu - B.Cu
-    @(1.8000 mm, 2.5500 mm): Via [RK_BRT] on F.Cu - B.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1265 mm)
-    Local override; error
-    @(2.1000 mm, 3.1000 mm): Via [RK_SYM] on F.Cu - B.Cu
-    @(1.8000 mm, 2.5500 mm): Via [RK_BRT] on F.Cu - B.Cu
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(45.7500 mm, 3.1000 mm): Track [RK_SYM] on F.Cu, length 31.0625 mm
-    @(2.4000 mm, 3.6500 mm): Track [RK_CON] on F.Cu, length 44.3500 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1000 mm)
-    Local override; error
-    @(1.5000 mm, 118.8411 mm): Track [RK_GAIN] on B.Cu, length 116.8411 mm
-    @(24.4658 mm, 21.1588 mm): Track [RK_BRT] on B.Cu, length 22.6658 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1265 mm)
-    Local override; error
-    @(1.5000 mm, 2.0000 mm): Via [RK_GAIN] on F.Cu - B.Cu
-    @(1.8000 mm, 2.5500 mm): Via [RK_BRT] on F.Cu - B.Cu
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(45.2500 mm, 2.0000 mm): Track [RK_GAIN] on F.Cu, length 32.1625 mm
-    @(2.1000 mm, 3.1000 mm): Track [RK_SYM] on F.Cu, length 43.6500 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1265 mm)
-    Local override; error
-    @(1.5000 mm, 2.0000 mm): Via [RK_GAIN] on F.Cu - B.Cu
-    @(1.8000 mm, 2.5500 mm): Via [RK_BRT] on F.Cu - B.Cu
-[shorting_items]: Items shorting two nets (nets COL3 and ROW_LEFT)
-    Local override; error
-    @(13.5000 mm, 56.5000 mm): PTH pad 2 [COL3] of S17
-    @(12.7000 mm, 51.6317 mm): Track [ROW_LEFT] on B.Cu, length 18.3683 mm
-[shorting_items]: Items shorting two nets (nets ROW_LEFT and COL2)
-    Local override; error
-    @(12.7000 mm, 70.0000 mm): Track [ROW_LEFT] on B.Cu, length 18.3683 mm
-    @(13.5000 mm, 74.5000 mm): PTH pad 2 [COL2] of S18
-[shorting_items]: Items shorting two nets (nets COL4 and ROW_LEFT)
-    Local override; error
-    @(13.5000 mm, 38.5000 mm): PTH pad 2 [COL4] of S16
-    @(12.7000 mm, 33.3559 mm): Track [ROW_LEFT] on B.Cu, length 18.2758 mm
-[shorting_items]: Items shorting two nets (nets ROW_LEFT and COL1)
-    Local override; error
-    @(12.7000 mm, 88.3683 mm): Track [ROW_LEFT] on B.Cu, length 18.2758 mm
-    @(13.5000 mm, 92.5000 mm): PTH pad 2 [COL1] of S19
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(3.2000 mm, 33.3559 mm): Track [ROW_LEFT] on B.Cu, length 27.6559 mm
-    @(24.4658 mm, 21.1588 mm): Track [RK_BRT] on B.Cu, length 22.6658 mm
-[shorting_items]: Items shorting two nets (nets  and ROW_LEFT)
-    Local override; error
-    @(42.2500 mm, 25.8375 mm): Pad 48 [<no net>] of U1 on F.Cu
-    @(42.2500 mm, 5.7000 mm): Track [ROW_LEFT] on F.Cu, length 28.4625 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1375 mm)
-    Local override; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(34.0000 mm, 13.5000 mm): Track [ROW_BOT] on F.Cu, length 6.5000 mm
-[shorting_items]: Items shorting two nets (nets ROW_BOT and COL0)
-    Local override; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.5000 mm, 18.0000 mm): PTH pad 2 [COL0] of S15
-[shorting_items]: Items shorting two nets (nets ROW_LEFT and ROW_RIGHT)
-    Local override; error
-    @(15.7973 mm, 33.3559 mm): Track [ROW_LEFT] on B.Cu, length 3.0973 mm
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(4.6000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 26.3065 mm
-    @(12.7000 mm, 33.3559 mm): Track [ROW_LEFT] on B.Cu, length 9.5000 mm
-[shorting_items]: Items shorting two nets (nets ROW_BOT and ROW_RIGHT)
-    Local override; error
-    @(40.5000 mm, 13.5000 mm): PTH pad 1 [ROW_BOT] of S15
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(4.6000 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 36.2375 mm
-[shorting_items]: Items shorting two nets (nets COL3 and ROW_TOP)
-    Local override; error
-    @(88.0000 mm, 131.0000 mm): PTH pad 2 [COL3] of S4
-    @(73.3160 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.3388 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(24.4658 mm, 118.8411 mm): Track [RK_GAIN] on B.Cu, length 22.9658 mm
-    @(2.5000 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 125.0000 mm
-[shorting_items]: Items shorting two nets (nets ROW_TOP and COL0)
-    Local override; error
-    @(36.6733 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.2862 mm
-    @(40.5000 mm, 131.0000 mm): PTH pad 2 [COL0] of S1
-[shorting_items]: Items shorting two nets (nets COL1 and ROW_TOP)
-    Local override; error
-    @(58.5000 mm, 131.0000 mm): PTH pad 2 [COL1] of S2
-    @(54.9595 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.3565 mm
-[shorting_items]: Items shorting two nets (nets ROW_TOP and COL0)
-    Local override; error
-    @(36.6733 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 34.1733 mm
-    @(34.0000 mm, 131.0000 mm): PTH pad 2 [COL0] of S1
-[shorting_items]: Items shorting two nets (nets ROW_TOP and COL3)
-    Local override; error
-    @(91.6548 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.2513 mm
-    @(94.5000 mm, 131.0000 mm): PTH pad 2 [COL3] of S4
-[shorting_items]: Items shorting two nets (nets ROW_BOT and ROW_TOP)
-    Local override; error
-    @(40.5000 mm, 13.5000 mm): PTH pad 1 [ROW_BOT] of S15
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(91.6548 mm, 11.8000 mm): Track [ROW_BOT] on B.Cu, length 18.2513 mm
-    @(108.5572 mm, 18.9179 mm): Track [COL4] on B.Cu, length 10.4179 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(8.5000 mm, 8.5000 mm): Track [COL4] on B.Cu, length 30.5855 mm
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(17.7398 mm, 39.0855 mm): Track [COL4] on B.Cu, length 9.2398 mm
-    @(12.7000 mm, 33.3559 mm): Track [ROW_LEFT] on B.Cu, length 18.2758 mm
-[shorting_items]: Items shorting two nets (nets ROW_TOP and COL4)
-    Local override; error
-    @(91.6548 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.2513 mm
-    @(108.6277 mm, 130.0329 mm): Track [COL4] on B.Cu, length 1.4671 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 18.2618 mm
-    @(128.7327 mm, 39.0363 mm): Track [COL4] on B.Cu, length 2.7673 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(131.5000 mm, 39.0363 mm): Track [COL4] on B.Cu, length 30.5363 mm
-    @(122.0893 mm, 21.2139 mm): Track [RK_CON] on B.Cu, length 15.5107 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(131.5000 mm, 131.5000 mm): Track [COL4] on B.Cu, length 92.4637 mm
-    @(122.0893 mm, 118.7861 mm): Track [RK_SYM] on B.Cu, length 15.8107 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(37.8629 mm, 18.9731 mm): Track [COL0] on B.Cu, length 14.4731 mm
-    @(73.1783 mm, 6.5000 mm): Track [COL2] on B.Cu, length 66.6783 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1250 mm)
-    Local override; error
-    @(45.2500 mm, 2.0000 mm): Track [RK_GAIN] on F.Cu, length 32.1625 mm
-    @(44.7500 mm, 6.2000 mm): Via [COL4] on F.Cu - B.Cu
-[shorting_items]: Items shorting two nets (nets ROW_TOP and COL4)
-    Local override; error
-    @(91.6548 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.2513 mm
-    @(108.6277 mm, 130.0329 mm): Via [COL4] on F.Cu - B.Cu
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(108.5572 mm, 8.5000 mm): Track [COL4] on B.Cu, length 2.3000 mm
-    @(132.5000 mm, 7.5000 mm): Track [COL3] on B.Cu, length 41.6850 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(131.5000 mm, 131.5000 mm): Track [COL4] on B.Cu, length 92.4637 mm
-    @(128.6283 mm, 56.7534 mm): Track [COL3] on B.Cu, length 3.8717 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(17.8647 mm, 56.7826 mm): Track [COL3] on B.Cu, length 10.3647 mm
-    @(12.7000 mm, 51.6317 mm): Track [ROW_LEFT] on B.Cu, length 18.3683 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0173 mm)
-    Local override; error
-    @(128.7327 mm, 39.0363 mm): Via [COL4] on F.Cu - B.Cu
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 18.2618 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(90.8150 mm, 19.0645 mm): Track [COL3] on B.Cu, length 11.5645 mm
-    @(108.5572 mm, 8.5000 mm): Track [COL4] on B.Cu, length 100.0572 mm
-[shorting_items]: Items shorting two nets (nets COL4 and )
-    Local override; error
-    @(44.7500 mm, 6.2000 mm): Track [COL4] on F.Cu, length 27.9625 mm
-    @(44.7500 mm, 25.8375 mm): Pad 43 [<no net>] of U1 on F.Cu
-[shorting_items]: Items shorting two nets (nets COL3 and ROW_RIGHT)
-    Local override; error
-    @(132.5000 mm, 132.5000 mm): Track [COL3] on B.Cu, length 75.7466 mm
-    @(133.0000 mm, 88.0000 mm): PTH pad 1 [ROW_RIGHT] of S7
-[shorting_items]: Items shorting two nets (nets COL3 and ROW_RIGHT)
-    Local override; error
-    @(132.5000 mm, 56.7534 mm): Track [COL3] on B.Cu, length 49.2534 mm
-    @(133.0000 mm, 52.0000 mm): PTH pad 1 [ROW_RIGHT] of S9
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(90.8717 mm, 129.9140 mm): Track [COL3] on B.Cu, length 2.5860 mm
-    @(73.3160 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.3388 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(90.8150 mm, 7.5000 mm): Track [COL3] on B.Cu, length 1.8500 mm
-    @(108.5572 mm, 6.2000 mm): Track [COL4] on B.Cu, length 63.8072 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(7.5000 mm, 7.5000 mm): Track [COL3] on B.Cu, length 49.2826 mm
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1750 mm)
-    Local override; error
-    @(90.8150 mm, 5.6500 mm): Track [COL3] on B.Cu, length 46.5650 mm
-    @(44.7500 mm, 6.2000 mm): Via [COL4] on F.Cu - B.Cu
-[shorting_items]: Items shorting two nets (nets COL3 and ROW_TOP)
-    Local override; error
-    @(90.8717 mm, 129.9140 mm): Via [COL3] on F.Cu - B.Cu
-    @(73.3160 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.3388 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1933 mm)
-    Local override; error
-    @(44.2500 mm, 5.6500 mm): Via [COL3] on F.Cu - B.Cu
-    @(44.7500 mm, 6.2000 mm): Via [COL4] on F.Cu - B.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1217 mm)
-    Local override; error
-    @(129.1000 mm, 51.6683 mm): Track [ROW_RIGHT] on B.Cu, length 18.3317 mm
-    @(128.6283 mm, 56.7534 mm): Via [COL3] on F.Cu - B.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1933 mm)
-    Local override; error
-    @(44.2500 mm, 5.6500 mm): Via [COL3] on F.Cu - B.Cu
-    @(44.7500 mm, 6.2000 mm): Via [COL4] on F.Cu - B.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1250 mm)
-    Local override; error
-    @(44.2500 mm, 5.6500 mm): Track [COL3] on F.Cu, length 28.5125 mm
-    @(44.7500 mm, 6.2000 mm): Via [COL4] on F.Cu - B.Cu
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(108.5572 mm, 6.2000 mm): Track [COL4] on B.Cu, length 63.8072 mm
-    @(73.1783 mm, 6.5000 mm): Track [COL2] on B.Cu, length 1.4000 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
-    @(6.5000 mm, 6.5000 mm): Track [COL2] on B.Cu, length 67.9032 mm
-[shorting_items]: Items shorting two nets (nets COL2 and ROW_TOP)
-    Local override; error
-    @(73.1888 mm, 129.8516 mm): Track [COL2] on B.Cu, length 3.6484 mm
-    @(73.3160 mm, 127.6481 mm): Track [ROW_TOP] on B.Cu, length 2.3519 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1000 mm)
-    Local override; error
-    @(108.5572 mm, 6.2000 mm): Track [COL4] on B.Cu, length 63.8072 mm
-    @(73.1783 mm, 19.1478 mm): Track [COL2] on B.Cu, length 12.6478 mm
-[shorting_items]: Items shorting two nets (nets COL2 and COL4)
-    Local override; error
-    @(73.1783 mm, 6.5000 mm): Track [COL2] on B.Cu, length 66.6783 mm
-    @(44.7500 mm, 6.2000 mm): Via [COL4] on F.Cu - B.Cu
-[shorting_items]: Items shorting two nets (nets ROW_RIGHT and COL2)
-    Local override; error
-    @(133.0000 mm, 52.0000 mm): PTH pad 1 [ROW_RIGHT] of S9
-    @(133.5000 mm, 74.4136 mm): Track [COL2] on B.Cu, length 67.9136 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(128.6032 mm, 74.4136 mm): Track [COL2] on B.Cu, length 4.8968 mm
-    @(132.5000 mm, 132.5000 mm): Track [COL3] on B.Cu, length 75.7466 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1750 mm)
-    Local override; error
-    @(44.2500 mm, 5.6500 mm): Via [COL3] on F.Cu - B.Cu
-    @(73.1783 mm, 5.1000 mm): Track [COL2] on B.Cu, length 29.4283 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(17.8959 mm, 74.4032 mm): Track [COL2] on B.Cu, length 11.3959 mm
-    @(12.7000 mm, 70.0000 mm): Track [ROW_LEFT] on B.Cu, length 18.3683 mm
-[shorting_items]: Items shorting two nets (nets COL2 and ROW_RIGHT)
-    Local override; error
-    @(133.5000 mm, 133.5000 mm): Track [COL2] on B.Cu, length 59.0864 mm
-    @(133.0000 mm, 88.0000 mm): PTH pad 1 [ROW_RIGHT] of S7
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1933 mm)
-    Local override; error
-    @(44.2500 mm, 5.6500 mm): Via [COL3] on F.Cu - B.Cu
-    @(43.7500 mm, 5.1000 mm): Via [COL2] on F.Cu - B.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1933 mm)
-    Local override; error
-    @(44.2500 mm, 5.6500 mm): Via [COL3] on F.Cu - B.Cu
-    @(43.7500 mm, 5.1000 mm): Via [COL2] on F.Cu - B.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1468 mm)
-    Local override; error
-    @(128.6032 mm, 74.4136 mm): Via [COL2] on F.Cu - B.Cu
-    @(129.1000 mm, 70.0000 mm): Track [ROW_RIGHT] on B.Cu, length 18.3317 mm
-[shorting_items]: Items shorting two nets (nets COL2 and ROW_TOP)
-    Local override; error
-    @(73.1888 mm, 129.8516 mm): Via [COL2] on F.Cu - B.Cu
-    @(73.3160 mm, 127.6481 mm): Track [ROW_TOP] on B.Cu, length 2.3519 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1250 mm)
-    Local override; error
-    @(44.2500 mm, 5.6500 mm): Via [COL3] on F.Cu - B.Cu
-    @(43.7500 mm, 5.1000 mm): Track [COL2] on F.Cu, length 29.0625 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(12.7000 mm, 88.3683 mm): Track [ROW_LEFT] on B.Cu, length 18.2758 mm
-    @(17.8093 mm, 92.0524 mm): Track [COL1] on B.Cu, length 12.3093 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(5.5000 mm, 5.5000 mm): Track [COL1] on B.Cu, length 86.5524 mm
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
+** Found 47 DRC violations **
 [clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0250 mm)
     Local override; error
-    @(43.7500 mm, 5.1000 mm): Via [COL2] on F.Cu - B.Cu
-    @(55.5638 mm, 5.5000 mm): Track [COL1] on B.Cu, length 50.0638 mm
+    @(122.0000 mm, 126.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
+    @(127.5000 mm, 127.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
 [tracks_crossing]: Tracks crossing
     Local override; error
-    @(55.5638 mm, 5.5000 mm): Track [COL1] on B.Cu, length 0.9500 mm
-    @(73.1783 mm, 5.1000 mm): Track [COL2] on B.Cu, length 29.4283 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1933 mm)
+    @(26.0000 mm, 30.5000 mm): Track [GND] on F.Cu, length 15.0000 mm
+    @(26.0000 mm, 26.0000 mm): Track [RK_BRT] on F.Cu, length 6.5000 mm
+[shorting_items]: Items shorting two nets (nets RK_SYM and GND)
     Local override; error
-    @(43.7500 mm, 5.1000 mm): Via [COL2] on F.Cu - B.Cu
-    @(43.2500 mm, 4.5500 mm): Via [COL1] on F.Cu - B.Cu
-[tracks_crossing]: Tracks crossing
+    @(128.5000 mm, 122.0000 mm): Track [RK_SYM] on F.Cu, length 5.5902 mm
+    @(128.5000 mm, 126.5000 mm): PTH pad 2 [GND] of SW2
+[shorting_items]: Items shorting two nets (nets RK_SYM and GND)
     Local override; error
-    @(134.5000 mm, 92.0947 mm): Track [COL1] on B.Cu, length 86.5947 mm
-    @(122.0893 mm, 21.2139 mm): Track [RK_CON] on B.Cu, length 15.5107 mm
-[shorting_items]: Items shorting two nets (nets COL1 and ROW_TOP)
+    @(127.5000 mm, 127.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+    @(128.5000 mm, 126.5000 mm): PTH pad 2 [GND] of SW2
+[shorting_items]: Items shorting two nets (nets RK_SYM and GND)
     Local override; error
-    @(55.5203 mm, 129.8822 mm): Via [COL1] on F.Cu - B.Cu
-    @(54.9595 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.3565 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1933 mm)
-    Local override; error
-    @(43.7500 mm, 5.1000 mm): Via [COL2] on F.Cu - B.Cu
-    @(43.2500 mm, 4.5500 mm): Via [COL1] on F.Cu - B.Cu
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(135.5000 mm, 109.8548 mm): Track [COL0] on B.Cu, length 105.3548 mm
-    @(122.0893 mm, 21.2139 mm): Track [RK_CON] on B.Cu, length 15.5107 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(135.5000 mm, 135.5000 mm): Track [COL0] on B.Cu, length 25.6452 mm
-    @(122.0893 mm, 118.7861 mm): Track [RK_SYM] on B.Cu, length 15.8107 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1250 mm)
-    Local override; error
-    @(42.7500 mm, 4.0000 mm): Track [COL0] on F.Cu, length 30.1625 mm
-    @(43.2500 mm, 4.5500 mm): Via [COL1] on F.Cu - B.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
-    Local override; error
-    @(37.8629 mm, 4.0000 mm): Track [COL0] on B.Cu, length 4.8871 mm
-    @(137.6000 mm, 3.6500 mm): Track [RK_CON] on B.Cu, length 135.2000 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1250 mm)
-    Local override; error
-    @(43.2500 mm, 4.5500 mm): Track [COL1] on F.Cu, length 29.6125 mm
-    @(43.7500 mm, 5.1000 mm): Via [COL2] on F.Cu - B.Cu
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(134.5000 mm, 5.5000 mm): Track [COL1] on B.Cu, length 78.9362 mm
-    @(73.1783 mm, 6.5000 mm): Track [COL2] on B.Cu, length 1.4000 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1500 mm)
-    Local override; error
-    @(37.8629 mm, 4.5000 mm): Track [COL0] on B.Cu, length 0.5000 mm
-    @(137.6000 mm, 3.6500 mm): Track [RK_CON] on B.Cu, length 135.2000 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1933 mm)
-    Local override; error
-    @(42.7500 mm, 4.0000 mm): Via [COL0] on F.Cu - B.Cu
-    @(43.2500 mm, 4.5500 mm): Via [COL1] on F.Cu - B.Cu
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1933 mm)
-    Local override; error
-    @(42.7500 mm, 4.0000 mm): Via [COL0] on F.Cu - B.Cu
-    @(43.2500 mm, 4.5500 mm): Via [COL1] on F.Cu - B.Cu
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(122.0893 mm, 118.7861 mm): Track [RK_SYM] on B.Cu, length 15.8107 mm
-    @(134.5000 mm, 134.5000 mm): Track [COL1] on B.Cu, length 42.4053 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(54.9595 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.3565 mm
-    @(55.5203 mm, 129.8822 mm): Track [COL1] on B.Cu, length 4.6178 mm
-[shorting_items]: Items shorting two nets (nets COL1 and COL0)
-    Local override; error
-    @(43.2500 mm, 4.5500 mm): Via [COL1] on F.Cu - B.Cu
-    @(135.5000 mm, 4.5000 mm): Track [COL0] on B.Cu, length 97.6371 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(134.5000 mm, 134.5000 mm): Track [COL1] on B.Cu, length 42.4053 mm
-    @(128.7981 mm, 109.8548 mm): Track [COL0] on B.Cu, length 6.7019 mm
-[shorting_items]: Items shorting two nets (nets COL0 and ROW_RIGHT)
-    Local override; error
-    @(4.5000 mm, 4.5000 mm): Track [COL0] on B.Cu, length 105.3038 mm
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0762 mm)
-    Local override; error
-    @(128.6738 mm, 92.0947 mm): Via [COL1] on F.Cu - B.Cu
-    @(129.1000 mm, 88.3317 mm): Track [ROW_RIGHT] on B.Cu, length 18.2618 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(133.5000 mm, 6.5000 mm): Track [COL2] on B.Cu, length 60.3217 mm
-    @(108.5572 mm, 8.5000 mm): Track [COL4] on B.Cu, length 2.3000 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(55.5638 mm, 19.1064 mm): Track [COL1] on B.Cu, length 13.6064 mm
-    @(73.1783 mm, 6.5000 mm): Track [COL2] on B.Cu, length 66.6783 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(36.6733 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.2862 mm
-    @(37.7940 mm, 129.9868 mm): Track [COL0] on B.Cu, length 5.5132 mm
-[tracks_crossing]: Tracks crossing
-    Local override; error
-    @(133.5000 mm, 133.5000 mm): Track [COL2] on B.Cu, length 59.0864 mm
-    @(128.6738 mm, 92.0947 mm): Track [COL1] on B.Cu, length 5.8262 mm
-[shorting_items]: Items shorting two nets (nets 3V3 and UART_RX)
-    Local override; error
-    @(97.5400 mm, 30.0000 mm): PTH pad 2 [3V3] of J1
-    @(49.1625 mm, 30.2500 mm): Track [UART_RX] on F.Cu, length 48.3775 mm
-[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1750 mm)
-    Local override; error
-    @(55.5638 mm, 4.5500 mm): Track [COL1] on B.Cu, length 12.3138 mm
-    @(43.7500 mm, 5.1000 mm): Via [COL2] on F.Cu - B.Cu
-[shorting_items]: Items shorting two nets (nets 3V3 and UART_RX)
-    Local override; error
-    @(97.5400 mm, 30.0000 mm): PTH pad 2 [3V3] of J1
-    @(97.5400 mm, 30.2500 mm): Track [UART_RX] on F.Cu, length 4.8300 mm
-[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.1500 mm; actual 0.0000 mm)
-    Rule: board setup constraints hole; error
-    @(124.5000 mm, 122.5000 mm): PTH pad 2 [GND] of SW2
-    @(125.0000 mm, 125.0000 mm): NPTH pad of H3
-[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.1500 mm; actual 0.0000 mm)
-    Rule: board setup constraints hole; error
-    @(124.5000 mm, 122.5000 mm): PTH pad 2 [GND] of SW2
-    @(125.0000 mm, 125.0000 mm): NPTH pad of H3
+    @(127.5000 mm, 127.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+    @(128.5000 mm, 126.5000 mm): PTH pad 2 [GND] of SW2
 [courtyards_overlap]: Courtyards overlap
     Rule: board setup constraints courtyard; error
-    @(118.0000 mm, 118.0000 mm): Footprint SW2
-    @(125.0000 mm, 125.0000 mm): Footprint H3
-[npth_inside_courtyard]: NPTH inside courtyard
-    Local override; error
-    @(125.0000 mm, 125.0000 mm): NPTH pad of H3
-    @(118.0000 mm, 118.0000 mm): Footprint SW2
+    @(134.0000 mm, 113.0000 mm): Footprint S6
+    @(122.0000 mm, 122.0000 mm): Footprint SW2
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(74.0000 mm, 14.0000 mm): Footprint S13
+    @(74.0000 mm, 20.0000 mm): Footprint J_GND
 [pth_inside_courtyard]: PTH inside courtyard
     Local override; error
-    @(124.5000 mm, 122.5000 mm): PTH pad 2 [GND] of SW2
-    @(125.0000 mm, 125.0000 mm): Footprint H3
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(118.0000 mm, 122.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(121.2500 mm, 122.5000 mm): Track [GND] on F.Cu, length 1.1500 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(118.0000 mm, 26.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(22.0000 mm, 122.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(25.2500 mm, 122.5000 mm): Track [GND] on F.Cu, length 1.1500 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(16.7500 mm, 110.5000 mm): Track [COL0] on F.Cu, length 1.1500 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(42.7500 mm, 4.0000 mm): Track [COL0] on F.Cu, length 30.1625 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(13.5000 mm, 110.5000 mm): Track [COL0] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(17.6653 mm, 109.8038 mm): Via [COL0] on F.Cu - B.Cu
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(37.8629 mm, 18.9731 mm): Track [COL0] on B.Cu, length 14.4731 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(17.6653 mm, 109.8038 mm): Track [COL0] on B.Cu, length 13.1653 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(16.7500 mm, 92.5000 mm): Track [COL1] on F.Cu, length 1.1500 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(43.2500 mm, 4.5500 mm): Track [COL1] on F.Cu, length 29.6125 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(13.5000 mm, 92.5000 mm): Track [COL1] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0593 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(17.8093 mm, 92.0524 mm): Via [COL1] on F.Cu - B.Cu
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(55.5638 mm, 19.1064 mm): Track [COL1] on B.Cu, length 13.6064 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(17.8093 mm, 92.0524 mm): Track [COL1] on B.Cu, length 12.3093 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(16.7500 mm, 74.5000 mm): Track [COL2] on F.Cu, length 1.1500 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(13.5000 mm, 74.5000 mm): Track [COL2] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(43.7500 mm, 5.1000 mm): Track [COL2] on F.Cu, length 29.0625 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.1459 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(17.8959 mm, 74.4032 mm): Via [COL2] on F.Cu - B.Cu
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(17.8959 mm, 74.4032 mm): Track [COL2] on B.Cu, length 11.3959 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(73.1783 mm, 19.1478 mm): Track [COL2] on B.Cu, length 12.6478 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(16.7500 mm, 56.5000 mm): Track [COL3] on F.Cu, length 1.1500 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(13.5000 mm, 56.5000 mm): Track [COL3] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(44.2500 mm, 5.6500 mm): Track [COL3] on F.Cu, length 28.5125 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.1147 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(17.8647 mm, 56.7826 mm): Via [COL3] on F.Cu - B.Cu
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(90.8150 mm, 19.0645 mm): Track [COL3] on B.Cu, length 11.5645 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(17.8647 mm, 56.7826 mm): Track [COL3] on B.Cu, length 10.3647 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(16.7500 mm, 38.5000 mm): Track [COL4] on F.Cu, length 1.1500 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(44.7500 mm, 6.2000 mm): Track [COL4] on F.Cu, length 27.9625 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(13.5000 mm, 38.5000 mm): Track [COL4] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(17.7398 mm, 39.0855 mm): Via [COL4] on F.Cu - B.Cu
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(17.7398 mm, 39.0855 mm): Track [COL4] on B.Cu, length 9.2398 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(108.5572 mm, 18.9179 mm): Track [COL4] on B.Cu, length 10.4179 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(13.5000 mm, 106.0000 mm): Track [ROW_LEFT] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(13.5000 mm, 70.0000 mm): Track [ROW_LEFT] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(13.5000 mm, 52.0000 mm): Track [ROW_LEFT] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(13.5000 mm, 34.0000 mm): Track [ROW_LEFT] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(42.2500 mm, 5.7000 mm): Track [ROW_LEFT] on F.Cu, length 28.4625 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(13.5000 mm, 88.0000 mm): Track [ROW_LEFT] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(45.2500 mm, 2.0000 mm): Track [RK_GAIN] on F.Cu, length 32.1625 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(24.4658 mm, 118.8411 mm): Track [RK_GAIN] on B.Cu, length 22.9658 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(118.0000 mm, 118.0000 mm): Track [RK_SYM] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(45.7500 mm, 3.1000 mm): Track [RK_SYM] on F.Cu, length 31.0625 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.1606 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(122.0893 mm, 118.7861 mm): Via [RK_SYM] on F.Cu - B.Cu
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(122.0893 mm, 118.7861 mm): Track [RK_SYM] on B.Cu, length 15.8107 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(46.2500 mm, 2.5500 mm): Track [RK_BRT] on F.Cu, length 31.6125 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(24.4658 mm, 21.1588 mm): Track [RK_BRT] on B.Cu, length 22.6658 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(118.0000 mm, 22.0000 mm): Track [RK_CON] on F.Cu, length 6.5000 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(46.7500 mm, 3.6500 mm): Track [RK_CON] on F.Cu, length 30.5125 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.1606 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(122.0893 mm, 21.2139 mm): Via [RK_CON] on F.Cu - B.Cu
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(122.0893 mm, 21.2139 mm): Track [RK_CON] on B.Cu, length 15.5107 mm
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(118.0000 mm, 122.5000 mm): PTH pad 2 [GND] of SW2
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(34.0000 mm, 18.0000 mm): PTH pad 2 [COL0] of S15
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(40.5000 mm, 18.0000 mm): PTH pad 2 [COL0] of S15
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(22.0000 mm, 122.5000 mm): PTH pad 2 [GND] of SW1
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(122.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(28.5000 mm, 122.5000 mm): PTH pad 2 [GND] of SW1
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(88.0000 mm, 18.0000 mm): PTH pad 2 [COL3] of S12
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(94.5000 mm, 18.0000 mm): PTH pad 2 [COL3] of S12
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(52.0000 mm, 18.0000 mm): PTH pad 2 [COL1] of S14
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(58.5000 mm, 18.0000 mm): PTH pad 2 [COL1] of S14
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(106.0000 mm, 18.0000 mm): PTH pad 2 [COL4] of S11
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(112.5000 mm, 18.0000 mm): PTH pad 2 [COL4] of S11
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(70.0000 mm, 18.0000 mm): PTH pad 2 [COL2] of S13
-[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
-    Rule: board setup constraints edge; error
-    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(76.5000 mm, 18.0000 mm): PTH pad 2 [COL2] of S13
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(120.4467 mm, 121.6771 mm): Via [GND] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(120.3732 mm, 27.2442 mm): Via [GND] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(25.9960 mm, 121.6248 mm): Via [GND] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(26.0746 mm, 27.3016 mm): Via [GND] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(128.7981 mm, 109.8548 mm): Via [COL0] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(17.6653 mm, 109.8038 mm): Via [COL0] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(37.8629 mm, 18.9731 mm): Via [COL0] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(37.7940 mm, 129.9868 mm): Via [COL0] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(55.5203 mm, 129.8822 mm): Via [COL1] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(128.6738 mm, 92.0947 mm): Via [COL1] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(17.8093 mm, 92.0524 mm): Via [COL1] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(55.5638 mm, 19.1064 mm): Via [COL1] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(73.1888 mm, 129.8516 mm): Via [COL2] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(128.6032 mm, 74.4136 mm): Via [COL2] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(73.1783 mm, 19.1478 mm): Via [COL2] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(17.8959 mm, 74.4032 mm): Via [COL2] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(128.6283 mm, 56.7534 mm): Via [COL3] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(90.8150 mm, 19.0645 mm): Via [COL3] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(90.8717 mm, 129.9140 mm): Via [COL3] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(17.8647 mm, 56.7826 mm): Via [COL3] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(128.7327 mm, 39.0363 mm): Via [COL4] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(17.7398 mm, 39.0855 mm): Via [COL4] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(108.6277 mm, 130.0329 mm): Via [COL4] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(108.5572 mm, 18.9179 mm): Via [COL4] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(73.3160 mm, 127.6481 mm): Via [ROW_TOP] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(91.6548 mm, 127.5764 mm): Via [ROW_TOP] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(36.6733 mm, 127.4949 mm): Via [ROW_TOP] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(109.9061 mm, 127.4445 mm): Via [ROW_TOP] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(54.9595 mm, 127.6127 mm): Via [ROW_TOP] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(130.9000 mm, 70.0000 mm): Via [ROW_RIGHT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(130.7350 mm, 106.5935 mm): Via [ROW_RIGHT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(130.7350 mm, 33.4065 mm): Via [ROW_RIGHT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(130.8511 mm, 88.3317 mm): Via [ROW_RIGHT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(130.8511 mm, 51.6683 mm): Via [ROW_RIGHT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(73.3160 mm, 12.3519 mm): Via [ROW_BOT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(91.6548 mm, 12.4236 mm): Via [ROW_BOT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(109.9061 mm, 12.5555 mm): Via [ROW_BOT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(54.9595 mm, 12.3873 mm): Via [ROW_BOT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(36.6733 mm, 12.5051 mm): Via [ROW_BOT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(15.6000 mm, 70.0000 mm): Via [ROW_LEFT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(15.7973 mm, 106.6441 mm): Via [ROW_LEFT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(15.6606 mm, 51.6317 mm): Via [ROW_LEFT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(15.7973 mm, 33.3559 mm): Via [ROW_LEFT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(15.6606 mm, 88.3683 mm): Via [ROW_LEFT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(1.5000 mm, 2.0000 mm): Via [RK_GAIN] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(24.4658 mm, 118.8411 mm): Via [RK_GAIN] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(2.1000 mm, 3.1000 mm): Via [RK_SYM] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(122.0893 mm, 118.7861 mm): Via [RK_SYM] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(1.8000 mm, 2.5500 mm): Via [RK_BRT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(24.4658 mm, 21.1588 mm): Via [RK_BRT] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(2.4000 mm, 3.6500 mm): Via [RK_CON] on F.Cu - B.Cu
-[drill_out_of_range]: Hole size out of range (board setup constraints min hole 0.3000 mm; actual 0.2500 mm)
-    Rule: netclass 'Default'; error
-    @(122.0893 mm, 21.2139 mm): Via [RK_CON] on F.Cu - B.Cu
+    @(74.0000 mm, 20.0000 mm): PTH pad 1 [GND] of J_GND
+    @(74.0000 mm, 14.0000 mm): Footprint S13
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(74.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S13
+    @(74.0000 mm, 20.0000 mm): Footprint J_GND
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(127.5000 mm, 127.5000 mm): Footprint J_SYM
+    @(122.0000 mm, 122.0000 mm): Footprint SW2
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(128.5000 mm, 126.5000 mm): PTH pad 2 [GND] of SW2
+    @(127.5000 mm, 127.5000 mm): Footprint J_SYM
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(127.5000 mm, 127.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+    @(122.0000 mm, 122.0000 mm): Footprint SW2
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(23.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(26.0000 mm, 30.5000 mm): Track [GND] on F.Cu, length 15.0000 mm
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(125.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(122.0000 mm, 30.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(23.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(122.0000 mm, 30.5000 mm): Track [GND] on F.Cu, length 15.0000 mm
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(23.0000 mm, 125.0000 mm): Segment on Edge.Cuts
+    @(26.0000 mm, 122.0000 mm): Track [RK_GAIN] on F.Cu, length 7.7782 mm
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(125.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(122.0000 mm, 122.0000 mm): Track [RK_SYM] on F.Cu, length 6.5000 mm
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(23.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(26.0000 mm, 26.0000 mm): Track [RK_BRT] on F.Cu, length 7.7782 mm
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(125.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(122.0000 mm, 26.0000 mm): Track [RK_CON] on F.Cu, length 6.5000 mm
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.5000 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(23.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(74.0000 mm, 22.5400 mm): PTH pad 2 [GND] of J_GND
 [solder_mask_bridge]: Front solder mask aperture bridges items with different nets
     Rule: board setup solder mask min width; error
-    @(42.7500 mm, 4.0000 mm): Track [COL0] on F.Cu, length 30.1625 mm
-    @(42.7500 mm, 25.8375 mm): Pad 47 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(45.7500 mm, 3.1000 mm): Track [RK_SYM] on F.Cu, length 31.0625 mm
-    @(45.7500 mm, 25.8375 mm): Pad 41 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(46.2500 mm, 2.5500 mm): Track [RK_BRT] on F.Cu, length 31.6125 mm
-    @(46.2500 mm, 25.8375 mm): Pad 40 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(125.0000 mm, 125.0000 mm): NPTH pad of H3
-    @(124.5000 mm, 122.5000 mm): PTH pad 2 [GND] of SW2
+    @(128.5000 mm, 126.5000 mm): PTH pad 2 [GND] of SW2
+    @(127.5000 mm, 127.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
 [solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
     Rule: board setup solder mask min width; error
-    @(125.0000 mm, 125.0000 mm): NPTH pad of H3
-    @(124.5000 mm, 122.5000 mm): PTH pad 2 [GND] of SW2
+    @(127.5000 mm, 127.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+    @(128.5000 mm, 126.5000 mm): PTH pad 2 [GND] of SW2
 [solder_mask_bridge]: Front solder mask aperture bridges items with different nets
     Rule: board setup solder mask min width; error
-    @(46.7500 mm, 3.6500 mm): Track [RK_CON] on F.Cu, length 30.5125 mm
-    @(46.7500 mm, 25.8375 mm): Pad 39 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(95.0000 mm, 30.7500 mm): Track [UART_TX] on F.Cu, length 4.3300 mm
-    @(95.0000 mm, 30.0000 mm): PTH pad 1 [3V3] of J1
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(95.0000 mm, 30.7500 mm): Track [UART_TX] on F.Cu, length 4.3300 mm
-    @(95.0000 mm, 32.5400 mm): PTH pad 3 [GND] of J1
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(12.7000 mm, 88.3683 mm): Track [ROW_LEFT] on B.Cu, length 18.2758 mm
-    @(13.5000 mm, 92.5000 mm): PTH pad 2 [COL1] of S19
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(49.1625 mm, 30.7500 mm): Track [UART_TX] on F.Cu, length 45.8375 mm
-    @(63.1375 mm, 30.9500 mm): Pad 4 [<no net>] of U4 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(49.1625 mm, 30.7500 mm): Track [UART_TX] on F.Cu, length 45.8375 mm
-    @(78.0000 mm, 30.0000 mm): PTH pad 1 [SWDIO] of J2
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(49.1625 mm, 30.7500 mm): Track [UART_TX] on F.Cu, length 45.8375 mm
-    @(95.0000 mm, 30.0000 mm): PTH pad 1 [3V3] of J1
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(12.7000 mm, 70.0000 mm): Track [ROW_LEFT] on B.Cu, length 18.3683 mm
-    @(13.5000 mm, 74.5000 mm): PTH pad 2 [COL2] of S18
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(54.9595 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.3565 mm
-    @(58.5000 mm, 131.0000 mm): PTH pad 2 [COL1] of S2
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(40.8375 mm, 28.7500 mm): Pad 4 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(49.1625 mm, 30.7500 mm): Track [UART_TX] on F.Cu, length 45.8375 mm
-    @(60.8625 mm, 30.9500 mm): Pad 3 [<no net>] of U4 on F.Cu
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(133.5000 mm, 74.4136 mm): Track [COL2] on B.Cu, length 67.9136 mm
-    @(133.0000 mm, 52.0000 mm): PTH pad 1 [ROW_RIGHT] of S9
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(54.9595 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.3565 mm
-    @(70.0000 mm, 131.0000 mm): PTH pad 2 [COL2] of S3
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(36.6733 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.2862 mm
-    @(40.5000 mm, 131.0000 mm): PTH pad 2 [COL0] of S1
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(12.7000 mm, 33.3559 mm): Track [ROW_LEFT] on B.Cu, length 18.2758 mm
-    @(13.5000 mm, 38.5000 mm): PTH pad 2 [COL4] of S16
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(36.6733 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.2862 mm
-    @(52.0000 mm, 131.0000 mm): PTH pad 2 [COL1] of S2
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(12.7000 mm, 51.6317 mm): Track [ROW_LEFT] on B.Cu, length 18.3683 mm
-    @(13.5000 mm, 56.5000 mm): PTH pad 2 [COL3] of S17
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(132.5000 mm, 56.7534 mm): Track [COL3] on B.Cu, length 49.2534 mm
-    @(133.0000 mm, 52.0000 mm): PTH pad 1 [ROW_RIGHT] of S9
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(40.8375 mm, 29.2500 mm): Pad 5 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(42.2500 mm, 5.7000 mm): Track [ROW_LEFT] on F.Cu, length 28.4625 mm
-    @(42.2500 mm, 25.8375 mm): Pad 48 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(43.2500 mm, 4.5500 mm): Track [COL1] on F.Cu, length 29.6125 mm
-    @(43.2500 mm, 25.8375 mm): Pad 46 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(133.5000 mm, 74.4136 mm): Track [COL2] on B.Cu, length 67.9136 mm
-    @(133.0000 mm, 38.5000 mm): PTH pad 2 [COL4] of S10
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(133.5000 mm, 74.4136 mm): Track [COL2] on B.Cu, length 67.9136 mm
-    @(133.0000 mm, 34.0000 mm): PTH pad 1 [ROW_RIGHT] of S10
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(133.5000 mm, 74.4136 mm): Track [COL2] on B.Cu, length 67.9136 mm
-    @(133.0000 mm, 56.5000 mm): PTH pad 2 [COL3] of S9
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(133.5000 mm, 74.4136 mm): Track [COL2] on B.Cu, length 67.9136 mm
-    @(133.0000 mm, 70.0000 mm): PTH pad 1 [ROW_RIGHT] of S8
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(44.2500 mm, 5.6500 mm): Track [COL3] on F.Cu, length 28.5125 mm
-    @(44.2500 mm, 25.8375 mm): Pad 44 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(43.7500 mm, 5.1000 mm): Track [COL2] on F.Cu, length 29.0625 mm
-    @(43.7500 mm, 25.8375 mm): Pad 45 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(133.5000 mm, 133.5000 mm): Track [COL2] on B.Cu, length 59.0864 mm
-    @(133.0000 mm, 88.0000 mm): PTH pad 1 [ROW_RIGHT] of S7
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(133.5000 mm, 133.5000 mm): Track [COL2] on B.Cu, length 59.0864 mm
-    @(133.0000 mm, 92.5000 mm): PTH pad 2 [COL1] of S7
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(133.5000 mm, 133.5000 mm): Track [COL2] on B.Cu, length 59.0864 mm
-    @(133.0000 mm, 106.0000 mm): PTH pad 1 [ROW_RIGHT] of S6
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(133.5000 mm, 133.5000 mm): Track [COL2] on B.Cu, length 59.0864 mm
-    @(133.0000 mm, 110.5000 mm): PTH pad 2 [COL0] of S6
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(45.2500 mm, 2.0000 mm): Track [RK_GAIN] on F.Cu, length 32.1625 mm
-    @(45.2500 mm, 25.8375 mm): Pad 42 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(97.5400 mm, 30.2500 mm): Track [UART_RX] on F.Cu, length 4.8300 mm
-    @(97.5400 mm, 30.0000 mm): PTH pad 2 [3V3] of J1
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(97.5400 mm, 30.2500 mm): Track [UART_RX] on F.Cu, length 4.8300 mm
-    @(97.5400 mm, 32.5400 mm): PTH pad 4 [GND] of J1
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(49.1625 mm, 30.2500 mm): Track [UART_RX] on F.Cu, length 48.3775 mm
-    @(78.0000 mm, 30.0000 mm): PTH pad 1 [SWDIO] of J2
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(49.1625 mm, 30.2500 mm): Track [UART_RX] on F.Cu, length 48.3775 mm
-    @(95.0000 mm, 30.0000 mm): PTH pad 1 [3V3] of J1
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(49.1625 mm, 30.2500 mm): Track [UART_RX] on F.Cu, length 48.3775 mm
-    @(97.5400 mm, 30.0000 mm): PTH pad 2 [3V3] of J1
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(49.1625 mm, 30.2500 mm): Track [UART_RX] on F.Cu, length 48.3775 mm
-    @(60.8625 mm, 30.0000 mm): Pad 2 [<no net>] of U4 on F.Cu
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(132.5000 mm, 56.7534 mm): Track [COL3] on B.Cu, length 49.2534 mm
-    @(133.0000 mm, 38.5000 mm): PTH pad 2 [COL4] of S10
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(132.5000 mm, 56.7534 mm): Track [COL3] on B.Cu, length 49.2534 mm
-    @(133.0000 mm, 34.0000 mm): PTH pad 1 [ROW_RIGHT] of S10
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(132.5000 mm, 132.5000 mm): Track [COL3] on B.Cu, length 75.7466 mm
-    @(133.0000 mm, 88.0000 mm): PTH pad 1 [ROW_RIGHT] of S7
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(132.5000 mm, 132.5000 mm): Track [COL3] on B.Cu, length 75.7466 mm
-    @(133.0000 mm, 92.5000 mm): PTH pad 2 [COL1] of S7
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(132.5000 mm, 132.5000 mm): Track [COL3] on B.Cu, length 75.7466 mm
-    @(133.0000 mm, 106.0000 mm): PTH pad 1 [ROW_RIGHT] of S6
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(132.5000 mm, 132.5000 mm): Track [COL3] on B.Cu, length 75.7466 mm
-    @(133.0000 mm, 110.5000 mm): PTH pad 2 [COL0] of S6
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(132.5000 mm, 132.5000 mm): Track [COL3] on B.Cu, length 75.7466 mm
-    @(133.0000 mm, 70.0000 mm): PTH pad 1 [ROW_RIGHT] of S8
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(132.5000 mm, 132.5000 mm): Track [COL3] on B.Cu, length 75.7466 mm
-    @(133.0000 mm, 74.5000 mm): PTH pad 2 [COL2] of S8
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(44.7500 mm, 6.2000 mm): Track [COL4] on F.Cu, length 27.9625 mm
-    @(44.7500 mm, 25.8375 mm): Pad 43 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(73.3160 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.3388 mm
-    @(76.5000 mm, 131.0000 mm): PTH pad 2 [COL2] of S3
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(73.3160 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.3388 mm
-    @(88.0000 mm, 131.0000 mm): PTH pad 2 [COL3] of S4
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.8375 mm, 28.7500 mm): Pad 4 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.8375 mm, 29.2500 mm): Pad 5 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.8375 mm, 29.7500 mm): Pad 6 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.8375 mm, 30.2500 mm): Pad 7 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.5000 mm, 13.5000 mm): PTH pad 1 [ROW_BOT] of S15
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.5000 mm, 18.0000 mm): PTH pad 2 [COL0] of S15
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.8375 mm, 27.2500 mm): Pad 1 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.8375 mm, 27.7500 mm): Pad 2 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.8375 mm, 28.2500 mm): Pad 3 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.8375 mm, 30.7500 mm): Pad 8 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.8375 mm, 31.2500 mm): Pad 9 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 7.1000 mm): Track [ROW_RIGHT] on F.Cu, length 25.1500 mm
-    @(40.8375 mm, 31.7500 mm): Pad 10 [ROW_TOP] of U1 on F.Cu
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
-    @(13.5000 mm, 34.0000 mm): PTH pad 1 [ROW_LEFT] of S16
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
-    @(20.0000 mm, 34.0000 mm): PTH pad 1 [ROW_LEFT] of S16
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
-    @(78.0000 mm, 32.5400 mm): PTH pad 2 [SWCLK] of J2
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
-    @(97.5400 mm, 32.5400 mm): PTH pad 4 [GND] of J1
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(129.1000 mm, 33.4065 mm): Track [ROW_RIGHT] on B.Cu, length 124.5000 mm
-    @(95.0000 mm, 32.5400 mm): PTH pad 3 [GND] of J1
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.8375 mm, 28.7500 mm): Pad 4 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.8375 mm, 29.2500 mm): Pad 5 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.8375 mm, 29.7500 mm): Pad 6 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.8375 mm, 30.2500 mm): Pad 7 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.5000 mm, 18.0000 mm): PTH pad 2 [COL0] of S15
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.8375 mm, 27.2500 mm): Pad 1 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.8375 mm, 27.7500 mm): Pad 2 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.8375 mm, 28.2500 mm): Pad 3 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.8375 mm, 30.7500 mm): Pad 8 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.8375 mm, 31.2500 mm): Pad 9 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.8375 mm, 31.7500 mm): Pad 10 [ROW_TOP] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 6.4000 mm): Track [ROW_BOT] on F.Cu, length 26.3500 mm
-    @(40.8375 mm, 32.2500 mm): Pad 11 [ROW_RIGHT] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(40.8375 mm, 29.7500 mm): Pad 6 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(40.8375 mm, 30.2500 mm): Pad 7 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(40.5000 mm, 13.5000 mm): PTH pad 1 [ROW_BOT] of S15
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(40.5000 mm, 18.0000 mm): PTH pad 2 [COL0] of S15
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(40.8375 mm, 27.2500 mm): Pad 1 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(40.8375 mm, 27.7500 mm): Pad 2 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(40.8375 mm, 28.2500 mm): Pad 3 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(40.8375 mm, 30.7500 mm): Pad 8 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(40.8375 mm, 5.0000 mm): Track [ROW_TOP] on F.Cu, length 26.7500 mm
-    @(40.8375 mm, 31.2500 mm): Pad 9 [<no net>] of U1 on F.Cu
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(36.6733 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 34.1733 mm
-    @(34.0000 mm, 131.0000 mm): PTH pad 2 [COL0] of S1
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(91.6548 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.2513 mm
-    @(94.5000 mm, 131.0000 mm): PTH pad 2 [COL3] of S4
-[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
-    Rule: board setup solder mask min width; error
-    @(91.6548 mm, 130.0000 mm): Track [ROW_TOP] on B.Cu, length 18.2513 mm
-    @(106.0000 mm, 131.0000 mm): PTH pad 2 [COL4] of S5
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; warning
-    @(120.4467 mm, 121.6771 mm): Via [GND] on F.Cu - B.Cu
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; warning
-    @(120.3732 mm, 27.2442 mm): Via [GND] on F.Cu - B.Cu
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; warning
-    @(25.9960 mm, 121.6248 mm): Via [GND] on F.Cu - B.Cu
-[via_dangling]: Via is not connected or connected on only one layer
-    Local override; warning
-    @(26.0746 mm, 27.3016 mm): Via [GND] on F.Cu - B.Cu
-[track_dangling]: Track has unconnected end
-    Local override; warning
-    @(129.7500 mm, 74.5000 mm): Track [COL2] on F.Cu, length 1.1500 mm
-[track_dangling]: Track has unconnected end
-    Local override; warning
-    @(16.7500 mm, 74.5000 mm): Track [COL2] on F.Cu, length 1.1500 mm
-[track_dangling]: Track has unconnected end
-    Local override; warning
-    @(129.7500 mm, 70.0000 mm): Track [ROW_RIGHT] on F.Cu, length 1.1500 mm
-[track_dangling]: Track has unconnected end
-    Local override; warning
-    @(16.7500 mm, 70.0000 mm): Track [ROW_LEFT] on F.Cu, length 1.1500 mm
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0642 mm)
+    @(128.5000 mm, 122.0000 mm): Track [RK_SYM] on F.Cu, length 5.5902 mm
+    @(128.5000 mm, 126.5000 mm): PTH pad 2 [GND] of SW2
+[silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(0.0000 mm, 140.0000 mm): Segment on Edge.Cuts
-    @(4.0000 mm, 42.0000 mm): PCB text 'MATRIX B.Cu bus + via-at-switch' on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0866 mm)
+    @(23.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(72.6200 mm, 21.2700 mm): Segment of J_GND on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(18.5000 mm, 29.0000 mm): PCB text 'BRT' on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    @(23.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(75.3800 mm, 21.2700 mm): Segment of J_GND on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(0.0000 mm, 140.0000 mm): Segment on Edge.Cuts
-    @(4.0000 mm, 134.0000 mm): PCB text 'KiCad headless · STM32G431 · OSB 1-20' on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    @(125.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(125.2500 mm, 24.0000 mm): Reference field of SW4
+[silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(0.0000 mm, 140.0000 mm): Segment on Edge.Cuts
-    @(4.0000 mm, 137.0000 mm): PCB text 'CMFD BOARD-A BEZEL MCU  #137' on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    @(125.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(123.0000 mm, 31.5000 mm): Segment of SW4 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(121.2500 mm, 116.0000 mm): Reference field of SW2
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    @(125.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(127.5000 mm, 25.0000 mm): Segment of SW4 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(123.5000 mm, 117.0000 mm): Segment of SW2 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    @(125.0000 mm, 125.0000 mm): Segment on Edge.Cuts
+    @(25.7500 mm, 123.5000 mm): Segment of SW1 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(16.7500 mm, 104.0000 mm): Reference field of S20
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    @(125.0000 mm, 125.0000 mm): Segment on Edge.Cuts
+    @(32.7500 mm, 125.0000 mm): Segment of SW1 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(14.5000 mm, 111.5000 mm): Segment of S20 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    @(125.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(125.2500 mm, 120.0000 mm): Reference field of SW2
+[silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(19.0000 mm, 105.0000 mm): Segment of S20 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    @(125.0000 mm, 125.0000 mm): Segment on Edge.Cuts
+    @(121.7500 mm, 123.5000 mm): Segment of SW2 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge
     Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(16.7500 mm, 68.0000 mm): Reference field of S18
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(14.5000 mm, 75.5000 mm): Segment of S18 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(19.0000 mm, 69.0000 mm): Segment of S18 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(121.2500 mm, 20.0000 mm): Reference field of SW4
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(119.0000 mm, 27.5000 mm): Segment of SW4 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
-    @(123.5000 mm, 21.0000 mm): Segment of SW4 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(16.7500 mm, 50.0000 mm): Reference field of S17
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(14.5000 mm, 57.5000 mm): Segment of S17 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(19.0000 mm, 51.0000 mm): Segment of S17 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(16.7500 mm, 32.0000 mm): Reference field of S16
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(14.5000 mm, 39.5000 mm): Segment of S16 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(19.0000 mm, 33.0000 mm): Segment of S16 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(16.7500 mm, 86.0000 mm): Reference field of S19
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(14.5000 mm, 93.5000 mm): Segment of S19 on F.Silkscreen
-[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
-    Rule: board setup constraints silk; warning
-    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
-    @(19.0000 mm, 87.0000 mm): Segment of S19 on F.Silkscreen
+    @(125.0000 mm, 23.0000 mm): Segment on Edge.Cuts
+    @(127.5000 mm, 121.0000 mm): Segment of SW2 on F.Silkscreen
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.4995 mm; actual 0.4500 mm)
+    Rule: board setup constraints; warning
+    @(74.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S13
+    @(74.0000 mm, 20.0000 mm): PTH pad 1 [GND] of J_GND
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.4995 mm; actual 0.3642 mm)
+    Rule: board setup constraints; warning
+    @(127.5000 mm, 127.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+    @(128.5000 mm, 126.5000 mm): PTH pad 2 [GND] of SW2
 [text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7000 mm)
     Rule: board setup constraints silk text height; warning
-    @(4.0000 mm, 42.0000 mm): PCB text 'MATRIX B.Cu bus + via-at-switch' on F.Silkscreen
-[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    @(22.0000 mm, 33.5000 mm): PCB text 'BRT' on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7000 mm)
     Rule: board setup constraints silk text height; warning
-    @(18.5000 mm, 29.0000 mm): PCB text 'BRT' on F.Silkscreen
-[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    @(22.0000 mm, 129.5000 mm): PCB text 'GAIN' on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7000 mm)
     Rule: board setup constraints silk text height; warning
-    @(18.5000 mm, 125.0000 mm): PCB text 'GAIN' on F.Silkscreen
-[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    @(22.0000 mm, 140.0000 mm): PCB text '1 pin per button' on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7000 mm)
     Rule: board setup constraints silk text height; warning
-    @(114.5000 mm, 29.0000 mm): PCB text 'CON' on F.Silkscreen
-[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    @(118.0000 mm, 33.5000 mm): PCB text 'CON' on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7000 mm)
     Rule: board setup constraints silk text height; warning
-    @(114.5000 mm, 125.0000 mm): PCB text 'SYM' on F.Silkscreen
-[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    @(118.0000 mm, 129.5000 mm): PCB text 'SYM' on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
     Rule: board setup constraints silk; warning
-    @(124.7500 mm, 121.0000 mm): Segment of SW2 on F.Silkscreen
-    @(125.0000 mm, 120.8500 mm): Reference field of H3
-[copper_sliver]: Copper sliver (F.Cu)
+    @(123.0000 mm, 127.5000 mm): Segment of SW2 on F.Silkscreen
+    @(126.1200 mm, 127.5000 mm): Segment of J_SYM on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(127.5000 mm, 125.1200 mm): Reference field of J_SYM
+    @(128.7500 mm, 125.0000 mm): Segment of SW2 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance
+    Rule: board setup constraints silk; warning
+    @(74.0000 mm, 17.6200 mm): Reference field of J_GND
+    @(73.7500 mm, 15.5000 mm): Segment of S13 on F.Silkscreen
+[silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
-[copper_sliver]: Copper sliver (F.Cu)
+    @(123.0000 mm, 127.5000 mm): Segment of SW2 on F.Silkscreen
+    @(127.5000 mm, 127.5000 mm): PTH pad 1 [RK_SYM] of J_SYM
+[silk_over_copper]: Silkscreen clipped by solder mask
     Local override; warning
+    @(127.5000 mm, 125.1200 mm): Reference field of J_SYM
+    @(128.5000 mm, 126.5000 mm): PTH pad 2 [GND] of SW2
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(74.0000 mm, 17.6200 mm): Reference field of J_GND
+    @(74.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S13
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(72.6200 mm, 18.6200 mm): Segment of J_GND on F.Silkscreen
+    @(74.0000 mm, 18.5000 mm): PTH pad 2 [GND] of S13
 
-** Found 10 unconnected pads **
+** Found 4 unconnected pads **
 [unconnected_items]: Missing connection between items
     Local override; error
-    @(22.0000 mm, 122.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
-    @(118.0000 mm, 122.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
+    @(26.0000 mm, 30.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
+    @(18.5000 mm, 35.0000 mm): Track [GND] on F.Cu, length 6.5000 mm
 [unconnected_items]: Missing connection between items
     Local override; error
-    @(78.0000 mm, 35.0800 mm): PTH pad 3 [GND] of J2
-    @(95.0000 mm, 32.5400 mm): PTH pad 3 [GND] of J1
+    @(74.0000 mm, 22.5400 mm): PTH pad 2 [GND] of J_GND
+    @(74.0000 mm, 18.5000 mm): Track [GND] on F.Cu, length 1.5000 mm
 [unconnected_items]: Missing connection between items
     Local override; error
-    @(78.0000 mm, 35.0800 mm): PTH pad 3 [GND] of J2
-    @(22.0000 mm, 26.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
+    @(122.0000 mm, 126.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
+    @(129.5000 mm, 119.5000 mm): PTH pad 2 [GND] of S6
 [unconnected_items]: Missing connection between items
     Local override; error
-    @(95.0000 mm, 32.5400 mm): PTH pad 3 [GND] of J1
-    @(97.5400 mm, 32.5400 mm): PTH pad 4 [GND] of J1
-[unconnected_items]: Missing connection between items
-    Local override; error
-    @(97.5400 mm, 32.5400 mm): PTH pad 4 [GND] of J1
-    @(121.2500 mm, 122.5000 mm): Track [GND] on F.Cu, length 1.1500 mm
-[unconnected_items]: Missing connection between items
-    Local override; error
-    @(118.0000 mm, 26.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
-    @(97.5400 mm, 32.5400 mm): PTH pad 4 [GND] of J1
-[unconnected_items]: Missing connection between items
-    Local override; error
-    @(49.1625 mm, 28.2500 mm): Pad 34 [SWDIO] of U1 on F.Cu
-    @(78.0000 mm, 30.0000 mm): PTH pad 1 [SWDIO] of J2
-[unconnected_items]: Missing connection between items
-    Local override; error
-    @(47.7500 mm, 25.8375 mm): Pad 37 [SWCLK] of U1 on F.Cu
-    @(78.0000 mm, 32.5400 mm): PTH pad 2 [SWCLK] of J2
-[unconnected_items]: Missing connection between items
-    Local override; error
-    @(95.0000 mm, 30.0000 mm): PTH pad 1 [3V3] of J1
-    @(78.0000 mm, 37.6200 mm): PTH pad 4 [3V3] of J2
-[unconnected_items]: Missing connection between items
-    Local override; error
-    @(97.5400 mm, 30.0000 mm): PTH pad 2 [3V3] of J1
-    @(95.0000 mm, 30.0000 mm): PTH pad 1 [3V3] of J1
+    @(129.5000 mm, 54.5000 mm): Track [GND] on F.Cu, length 19.5000 mm
+    @(122.0000 mm, 30.5000 mm): Track [GND] on F.Cu, length 6.5000 mm
 
 ** Found 0 Footprint errors **
 

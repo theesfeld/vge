@@ -1,7 +1,7 @@
 {
     "$schema": "https://schemas.kicad.org/drc.v1.json",
     "coordinate_units": "mm",
-    "date": "2026-07-22T09:59:52",
+    "date": "2026-07-22T10:10:38",
     "ignored_checks": [
         {
             "description": "Footprint has no courtyard defined",
@@ -34,234 +34,188 @@
     "unconnected_items": [],
     "violations": [
         {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.1944 mm)",
             "items": [
                 {
-                    "description": "Pad A1 [<no net>] of J4 on F.Cu",
+                    "description": "Pad A1 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 54.8,
-                        "y": 8.32
+                        "x": 71.8,
+                        "y": 46.32
                     },
-                    "uuid": "b3a30c7f-35b2-4a6e-ba2c-85177cc9f9c5"
+                    "uuid": "4e6bc495-e106-4076-9e91-00a597afdc6b"
                 },
                 {
-                    "description": "Pad B12 [<no net>] of J4 on F.Cu",
+                    "description": "NPTH pad of J3",
                     "pos": {
-                        "x": 54.8,
-                        "y": 8.32
+                        "x": 72.11,
+                        "y": 47.395
                     },
-                    "uuid": "568182a4-7760-49bb-affe-386dc4833e35"
+                    "uuid": "4de92c43-c905-4f4c-adae-23aa763b8edd"
                 }
             ],
             "severity": "error",
-            "type": "clearance"
+            "type": "hole_clearance"
         },
         {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.1944 mm)",
             "items": [
                 {
-                    "description": "PTH pad 1 [<no net>] of J11",
+                    "description": "Pad B12 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 28.0,
-                        "y": 58.0
+                        "x": 71.8,
+                        "y": 46.32
                     },
-                    "uuid": "63c6ba00-e95f-4dfe-bec1-e42874f67286"
+                    "uuid": "c4976304-1cbe-48e0-b2e0-31a369173ef9"
                 },
                 {
-                    "description": "PTH pad 15 [<no net>] of J10",
+                    "description": "NPTH pad of J3",
                     "pos": {
-                        "x": 28.0,
-                        "y": 57.78
+                        "x": 72.11,
+                        "y": 47.395
                     },
-                    "uuid": "1ea39191-cd06-48f9-ac12-a724db5bc581"
+                    "uuid": "4de92c43-c905-4f4c-adae-23aa763b8edd"
                 }
             ],
             "severity": "error",
-            "type": "clearance"
+            "type": "hole_clearance"
         },
         {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.2586 mm)",
             "items": [
                 {
-                    "description": "PTH pad 1 [<no net>] of J11",
+                    "description": "Pad A4 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 28.0,
-                        "y": 58.0
+                        "x": 72.6,
+                        "y": 46.32
                     },
-                    "uuid": "63c6ba00-e95f-4dfe-bec1-e42874f67286"
+                    "uuid": "36fb5a5b-2689-4296-a2bc-58a4d25c813f"
                 },
                 {
-                    "description": "PTH pad 15 [<no net>] of J10",
+                    "description": "NPTH pad of J3",
                     "pos": {
-                        "x": 28.0,
-                        "y": 57.78
+                        "x": 72.11,
+                        "y": 47.395
                     },
-                    "uuid": "1ea39191-cd06-48f9-ac12-a724db5bc581"
+                    "uuid": "4de92c43-c905-4f4c-adae-23aa763b8edd"
                 }
             ],
             "severity": "error",
-            "type": "clearance"
+            "type": "hole_clearance"
         },
         {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.2586 mm)",
             "items": [
                 {
-                    "description": "PTH pad 2 [<no net>] of J11",
+                    "description": "Pad B9 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 30.54,
-                        "y": 58.0
+                        "x": 72.6,
+                        "y": 46.32
                     },
-                    "uuid": "ab179821-eea7-4a88-83a4-3d15b23ba512"
+                    "uuid": "a11e86c9-353d-4826-96d9-80c976695ab8"
                 },
                 {
-                    "description": "PTH pad 16 [<no net>] of J10",
+                    "description": "NPTH pad of J3",
                     "pos": {
-                        "x": 30.54,
-                        "y": 57.78
+                        "x": 72.11,
+                        "y": 47.395
                     },
-                    "uuid": "2861512f-da77-44f4-b2e3-7b0da4405105"
+                    "uuid": "4de92c43-c905-4f4c-adae-23aa763b8edd"
                 }
             ],
             "severity": "error",
-            "type": "clearance"
+            "type": "hole_clearance"
         },
         {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.2586 mm)",
             "items": [
                 {
-                    "description": "PTH pad 2 [<no net>] of J11",
+                    "description": "Pad B4 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 30.54,
-                        "y": 58.0
+                        "x": 77.4,
+                        "y": 46.32
                     },
-                    "uuid": "ab179821-eea7-4a88-83a4-3d15b23ba512"
+                    "uuid": "e8ef2e14-b17f-42fe-982b-93231515fad3"
                 },
                 {
-                    "description": "PTH pad 16 [<no net>] of J10",
+                    "description": "NPTH pad of J3",
                     "pos": {
-                        "x": 30.54,
-                        "y": 57.78
+                        "x": 77.89,
+                        "y": 47.395
                     },
-                    "uuid": "2861512f-da77-44f4-b2e3-7b0da4405105"
+                    "uuid": "395fb15d-00db-4844-b80f-8df008b281be"
                 }
             ],
             "severity": "error",
-            "type": "clearance"
+            "type": "hole_clearance"
         },
         {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.2586 mm)",
             "items": [
                 {
-                    "description": "Pad A4 [<no net>] of J4 on F.Cu",
+                    "description": "Pad A9 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 55.6,
-                        "y": 8.32
+                        "x": 77.4,
+                        "y": 46.32
                     },
-                    "uuid": "4ec60c5f-e807-47bc-bee6-fc9ca62ac733"
+                    "uuid": "37aba981-3705-4c66-97c2-ce86267d2edb"
                 },
                 {
-                    "description": "Pad B9 [<no net>] of J4 on F.Cu",
+                    "description": "NPTH pad of J3",
                     "pos": {
-                        "x": 55.6,
-                        "y": 8.32
+                        "x": 77.89,
+                        "y": 47.395
                     },
-                    "uuid": "80340b29-dd64-4a5d-ac4f-7e86e1c46c65"
+                    "uuid": "395fb15d-00db-4844-b80f-8df008b281be"
                 }
             ],
             "severity": "error",
-            "type": "clearance"
+            "type": "hole_clearance"
         },
         {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.1944 mm)",
             "items": [
                 {
-                    "description": "PTH pad 3 [<no net>] of J11",
+                    "description": "Pad A12 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 28.0,
-                        "y": 60.54
+                        "x": 78.2,
+                        "y": 46.32
                     },
-                    "uuid": "112e9739-79df-4b3a-aac8-8dc8ef326ce7"
+                    "uuid": "11a4efc2-a1cf-4ebe-bd8f-8c59791c2d16"
                 },
                 {
-                    "description": "PTH pad 17 [<no net>] of J10",
+                    "description": "NPTH pad of J3",
                     "pos": {
-                        "x": 28.0,
-                        "y": 60.32
+                        "x": 77.89,
+                        "y": 47.395
                     },
-                    "uuid": "ed0ce75a-c023-4f73-af5c-10b5fca66830"
+                    "uuid": "395fb15d-00db-4844-b80f-8df008b281be"
                 }
             ],
             "severity": "error",
-            "type": "clearance"
+            "type": "hole_clearance"
         },
         {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "description": "Hole clearance violation (board setup constraints hole clearance 0.3000 mm; actual 0.1944 mm)",
             "items": [
                 {
-                    "description": "PTH pad 3 [<no net>] of J11",
+                    "description": "Pad B1 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 28.0,
-                        "y": 60.54
+                        "x": 78.2,
+                        "y": 46.32
                     },
-                    "uuid": "112e9739-79df-4b3a-aac8-8dc8ef326ce7"
+                    "uuid": "bf7255fd-bcb2-4893-ad02-3c45d4049de5"
                 },
                 {
-                    "description": "PTH pad 17 [<no net>] of J10",
+                    "description": "NPTH pad of J3",
                     "pos": {
-                        "x": 28.0,
-                        "y": 60.32
+                        "x": 77.89,
+                        "y": 47.395
                     },
-                    "uuid": "ed0ce75a-c023-4f73-af5c-10b5fca66830"
+                    "uuid": "395fb15d-00db-4844-b80f-8df008b281be"
                 }
             ],
             "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 4 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 60.54
-                    },
-                    "uuid": "bcac0acf-b738-49f6-bc3c-b79dc7546316"
-                },
-                {
-                    "description": "PTH pad 18 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 60.32
-                    },
-                    "uuid": "35a4fb18-b1ee-4808-a0bd-09894ed3d48e"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 4 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 60.54
-                    },
-                    "uuid": "bcac0acf-b738-49f6-bc3c-b79dc7546316"
-                },
-                {
-                    "description": "PTH pad 18 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 60.32
-                    },
-                    "uuid": "35a4fb18-b1ee-4808-a0bd-09894ed3d48e"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
+            "type": "hole_clearance"
         },
         {
             "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
@@ -269,110 +223,18 @@
                 {
                     "description": "Pad A1 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 18.8,
-                        "y": 8.32
+                        "x": 71.8,
+                        "y": 46.32
                     },
-                    "uuid": "d4138adb-7905-4cee-9166-ac591926011c"
+                    "uuid": "4e6bc495-e106-4076-9e91-00a597afdc6b"
                 },
                 {
                     "description": "Pad B12 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 18.8,
-                        "y": 8.32
+                        "x": 71.8,
+                        "y": 46.32
                     },
-                    "uuid": "04932077-4dd1-4a4e-a3c2-373de1c98e6c"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 5 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 63.08
-                    },
-                    "uuid": "a51d5aab-c152-487b-acd9-71131e2bbf1c"
-                },
-                {
-                    "description": "PTH pad 19 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 62.86
-                    },
-                    "uuid": "d8f41126-2a72-4afc-a507-9cc5c9822694"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 5 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 63.08
-                    },
-                    "uuid": "a51d5aab-c152-487b-acd9-71131e2bbf1c"
-                },
-                {
-                    "description": "PTH pad 19 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 62.86
-                    },
-                    "uuid": "d8f41126-2a72-4afc-a507-9cc5c9822694"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 6 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 63.08
-                    },
-                    "uuid": "518eec8f-a106-43ab-93f1-7098f87cd67e"
-                },
-                {
-                    "description": "PTH pad 20 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 62.86
-                    },
-                    "uuid": "c5477006-af82-4e10-8a46-bd5cf3359028"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 6 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 63.08
-                    },
-                    "uuid": "518eec8f-a106-43ab-93f1-7098f87cd67e"
-                },
-                {
-                    "description": "PTH pad 20 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 62.86
-                    },
-                    "uuid": "c5477006-af82-4e10-8a46-bd5cf3359028"
+                    "uuid": "c4976304-1cbe-48e0-b2e0-31a369173ef9"
                 }
             ],
             "severity": "error",
@@ -384,179 +246,110 @@
                 {
                     "description": "Pad A4 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 19.6,
-                        "y": 8.32
+                        "x": 72.6,
+                        "y": 46.32
                     },
-                    "uuid": "5d142f96-e3f4-49f1-9891-cb38fdfef482"
+                    "uuid": "36fb5a5b-2689-4296-a2bc-58a4d25c813f"
                 },
                 {
                     "description": "Pad B9 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 19.6,
-                        "y": 8.32
+                        "x": 72.6,
+                        "y": 46.32
                     },
-                    "uuid": "c0ecd59e-8374-4b5f-8490-3caadfefb443"
+                    "uuid": "a11e86c9-353d-4826-96d9-80c976695ab8"
                 }
             ],
             "severity": "error",
             "type": "clearance"
         },
         {
-            "description": "Hole clearance violation (board setup constraints hole clearance 0.1500 mm; actual 0.1337 mm)",
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
             "items": [
                 {
-                    "description": "PTH pad 14 [<no net>] of J11",
+                    "description": "PTH pad 13 [<no net>] of J10",
                     "pos": {
-                        "x": 30.54,
-                        "y": 73.24
+                        "x": 30.0,
+                        "y": 60.24
                     },
-                    "uuid": "4c786783-8d5c-4e2f-99a5-bc73e1c693fb"
+                    "uuid": "5b0ce84f-8b70-401a-81b1-ad9e0a5550d3"
                 },
                 {
-                    "description": "NPTH pad of J5",
+                    "description": "PTH pad 1 [<no net>] of J11",
                     "pos": {
-                        "x": 31.91,
-                        "y": 75.46
+                        "x": 30.0,
+                        "y": 62.0
                     },
-                    "uuid": "cdcb1354-a70f-4f39-b96e-0ffc1ee329a2"
-                }
-            ],
-            "severity": "error",
-            "type": "hole_clearance"
-        },
-        {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "Pad A9 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 60.4,
-                        "y": 8.32
-                    },
-                    "uuid": "bca7e0d5-441f-490f-a87b-1d583f02b7ee"
-                },
-                {
-                    "description": "Pad B4 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 60.4,
-                        "y": 8.32
-                    },
-                    "uuid": "0258d729-b650-45a8-8f36-aba4ee8c7a29"
+                    "uuid": "f26af3f8-76ef-49a2-9498-453d3c834146"
                 }
             ],
             "severity": "error",
             "type": "clearance"
         },
         {
-            "description": "Hole clearance violation (board setup constraints hole clearance 0.1500 mm; actual 0.1337 mm)",
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
             "items": [
                 {
-                    "description": "PTH pad 14 [<no net>] of J11",
+                    "description": "PTH pad 13 [<no net>] of J10",
                     "pos": {
-                        "x": 30.54,
-                        "y": 73.24
+                        "x": 30.0,
+                        "y": 60.24
                     },
-                    "uuid": "4c786783-8d5c-4e2f-99a5-bc73e1c693fb"
+                    "uuid": "5b0ce84f-8b70-401a-81b1-ad9e0a5550d3"
                 },
                 {
-                    "description": "NPTH pad of J5",
+                    "description": "PTH pad 1 [<no net>] of J11",
                     "pos": {
-                        "x": 31.91,
-                        "y": 75.46
+                        "x": 30.0,
+                        "y": 62.0
                     },
-                    "uuid": "cdcb1354-a70f-4f39-b96e-0ffc1ee329a2"
-                }
-            ],
-            "severity": "error",
-            "type": "hole_clearance"
-        },
-        {
-            "description": "Hole clearance violation (board setup constraints hole clearance 0.1500 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 16 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 75.78
-                    },
-                    "uuid": "df29d658-7d00-4eab-aa0f-d00dbf58e3f3"
-                },
-                {
-                    "description": "NPTH pad of J5",
-                    "pos": {
-                        "x": 31.91,
-                        "y": 75.46
-                    },
-                    "uuid": "cdcb1354-a70f-4f39-b96e-0ffc1ee329a2"
-                }
-            ],
-            "severity": "error",
-            "type": "hole_clearance"
-        },
-        {
-            "description": "Hole clearance violation (board setup constraints hole clearance 0.1500 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 16 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 75.78
-                    },
-                    "uuid": "df29d658-7d00-4eab-aa0f-d00dbf58e3f3"
-                },
-                {
-                    "description": "NPTH pad of J5",
-                    "pos": {
-                        "x": 31.91,
-                        "y": 75.46
-                    },
-                    "uuid": "cdcb1354-a70f-4f39-b96e-0ffc1ee329a2"
-                }
-            ],
-            "severity": "error",
-            "type": "hole_clearance"
-        },
-        {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "Pad A12 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 61.2,
-                        "y": 8.32
-                    },
-                    "uuid": "e4248e5d-ee34-4645-bd37-95949dde5cf8"
-                },
-                {
-                    "description": "Pad B1 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 61.2,
-                        "y": 8.32
-                    },
-                    "uuid": "73b6a2b6-04c7-45f3-ab84-66d42441d6c6"
+                    "uuid": "f26af3f8-76ef-49a2-9498-453d3c834146"
                 }
             ],
             "severity": "error",
             "type": "clearance"
         },
         {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1257 mm)",
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
             "items": [
                 {
-                    "description": "PTH pad 17 [<no net>] of J11",
+                    "description": "PTH pad 14 [<no net>] of J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 78.32
+                        "x": 32.54,
+                        "y": 60.24
                     },
-                    "uuid": "32faae8f-c952-4158-8f7f-0382c1f2c286"
+                    "uuid": "1515db9f-1a5a-4881-b842-a69f9b5a17d3"
                 },
                 {
-                    "description": "PTH pad 6 [<no net>] of J5",
+                    "description": "PTH pad 2 [<no net>] of J11",
                     "pos": {
-                        "x": 27.08,
-                        "y": 79.78
+                        "x": 32.54,
+                        "y": 62.0
                     },
-                    "uuid": "63131fde-1ef3-48d4-84b8-8f4921cbf6e8"
+                    "uuid": "eae49dca-0e48-409b-94cd-b3902320d11b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 14 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 60.24
+                    },
+                    "uuid": "1515db9f-1a5a-4881-b842-a69f9b5a17d3"
+                },
+                {
+                    "description": "PTH pad 2 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 62.0
+                    },
+                    "uuid": "eae49dca-0e48-409b-94cd-b3902320d11b"
                 }
             ],
             "severity": "error",
@@ -566,66 +359,43 @@
             "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
             "items": [
                 {
-                    "description": "PTH pad 17 [<no net>] of J11",
+                    "description": "PTH pad 15 [<no net>] of J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 78.32
+                        "x": 30.0,
+                        "y": 62.78
                     },
-                    "uuid": "32faae8f-c952-4158-8f7f-0382c1f2c286"
+                    "uuid": "aa92bb66-d3c1-4ced-8630-9ac6d951294b"
                 },
                 {
-                    "description": "PTH pad 7 [<no net>] of J5",
+                    "description": "PTH pad 1 [<no net>] of J11",
                     "pos": {
-                        "x": 28.096,
-                        "y": 78.0
+                        "x": 30.0,
+                        "y": 62.0
                     },
-                    "uuid": "bee63a33-9087-401a-87b6-71c2dd99dca9"
+                    "uuid": "f26af3f8-76ef-49a2-9498-453d3c834146"
                 }
             ],
             "severity": "error",
             "type": "clearance"
         },
         {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1257 mm)",
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
             "items": [
                 {
-                    "description": "PTH pad 17 [<no net>] of J11",
+                    "description": "PTH pad 15 [<no net>] of J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 78.32
+                        "x": 30.0,
+                        "y": 62.78
                     },
-                    "uuid": "32faae8f-c952-4158-8f7f-0382c1f2c286"
+                    "uuid": "aa92bb66-d3c1-4ced-8630-9ac6d951294b"
                 },
                 {
-                    "description": "PTH pad 6 [<no net>] of J5",
+                    "description": "PTH pad 3 [<no net>] of J11",
                     "pos": {
-                        "x": 27.08,
-                        "y": 79.78
+                        "x": 30.0,
+                        "y": 64.54
                     },
-                    "uuid": "63131fde-1ef3-48d4-84b8-8f4921cbf6e8"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 17 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 78.32
-                    },
-                    "uuid": "32faae8f-c952-4158-8f7f-0382c1f2c286"
-                },
-                {
-                    "description": "PTH pad 7 [<no net>] of J5",
-                    "pos": {
-                        "x": 28.096,
-                        "y": 78.0
-                    },
-                    "uuid": "bee63a33-9087-401a-87b6-71c2dd99dca9"
+                    "uuid": "1822ae07-1658-4c44-9c32-c2a7ec2ae6d8"
                 }
             ],
             "severity": "error",
@@ -635,20 +405,250 @@
             "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
             "items": [
                 {
-                    "description": "PTH pad 19 [<no net>] of J11",
+                    "description": "PTH pad 15 [<no net>] of J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 80.86
+                        "x": 30.0,
+                        "y": 62.78
                     },
-                    "uuid": "1d948e64-7a30-4aa2-917f-6be0735de10f"
+                    "uuid": "aa92bb66-d3c1-4ced-8630-9ac6d951294b"
                 },
                 {
-                    "description": "PTH pad 8 [<no net>] of J5",
+                    "description": "PTH pad 1 [<no net>] of J11",
                     "pos": {
-                        "x": 29.112,
-                        "y": 79.78
+                        "x": 30.0,
+                        "y": 62.0
                     },
-                    "uuid": "e119f83c-8551-4290-8461-8c4ad75291a4"
+                    "uuid": "f26af3f8-76ef-49a2-9498-453d3c834146"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 15 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.78
+                    },
+                    "uuid": "aa92bb66-d3c1-4ced-8630-9ac6d951294b"
+                },
+                {
+                    "description": "PTH pad 3 [<no net>] of J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 64.54
+                    },
+                    "uuid": "1822ae07-1658-4c44-9c32-c2a7ec2ae6d8"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 16 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 62.78
+                    },
+                    "uuid": "9abe9262-8598-4c56-8b0c-0155224ba209"
+                },
+                {
+                    "description": "PTH pad 2 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 62.0
+                    },
+                    "uuid": "eae49dca-0e48-409b-94cd-b3902320d11b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 16 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 62.78
+                    },
+                    "uuid": "9abe9262-8598-4c56-8b0c-0155224ba209"
+                },
+                {
+                    "description": "PTH pad 4 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 64.54
+                    },
+                    "uuid": "036dcd89-dc78-4939-9d4f-f245ac86f0db"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 16 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 62.78
+                    },
+                    "uuid": "9abe9262-8598-4c56-8b0c-0155224ba209"
+                },
+                {
+                    "description": "PTH pad 2 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 62.0
+                    },
+                    "uuid": "eae49dca-0e48-409b-94cd-b3902320d11b"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 16 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 62.78
+                    },
+                    "uuid": "9abe9262-8598-4c56-8b0c-0155224ba209"
+                },
+                {
+                    "description": "PTH pad 4 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 64.54
+                    },
+                    "uuid": "036dcd89-dc78-4939-9d4f-f245ac86f0db"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 17 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 65.32
+                    },
+                    "uuid": "9f17d7c0-924f-47a6-97b7-aa755e2de8d8"
+                },
+                {
+                    "description": "PTH pad 3 [<no net>] of J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 64.54
+                    },
+                    "uuid": "1822ae07-1658-4c44-9c32-c2a7ec2ae6d8"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 17 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 65.32
+                    },
+                    "uuid": "9f17d7c0-924f-47a6-97b7-aa755e2de8d8"
+                },
+                {
+                    "description": "PTH pad 5 [<no net>] of J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 67.08
+                    },
+                    "uuid": "f2025154-6025-433b-b888-a73ba029f95d"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 17 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 65.32
+                    },
+                    "uuid": "9f17d7c0-924f-47a6-97b7-aa755e2de8d8"
+                },
+                {
+                    "description": "PTH pad 3 [<no net>] of J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 64.54
+                    },
+                    "uuid": "1822ae07-1658-4c44-9c32-c2a7ec2ae6d8"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 17 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 65.32
+                    },
+                    "uuid": "9f17d7c0-924f-47a6-97b7-aa755e2de8d8"
+                },
+                {
+                    "description": "PTH pad 5 [<no net>] of J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 67.08
+                    },
+                    "uuid": "f2025154-6025-433b-b888-a73ba029f95d"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 18 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 65.32
+                    },
+                    "uuid": "127eb1d9-f466-4b8e-b891-0d21a8753b3a"
+                },
+                {
+                    "description": "PTH pad 4 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 64.54
+                    },
+                    "uuid": "036dcd89-dc78-4939-9d4f-f245ac86f0db"
                 }
             ],
             "severity": "error",
@@ -660,18 +660,41 @@
                 {
                     "description": "Pad A9 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 24.4,
-                        "y": 8.32
+                        "x": 77.4,
+                        "y": 46.32
                     },
-                    "uuid": "a2ada9cd-d3eb-4d59-aab7-0ecfb17f810e"
+                    "uuid": "37aba981-3705-4c66-97c2-ce86267d2edb"
                 },
                 {
                     "description": "Pad B4 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 24.4,
-                        "y": 8.32
+                        "x": 77.4,
+                        "y": 46.32
                     },
-                    "uuid": "c84de8f6-12c4-4de3-95db-db64bacaf4d8"
+                    "uuid": "e8ef2e14-b17f-42fe-982b-93231515fad3"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 18 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 65.32
+                    },
+                    "uuid": "127eb1d9-f466-4b8e-b891-0d21a8753b3a"
+                },
+                {
+                    "description": "PTH pad 6 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 67.08
+                    },
+                    "uuid": "718b8787-8da7-44d9-baba-d0579e077b3c"
                 }
             ],
             "severity": "error",
@@ -681,20 +704,43 @@
             "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
             "items": [
                 {
-                    "description": "PTH pad 19 [<no net>] of J11",
+                    "description": "PTH pad 18 [<no net>] of J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 80.86
+                        "x": 32.54,
+                        "y": 65.32
                     },
-                    "uuid": "1d948e64-7a30-4aa2-917f-6be0735de10f"
+                    "uuid": "127eb1d9-f466-4b8e-b891-0d21a8753b3a"
                 },
                 {
-                    "description": "PTH pad 6 [<no net>] of J5",
+                    "description": "PTH pad 4 [<no net>] of J11",
                     "pos": {
-                        "x": 27.08,
-                        "y": 79.78
+                        "x": 32.54,
+                        "y": 64.54
                     },
-                    "uuid": "63131fde-1ef3-48d4-84b8-8f4921cbf6e8"
+                    "uuid": "036dcd89-dc78-4939-9d4f-f245ac86f0db"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 18 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 65.32
+                    },
+                    "uuid": "127eb1d9-f466-4b8e-b891-0d21a8753b3a"
+                },
+                {
+                    "description": "PTH pad 6 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 67.08
+                    },
+                    "uuid": "718b8787-8da7-44d9-baba-d0579e077b3c"
                 }
             ],
             "severity": "error",
@@ -704,20 +750,43 @@
             "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
             "items": [
                 {
-                    "description": "PTH pad 19 [<no net>] of J11",
+                    "description": "PTH pad 19 [<no net>] of J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 80.86
+                        "x": 30.0,
+                        "y": 67.86
                     },
-                    "uuid": "1d948e64-7a30-4aa2-917f-6be0735de10f"
+                    "uuid": "47b251ef-e9b0-4c2b-9ffb-7167c7fc9390"
                 },
                 {
-                    "description": "PTH pad 8 [<no net>] of J5",
+                    "description": "PTH pad 5 [<no net>] of J11",
                     "pos": {
-                        "x": 29.112,
-                        "y": 79.78
+                        "x": 30.0,
+                        "y": 67.08
                     },
-                    "uuid": "e119f83c-8551-4290-8461-8c4ad75291a4"
+                    "uuid": "f2025154-6025-433b-b888-a73ba029f95d"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 19 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 67.86
+                    },
+                    "uuid": "47b251ef-e9b0-4c2b-9ffb-7167c7fc9390"
+                },
+                {
+                    "description": "PTH pad 7 [<no net>] of J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 69.62
+                    },
+                    "uuid": "91d78297-91b1-483b-965c-58155041605a"
                 }
             ],
             "severity": "error",
@@ -727,66 +796,20 @@
             "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
             "items": [
                 {
-                    "description": "PTH pad 19 [<no net>] of J11",
+                    "description": "PTH pad 19 [<no net>] of J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 80.86
+                        "x": 30.0,
+                        "y": 67.86
                     },
-                    "uuid": "1d948e64-7a30-4aa2-917f-6be0735de10f"
+                    "uuid": "47b251ef-e9b0-4c2b-9ffb-7167c7fc9390"
                 },
                 {
-                    "description": "PTH pad 6 [<no net>] of J5",
+                    "description": "PTH pad 5 [<no net>] of J11",
                     "pos": {
-                        "x": 27.08,
-                        "y": 79.78
+                        "x": 30.0,
+                        "y": 67.08
                     },
-                    "uuid": "63131fde-1ef3-48d4-84b8-8f4921cbf6e8"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1904 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 20 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 80.86
-                    },
-                    "uuid": "d0d183bf-a5e4-43cf-bdfa-bcfdbc2a402c"
-                },
-                {
-                    "description": "PTH pad 8 [<no net>] of J5",
-                    "pos": {
-                        "x": 29.112,
-                        "y": 79.78
-                    },
-                    "uuid": "e119f83c-8551-4290-8461-8c4ad75291a4"
-                }
-            ],
-            "severity": "error",
-            "type": "clearance"
-        },
-        {
-            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.1904 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 20 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 80.86
-                    },
-                    "uuid": "d0d183bf-a5e4-43cf-bdfa-bcfdbc2a402c"
-                },
-                {
-                    "description": "PTH pad 8 [<no net>] of J5",
-                    "pos": {
-                        "x": 29.112,
-                        "y": 79.78
-                    },
-                    "uuid": "e119f83c-8551-4290-8461-8c4ad75291a4"
+                    "uuid": "f2025154-6025-433b-b888-a73ba029f95d"
                 }
             ],
             "severity": "error",
@@ -798,18 +821,133 @@
                 {
                     "description": "Pad A12 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 25.2,
-                        "y": 8.32
+                        "x": 78.2,
+                        "y": 46.32
                     },
-                    "uuid": "3e1fa7db-91ea-4018-816d-cbd9a2853a11"
+                    "uuid": "11a4efc2-a1cf-4ebe-bd8f-8c59791c2d16"
                 },
                 {
                     "description": "Pad B1 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 25.2,
-                        "y": 8.32
+                        "x": 78.2,
+                        "y": 46.32
                     },
-                    "uuid": "6e6b0083-e0be-457b-8f71-f4e03ad06f27"
+                    "uuid": "bf7255fd-bcb2-4893-ad02-3c45d4049de5"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 19 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 67.86
+                    },
+                    "uuid": "47b251ef-e9b0-4c2b-9ffb-7167c7fc9390"
+                },
+                {
+                    "description": "PTH pad 7 [<no net>] of J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 69.62
+                    },
+                    "uuid": "91d78297-91b1-483b-965c-58155041605a"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 20 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 67.86
+                    },
+                    "uuid": "9526b813-926e-404e-8f25-fe8b6e490990"
+                },
+                {
+                    "description": "PTH pad 6 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 67.08
+                    },
+                    "uuid": "718b8787-8da7-44d9-baba-d0579e077b3c"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 20 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 67.86
+                    },
+                    "uuid": "9526b813-926e-404e-8f25-fe8b6e490990"
+                },
+                {
+                    "description": "PTH pad 8 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 69.62
+                    },
+                    "uuid": "2ae0c320-c77d-4cff-99ea-e1cbceacf3ce"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 20 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 67.86
+                    },
+                    "uuid": "9526b813-926e-404e-8f25-fe8b6e490990"
+                },
+                {
+                    "description": "PTH pad 6 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 67.08
+                    },
+                    "uuid": "718b8787-8da7-44d9-baba-d0579e077b3c"
+                }
+            ],
+            "severity": "error",
+            "type": "clearance"
+        },
+        {
+            "description": "Clearance violation ( clearance 0.2000 mm; actual 0.0600 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 20 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 67.86
+                    },
+                    "uuid": "9526b813-926e-404e-8f25-fe8b6e490990"
+                },
+                {
+                    "description": "PTH pad 8 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 69.62
+                    },
+                    "uuid": "2ae0c320-c77d-4cff-99ea-e1cbceacf3ce"
                 }
             ],
             "severity": "error",
@@ -819,530 +957,24 @@
             "description": "Courtyards overlap",
             "items": [
                 {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                },
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 22.0,
-                        "y": 78.0
-                    },
-                    "uuid": "ca8735c9-34cf-4fdd-83b4-cbaf3d897187"
-                }
-            ],
-            "severity": "error",
-            "type": "courtyards_overlap"
-        },
-        {
-            "description": "NPTH inside courtyard",
-            "items": [
-                {
-                    "description": "NPTH pad of J5",
-                    "pos": {
-                        "x": 31.91,
-                        "y": 75.46
-                    },
-                    "uuid": "cdcb1354-a70f-4f39-b96e-0ffc1ee329a2"
-                },
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                }
-            ],
-            "severity": "error",
-            "type": "npth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 5 [<no net>] of J5",
-                    "pos": {
-                        "x": 26.064,
-                        "y": 78.0
-                    },
-                    "uuid": "2bdf7cd5-9786-4fb3-9e04-4a1610121c1c"
-                },
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 6 [<no net>] of J5",
-                    "pos": {
-                        "x": 27.08,
-                        "y": 79.78
-                    },
-                    "uuid": "63131fde-1ef3-48d4-84b8-8f4921cbf6e8"
-                },
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 7 [<no net>] of J5",
-                    "pos": {
-                        "x": 28.096,
-                        "y": 78.0
-                    },
-                    "uuid": "bee63a33-9087-401a-87b6-71c2dd99dca9"
-                },
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 8 [<no net>] of J5",
-                    "pos": {
-                        "x": 29.112,
-                        "y": 79.78
-                    },
-                    "uuid": "e119f83c-8551-4290-8461-8c4ad75291a4"
-                },
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 11 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 70.7
-                    },
-                    "uuid": "1988e80d-bd78-4a73-84d0-5cb0e20d0402"
-                },
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 22.0,
-                        "y": 78.0
-                    },
-                    "uuid": "ca8735c9-34cf-4fdd-83b4-cbaf3d897187"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 12 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 70.7
-                    },
-                    "uuid": "6d5294f7-77ff-4689-b08a-4a51b22974dd"
-                },
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 22.0,
-                        "y": 78.0
-                    },
-                    "uuid": "ca8735c9-34cf-4fdd-83b4-cbaf3d897187"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 13 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 73.24
-                    },
-                    "uuid": "08f5ff16-cbdc-46a1-826d-824405bd5abb"
-                },
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 22.0,
-                        "y": 78.0
-                    },
-                    "uuid": "ca8735c9-34cf-4fdd-83b4-cbaf3d897187"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 14 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 73.24
-                    },
-                    "uuid": "4c786783-8d5c-4e2f-99a5-bc73e1c693fb"
-                },
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 22.0,
-                        "y": 78.0
-                    },
-                    "uuid": "ca8735c9-34cf-4fdd-83b4-cbaf3d897187"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 15 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 75.78
-                    },
-                    "uuid": "7f90b6d8-15c8-47ad-9443-c1a0fe722f09"
-                },
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 22.0,
-                        "y": 78.0
-                    },
-                    "uuid": "ca8735c9-34cf-4fdd-83b4-cbaf3d897187"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 16 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 75.78
-                    },
-                    "uuid": "df29d658-7d00-4eab-aa0f-d00dbf58e3f3"
-                },
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 22.0,
-                        "y": 78.0
-                    },
-                    "uuid": "ca8735c9-34cf-4fdd-83b4-cbaf3d897187"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 17 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 78.32
-                    },
-                    "uuid": "32faae8f-c952-4158-8f7f-0382c1f2c286"
-                },
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 22.0,
-                        "y": 78.0
-                    },
-                    "uuid": "ca8735c9-34cf-4fdd-83b4-cbaf3d897187"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 18 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 78.32
-                    },
-                    "uuid": "d927689c-2696-4cb1-839c-d4ad6bcbfa91"
-                },
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 22.0,
-                        "y": 78.0
-                    },
-                    "uuid": "ca8735c9-34cf-4fdd-83b4-cbaf3d897187"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 19 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 80.86
-                    },
-                    "uuid": "1d948e64-7a30-4aa2-917f-6be0735de10f"
-                },
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 22.0,
-                        "y": 78.0
-                    },
-                    "uuid": "ca8735c9-34cf-4fdd-83b4-cbaf3d897187"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 20 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 80.86
-                    },
-                    "uuid": "d0d183bf-a5e4-43cf-bdfa-bcfdbc2a402c"
-                },
-                {
-                    "description": "Footprint J5",
-                    "pos": {
-                        "x": 22.0,
-                        "y": 78.0
-                    },
-                    "uuid": "ca8735c9-34cf-4fdd-83b4-cbaf3d897187"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "Courtyards overlap",
-            "items": [
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                },
-                {
                     "description": "Footprint J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 40.0
+                        "x": 30.0,
+                        "y": 45.0
                     },
-                    "uuid": "d0732aad-ea35-4782-b10d-686cc64681a6"
+                    "uuid": "30879ba7-556d-43ea-80f7-636d2f30d2d2"
+                },
+                {
+                    "description": "Footprint J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.0
+                    },
+                    "uuid": "375ae616-2087-43f1-b562-db583813e76e"
                 }
             ],
             "severity": "error",
             "type": "courtyards_overlap"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 15 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 57.78
-                    },
-                    "uuid": "1ea39191-cd06-48f9-ac12-a724db5bc581"
-                },
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 16 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 57.78
-                    },
-                    "uuid": "2861512f-da77-44f4-b2e3-7b0da4405105"
-                },
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 17 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 60.32
-                    },
-                    "uuid": "ed0ce75a-c023-4f73-af5c-10b5fca66830"
-                },
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 18 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 60.32
-                    },
-                    "uuid": "35a4fb18-b1ee-4808-a0bd-09894ed3d48e"
-                },
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 19 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 62.86
-                    },
-                    "uuid": "d8f41126-2a72-4afc-a507-9cc5c9822694"
-                },
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
-        },
-        {
-            "description": "PTH inside courtyard",
-            "items": [
-                {
-                    "description": "PTH pad 20 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 62.86
-                    },
-                    "uuid": "c5477006-af82-4e10-8a46-bd5cf3359028"
-                },
-                {
-                    "description": "Footprint J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "31ec5457-a0eb-40e4-be38-a603e7eb77f5"
-                }
-            ],
-            "severity": "error",
-            "type": "pth_inside_courtyard"
         },
         {
             "description": "PTH inside courtyard",
@@ -1350,18 +982,18 @@
                 {
                     "description": "PTH pad 1 [<no net>] of J11",
                     "pos": {
-                        "x": 28.0,
-                        "y": 58.0
+                        "x": 30.0,
+                        "y": 62.0
                     },
-                    "uuid": "63c6ba00-e95f-4dfe-bec1-e42874f67286"
+                    "uuid": "f26af3f8-76ef-49a2-9498-453d3c834146"
                 },
                 {
                     "description": "Footprint J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 40.0
+                        "x": 30.0,
+                        "y": 45.0
                     },
-                    "uuid": "d0732aad-ea35-4782-b10d-686cc64681a6"
+                    "uuid": "30879ba7-556d-43ea-80f7-636d2f30d2d2"
                 }
             ],
             "severity": "error",
@@ -1373,18 +1005,18 @@
                 {
                     "description": "PTH pad 2 [<no net>] of J11",
                     "pos": {
-                        "x": 30.54,
-                        "y": 58.0
+                        "x": 32.54,
+                        "y": 62.0
                     },
-                    "uuid": "ab179821-eea7-4a88-83a4-3d15b23ba512"
+                    "uuid": "eae49dca-0e48-409b-94cd-b3902320d11b"
                 },
                 {
                     "description": "Footprint J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 40.0
+                        "x": 30.0,
+                        "y": 45.0
                     },
-                    "uuid": "d0732aad-ea35-4782-b10d-686cc64681a6"
+                    "uuid": "30879ba7-556d-43ea-80f7-636d2f30d2d2"
                 }
             ],
             "severity": "error",
@@ -1396,18 +1028,18 @@
                 {
                     "description": "PTH pad 3 [<no net>] of J11",
                     "pos": {
-                        "x": 28.0,
-                        "y": 60.54
+                        "x": 30.0,
+                        "y": 64.54
                     },
-                    "uuid": "112e9739-79df-4b3a-aac8-8dc8ef326ce7"
+                    "uuid": "1822ae07-1658-4c44-9c32-c2a7ec2ae6d8"
                 },
                 {
                     "description": "Footprint J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 40.0
+                        "x": 30.0,
+                        "y": 45.0
                     },
-                    "uuid": "d0732aad-ea35-4782-b10d-686cc64681a6"
+                    "uuid": "30879ba7-556d-43ea-80f7-636d2f30d2d2"
                 }
             ],
             "severity": "error",
@@ -1419,18 +1051,18 @@
                 {
                     "description": "PTH pad 4 [<no net>] of J11",
                     "pos": {
-                        "x": 30.54,
-                        "y": 60.54
+                        "x": 32.54,
+                        "y": 64.54
                     },
-                    "uuid": "bcac0acf-b738-49f6-bc3c-b79dc7546316"
+                    "uuid": "036dcd89-dc78-4939-9d4f-f245ac86f0db"
                 },
                 {
                     "description": "Footprint J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 40.0
+                        "x": 30.0,
+                        "y": 45.0
                     },
-                    "uuid": "d0732aad-ea35-4782-b10d-686cc64681a6"
+                    "uuid": "30879ba7-556d-43ea-80f7-636d2f30d2d2"
                 }
             ],
             "severity": "error",
@@ -1442,18 +1074,18 @@
                 {
                     "description": "PTH pad 5 [<no net>] of J11",
                     "pos": {
-                        "x": 28.0,
-                        "y": 63.08
+                        "x": 30.0,
+                        "y": 67.08
                     },
-                    "uuid": "a51d5aab-c152-487b-acd9-71131e2bbf1c"
+                    "uuid": "f2025154-6025-433b-b888-a73ba029f95d"
                 },
                 {
                     "description": "Footprint J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 40.0
+                        "x": 30.0,
+                        "y": 45.0
                     },
-                    "uuid": "d0732aad-ea35-4782-b10d-686cc64681a6"
+                    "uuid": "30879ba7-556d-43ea-80f7-636d2f30d2d2"
                 }
             ],
             "severity": "error",
@@ -1465,18 +1097,248 @@
                 {
                     "description": "PTH pad 6 [<no net>] of J11",
                     "pos": {
-                        "x": 30.54,
-                        "y": 63.08
+                        "x": 32.54,
+                        "y": 67.08
                     },
-                    "uuid": "518eec8f-a106-43ab-93f1-7098f87cd67e"
+                    "uuid": "718b8787-8da7-44d9-baba-d0579e077b3c"
                 },
                 {
                     "description": "Footprint J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 40.0
+                        "x": 30.0,
+                        "y": 45.0
                     },
-                    "uuid": "d0732aad-ea35-4782-b10d-686cc64681a6"
+                    "uuid": "30879ba7-556d-43ea-80f7-636d2f30d2d2"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad 7 [<no net>] of J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 69.62
+                    },
+                    "uuid": "91d78297-91b1-483b-965c-58155041605a"
+                },
+                {
+                    "description": "Footprint J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 45.0
+                    },
+                    "uuid": "30879ba7-556d-43ea-80f7-636d2f30d2d2"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad 8 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 69.62
+                    },
+                    "uuid": "2ae0c320-c77d-4cff-99ea-e1cbceacf3ce"
+                },
+                {
+                    "description": "Footprint J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 45.0
+                    },
+                    "uuid": "30879ba7-556d-43ea-80f7-636d2f30d2d2"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad 13 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 60.24
+                    },
+                    "uuid": "5b0ce84f-8b70-401a-81b1-ad9e0a5550d3"
+                },
+                {
+                    "description": "Footprint J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.0
+                    },
+                    "uuid": "375ae616-2087-43f1-b562-db583813e76e"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad 14 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 60.24
+                    },
+                    "uuid": "1515db9f-1a5a-4881-b842-a69f9b5a17d3"
+                },
+                {
+                    "description": "Footprint J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.0
+                    },
+                    "uuid": "375ae616-2087-43f1-b562-db583813e76e"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad 15 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.78
+                    },
+                    "uuid": "aa92bb66-d3c1-4ced-8630-9ac6d951294b"
+                },
+                {
+                    "description": "Footprint J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.0
+                    },
+                    "uuid": "375ae616-2087-43f1-b562-db583813e76e"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad 16 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 62.78
+                    },
+                    "uuid": "9abe9262-8598-4c56-8b0c-0155224ba209"
+                },
+                {
+                    "description": "Footprint J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.0
+                    },
+                    "uuid": "375ae616-2087-43f1-b562-db583813e76e"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad 17 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 65.32
+                    },
+                    "uuid": "9f17d7c0-924f-47a6-97b7-aa755e2de8d8"
+                },
+                {
+                    "description": "Footprint J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.0
+                    },
+                    "uuid": "375ae616-2087-43f1-b562-db583813e76e"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad 18 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 65.32
+                    },
+                    "uuid": "127eb1d9-f466-4b8e-b891-0d21a8753b3a"
+                },
+                {
+                    "description": "Footprint J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.0
+                    },
+                    "uuid": "375ae616-2087-43f1-b562-db583813e76e"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad 19 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 67.86
+                    },
+                    "uuid": "47b251ef-e9b0-4c2b-9ffb-7167c7fc9390"
+                },
+                {
+                    "description": "Footprint J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.0
+                    },
+                    "uuid": "375ae616-2087-43f1-b562-db583813e76e"
+                }
+            ],
+            "severity": "error",
+            "type": "pth_inside_courtyard"
+        },
+        {
+            "description": "PTH inside courtyard",
+            "items": [
+                {
+                    "description": "PTH pad 20 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 67.86
+                    },
+                    "uuid": "9526b813-926e-404e-8f25-fe8b6e490990"
+                },
+                {
+                    "description": "Footprint J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.0
+                    },
+                    "uuid": "375ae616-2087-43f1-b562-db583813e76e"
                 }
             ],
             "severity": "error",
@@ -1486,250 +1348,20 @@
             "description": "Front solder mask aperture bridges items with different nets",
             "items": [
                 {
-                    "description": "PTH pad 1 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "63c6ba00-e95f-4dfe-bec1-e42874f67286"
-                },
-                {
-                    "description": "PTH pad 15 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 57.78
-                    },
-                    "uuid": "1ea39191-cd06-48f9-ac12-a724db5bc581"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 2 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 58.0
-                    },
-                    "uuid": "ab179821-eea7-4a88-83a4-3d15b23ba512"
-                },
-                {
-                    "description": "PTH pad 16 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 57.78
-                    },
-                    "uuid": "2861512f-da77-44f4-b2e3-7b0da4405105"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Rear solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 2 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 58.0
-                    },
-                    "uuid": "ab179821-eea7-4a88-83a4-3d15b23ba512"
-                },
-                {
-                    "description": "PTH pad 16 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 57.78
-                    },
-                    "uuid": "2861512f-da77-44f4-b2e3-7b0da4405105"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Rear solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 15 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 57.78
-                    },
-                    "uuid": "1ea39191-cd06-48f9-ac12-a724db5bc581"
-                },
-                {
-                    "description": "PTH pad 1 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "63c6ba00-e95f-4dfe-bec1-e42874f67286"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 17 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 60.32
-                    },
-                    "uuid": "ed0ce75a-c023-4f73-af5c-10b5fca66830"
-                },
-                {
-                    "description": "PTH pad 3 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 60.54
-                    },
-                    "uuid": "112e9739-79df-4b3a-aac8-8dc8ef326ce7"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 6 [<no net>] of J5",
-                    "pos": {
-                        "x": 27.08,
-                        "y": 79.78
-                    },
-                    "uuid": "63131fde-1ef3-48d4-84b8-8f4921cbf6e8"
-                },
-                {
-                    "description": "PTH pad 19 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 80.86
-                    },
-                    "uuid": "1d948e64-7a30-4aa2-917f-6be0735de10f"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Rear solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 6 [<no net>] of J5",
-                    "pos": {
-                        "x": 27.08,
-                        "y": 79.78
-                    },
-                    "uuid": "63131fde-1ef3-48d4-84b8-8f4921cbf6e8"
-                },
-                {
-                    "description": "PTH pad 19 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 80.86
-                    },
-                    "uuid": "1d948e64-7a30-4aa2-917f-6be0735de10f"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Rear solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 7 [<no net>] of J5",
-                    "pos": {
-                        "x": 28.096,
-                        "y": 78.0
-                    },
-                    "uuid": "bee63a33-9087-401a-87b6-71c2dd99dca9"
-                },
-                {
-                    "description": "PTH pad 17 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 78.32
-                    },
-                    "uuid": "32faae8f-c952-4158-8f7f-0382c1f2c286"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 8 [<no net>] of J5",
-                    "pos": {
-                        "x": 29.112,
-                        "y": 79.78
-                    },
-                    "uuid": "e119f83c-8551-4290-8461-8c4ad75291a4"
-                },
-                {
-                    "description": "PTH pad 19 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 80.86
-                    },
-                    "uuid": "1d948e64-7a30-4aa2-917f-6be0735de10f"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Rear solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 8 [<no net>] of J5",
-                    "pos": {
-                        "x": 29.112,
-                        "y": 79.78
-                    },
-                    "uuid": "e119f83c-8551-4290-8461-8c4ad75291a4"
-                },
-                {
-                    "description": "PTH pad 19 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 80.86
-                    },
-                    "uuid": "1d948e64-7a30-4aa2-917f-6be0735de10f"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
                     "description": "Pad A9 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 24.4,
-                        "y": 8.32
+                        "x": 77.4,
+                        "y": 46.32
                     },
-                    "uuid": "a2ada9cd-d3eb-4d59-aab7-0ecfb17f810e"
+                    "uuid": "37aba981-3705-4c66-97c2-ce86267d2edb"
                 },
                 {
                     "description": "Pad B4 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 24.4,
-                        "y": 8.32
+                        "x": 77.4,
+                        "y": 46.32
                     },
-                    "uuid": "c84de8f6-12c4-4de3-95db-db64bacaf4d8"
+                    "uuid": "e8ef2e14-b17f-42fe-982b-93231515fad3"
                 }
             ],
             "severity": "error",
@@ -1741,41 +1373,18 @@
                 {
                     "description": "Pad A12 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 25.2,
-                        "y": 8.32
+                        "x": 78.2,
+                        "y": 46.32
                     },
-                    "uuid": "3e1fa7db-91ea-4018-816d-cbd9a2853a11"
+                    "uuid": "11a4efc2-a1cf-4ebe-bd8f-8c59791c2d16"
                 },
                 {
                     "description": "Pad B1 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 25.2,
-                        "y": 8.32
+                        "x": 78.2,
+                        "y": 46.32
                     },
-                    "uuid": "6e6b0083-e0be-457b-8f71-f4e03ad06f27"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Rear solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 3 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 60.54
-                    },
-                    "uuid": "112e9739-79df-4b3a-aac8-8dc8ef326ce7"
-                },
-                {
-                    "description": "PTH pad 17 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 60.32
-                    },
-                    "uuid": "ed0ce75a-c023-4f73-af5c-10b5fca66830"
+                    "uuid": "bf7255fd-bcb2-4893-ad02-3c45d4049de5"
                 }
             ],
             "severity": "error",
@@ -1787,179 +1396,18 @@
                 {
                     "description": "Pad B9 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 19.6,
-                        "y": 8.32
+                        "x": 72.6,
+                        "y": 46.32
                     },
-                    "uuid": "c0ecd59e-8374-4b5f-8490-3caadfefb443"
+                    "uuid": "a11e86c9-353d-4826-96d9-80c976695ab8"
                 },
                 {
                     "description": "Pad A4 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 19.6,
-                        "y": 8.32
+                        "x": 72.6,
+                        "y": 46.32
                     },
-                    "uuid": "5d142f96-e3f4-49f1-9891-cb38fdfef482"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 17 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 78.32
-                    },
-                    "uuid": "32faae8f-c952-4158-8f7f-0382c1f2c286"
-                },
-                {
-                    "description": "PTH pad 7 [<no net>] of J5",
-                    "pos": {
-                        "x": 28.096,
-                        "y": 78.0
-                    },
-                    "uuid": "bee63a33-9087-401a-87b6-71c2dd99dca9"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "Pad A1 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 54.8,
-                        "y": 8.32
-                    },
-                    "uuid": "b3a30c7f-35b2-4a6e-ba2c-85177cc9f9c5"
-                },
-                {
-                    "description": "Pad B12 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 54.8,
-                        "y": 8.32
-                    },
-                    "uuid": "568182a4-7760-49bb-affe-386dc4833e35"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "Pad A9 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 60.4,
-                        "y": 8.32
-                    },
-                    "uuid": "bca7e0d5-441f-490f-a87b-1d583f02b7ee"
-                },
-                {
-                    "description": "Pad B4 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 60.4,
-                        "y": 8.32
-                    },
-                    "uuid": "0258d729-b650-45a8-8f36-aba4ee8c7a29"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "Pad A12 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 61.2,
-                        "y": 8.32
-                    },
-                    "uuid": "e4248e5d-ee34-4645-bd37-95949dde5cf8"
-                },
-                {
-                    "description": "Pad B1 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 61.2,
-                        "y": 8.32
-                    },
-                    "uuid": "73b6a2b6-04c7-45f3-ab84-66d42441d6c6"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "NPTH pad of J5",
-                    "pos": {
-                        "x": 31.91,
-                        "y": 75.46
-                    },
-                    "uuid": "cdcb1354-a70f-4f39-b96e-0ffc1ee329a2"
-                },
-                {
-                    "description": "PTH pad 16 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 75.78
-                    },
-                    "uuid": "df29d658-7d00-4eab-aa0f-d00dbf58e3f3"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Rear solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "NPTH pad of J5",
-                    "pos": {
-                        "x": 31.91,
-                        "y": 75.46
-                    },
-                    "uuid": "cdcb1354-a70f-4f39-b96e-0ffc1ee329a2"
-                },
-                {
-                    "description": "PTH pad 16 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 75.78
-                    },
-                    "uuid": "df29d658-7d00-4eab-aa0f-d00dbf58e3f3"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "Pad B9 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 55.6,
-                        "y": 8.32
-                    },
-                    "uuid": "80340b29-dd64-4a5d-ac4f-7e86e1c46c65"
-                },
-                {
-                    "description": "Pad A4 [<no net>] of J4 on F.Cu",
-                    "pos": {
-                        "x": 55.6,
-                        "y": 8.32
-                    },
-                    "uuid": "4ec60c5f-e807-47bc-bee6-fc9ca62ac733"
+                    "uuid": "36fb5a5b-2689-4296-a2bc-58a4d25c813f"
                 }
             ],
             "severity": "error",
@@ -1971,18 +1419,18 @@
                 {
                     "description": "Pad A1 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 18.8,
-                        "y": 8.32
+                        "x": 71.8,
+                        "y": 46.32
                     },
-                    "uuid": "d4138adb-7905-4cee-9166-ac591926011c"
+                    "uuid": "4e6bc495-e106-4076-9e91-00a597afdc6b"
                 },
                 {
                     "description": "Pad B12 [<no net>] of J3 on F.Cu",
                     "pos": {
-                        "x": 18.8,
-                        "y": 8.32
+                        "x": 71.8,
+                        "y": 46.32
                     },
-                    "uuid": "04932077-4dd1-4a4e-a3c2-373de1c98e6c"
+                    "uuid": "c4976304-1cbe-48e0-b2e0-31a369173ef9"
                 }
             ],
             "severity": "error",
@@ -1990,735 +1438,681 @@
         },
         {
             "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 18 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 60.32
-                    },
-                    "uuid": "35a4fb18-b1ee-4808-a0bd-09894ed3d48e"
-                },
-                {
-                    "description": "PTH pad 4 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 60.54
-                    },
-                    "uuid": "bcac0acf-b738-49f6-bc3c-b79dc7546316"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 19 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 62.86
-                    },
-                    "uuid": "d8f41126-2a72-4afc-a507-9cc5c9822694"
-                },
-                {
-                    "description": "PTH pad 5 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 63.08
-                    },
-                    "uuid": "a51d5aab-c152-487b-acd9-71131e2bbf1c"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Rear solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 19 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 62.86
-                    },
-                    "uuid": "d8f41126-2a72-4afc-a507-9cc5c9822694"
-                },
-                {
-                    "description": "PTH pad 5 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 63.08
-                    },
-                    "uuid": "a51d5aab-c152-487b-acd9-71131e2bbf1c"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Front solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 20 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 62.86
-                    },
-                    "uuid": "c5477006-af82-4e10-8a46-bd5cf3359028"
-                },
-                {
-                    "description": "PTH pad 6 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 63.08
-                    },
-                    "uuid": "518eec8f-a106-43ab-93f1-7098f87cd67e"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Rear solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 20 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 62.86
-                    },
-                    "uuid": "c5477006-af82-4e10-8a46-bd5cf3359028"
-                },
-                {
-                    "description": "PTH pad 6 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 63.08
-                    },
-                    "uuid": "518eec8f-a106-43ab-93f1-7098f87cd67e"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Rear solder mask aperture bridges items with different nets",
-            "items": [
-                {
-                    "description": "PTH pad 4 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 60.54
-                    },
-                    "uuid": "bcac0acf-b738-49f6-bc3c-b79dc7546316"
-                },
-                {
-                    "description": "PTH pad 18 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 60.32
-                    },
-                    "uuid": "35a4fb18-b1ee-4808-a0bd-09894ed3d48e"
-                }
-            ],
-            "severity": "error",
-            "type": "solder_mask_bridge"
-        },
-        {
-            "description": "Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "Segment on Edge.Cuts",
-                    "pos": {
-                        "x": 0.0,
-                        "y": 90.0
-                    },
-                    "uuid": "9898d7d6-d97f-4e63-b07a-da343ada5939"
-                },
-                {
-                    "description": "PCB text 'MOD1 SoM mezzanine (RK3566 class)' on F.Silkscreen",
-                    "pos": {
-                        "x": 10.0,
-                        "y": 68.0
-                    },
-                    "uuid": "9dbf9713-da9d-4c53-9f83-81aa37bfe353"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0624 mm)",
-            "items": [
-                {
-                    "description": "Segment on Edge.Cuts",
-                    "pos": {
-                        "x": 0.0,
-                        "y": 90.0
-                    },
-                    "uuid": "9898d7d6-d97f-4e63-b07a-da343ada5939"
-                },
-                {
-                    "description": "PCB text 'USB-C · Eth · CAN · UART · 18650 · KiCad headless' on F.Silkscreen",
-                    "pos": {
-                        "x": 3.0,
-                        "y": 84.0
-                    },
-                    "uuid": "a4077d3f-0574-4b61-a996-ca8eceef9a26"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "Segment on Edge.Cuts",
-                    "pos": {
-                        "x": 120.0,
-                        "y": 90.0
-                    },
-                    "uuid": "4961bd96-1ae5-409e-8160-ffc354d4f8de"
-                },
-                {
-                    "description": "PCB text 'CMFD BOARD-B CARRIER + SoM  #137' on F.Silkscreen",
-                    "pos": {
-                        "x": 3.0,
-                        "y": 87.0
-                    },
-                    "uuid": "97c5685d-a182-4fe6-865f-c638cf5552c9"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_edge_clearance"
-        },
-        {
-            "description": "Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 15 [<no net>] of J10",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 57.78
-                    },
-                    "uuid": "1ea39191-cd06-48f9-ac12-a724db5bc581"
-                },
-                {
-                    "description": "PTH pad 1 [<no net>] of J11",
-                    "pos": {
-                        "x": 28.0,
-                        "y": 58.0
-                    },
-                    "uuid": "63c6ba00-e95f-4dfe-bec1-e42874f67286"
-                }
-            ],
-            "severity": "warning",
-            "type": "hole_to_hole"
-        },
-        {
-            "description": "Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "PTH pad 16 [<no net>] of J10",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 57.78
-                    },
-                    "uuid": "2861512f-da77-44f4-b2e3-7b0da4405105"
-                },
-                {
-                    "description": "PTH pad 2 [<no net>] of J11",
-                    "pos": {
-                        "x": 30.54,
-                        "y": 58.0
-                    },
-                    "uuid": "ab179821-eea7-4a88-83a4-3d15b23ba512"
-                }
-            ],
-            "severity": "warning",
-            "type": "hole_to_hole"
-        },
-        {
-            "description": "Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)",
             "items": [
                 {
                     "description": "PTH pad 3 [<no net>] of J11",
                     "pos": {
-                        "x": 28.0,
-                        "y": 60.54
+                        "x": 30.0,
+                        "y": 64.54
                     },
-                    "uuid": "112e9739-79df-4b3a-aac8-8dc8ef326ce7"
+                    "uuid": "1822ae07-1658-4c44-9c32-c2a7ec2ae6d8"
                 },
                 {
                     "description": "PTH pad 17 [<no net>] of J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 60.32
+                        "x": 30.0,
+                        "y": 65.32
                     },
-                    "uuid": "ed0ce75a-c023-4f73-af5c-10b5fca66830"
+                    "uuid": "9f17d7c0-924f-47a6-97b7-aa755e2de8d8"
                 }
             ],
-            "severity": "warning",
-            "type": "hole_to_hole"
+            "severity": "error",
+            "type": "solder_mask_bridge"
         },
         {
-            "description": "Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)",
+            "description": "Rear solder mask aperture bridges items with different nets",
             "items": [
                 {
-                    "description": "PTH pad 18 [<no net>] of J10",
+                    "description": "PTH pad 3 [<no net>] of J11",
                     "pos": {
-                        "x": 30.54,
-                        "y": 60.32
+                        "x": 30.0,
+                        "y": 64.54
                     },
-                    "uuid": "35a4fb18-b1ee-4808-a0bd-09894ed3d48e"
+                    "uuid": "1822ae07-1658-4c44-9c32-c2a7ec2ae6d8"
                 },
+                {
+                    "description": "PTH pad 17 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 65.32
+                    },
+                    "uuid": "9f17d7c0-924f-47a6-97b7-aa755e2de8d8"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Front solder mask aperture bridges items with different nets",
+            "items": [
                 {
                     "description": "PTH pad 4 [<no net>] of J11",
                     "pos": {
-                        "x": 30.54,
-                        "y": 60.54
+                        "x": 32.54,
+                        "y": 64.54
                     },
-                    "uuid": "bcac0acf-b738-49f6-bc3c-b79dc7546316"
+                    "uuid": "036dcd89-dc78-4939-9d4f-f245ac86f0db"
+                },
+                {
+                    "description": "PTH pad 18 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 65.32
+                    },
+                    "uuid": "127eb1d9-f466-4b8e-b891-0d21a8753b3a"
                 }
             ],
-            "severity": "warning",
-            "type": "hole_to_hole"
+            "severity": "error",
+            "type": "solder_mask_bridge"
         },
         {
-            "description": "Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)",
+            "description": "Rear solder mask aperture bridges items with different nets",
+            "items": [
+                {
+                    "description": "PTH pad 4 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 64.54
+                    },
+                    "uuid": "036dcd89-dc78-4939-9d4f-f245ac86f0db"
+                },
+                {
+                    "description": "PTH pad 18 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 65.32
+                    },
+                    "uuid": "127eb1d9-f466-4b8e-b891-0d21a8753b3a"
+                }
+            ],
+            "severity": "error",
+            "type": "solder_mask_bridge"
+        },
+        {
+            "description": "Rear solder mask aperture bridges items with different nets",
             "items": [
                 {
                     "description": "PTH pad 5 [<no net>] of J11",
                     "pos": {
-                        "x": 28.0,
-                        "y": 63.08
+                        "x": 30.0,
+                        "y": 67.08
                     },
-                    "uuid": "a51d5aab-c152-487b-acd9-71131e2bbf1c"
+                    "uuid": "f2025154-6025-433b-b888-a73ba029f95d"
                 },
                 {
                     "description": "PTH pad 19 [<no net>] of J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 62.86
+                        "x": 30.0,
+                        "y": 67.86
                     },
-                    "uuid": "d8f41126-2a72-4afc-a507-9cc5c9822694"
+                    "uuid": "47b251ef-e9b0-4c2b-9ffb-7167c7fc9390"
                 }
             ],
-            "severity": "warning",
-            "type": "hole_to_hole"
+            "severity": "error",
+            "type": "solder_mask_bridge"
         },
         {
-            "description": "Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)",
+            "description": "Front solder mask aperture bridges items with different nets",
             "items": [
                 {
                     "description": "PTH pad 6 [<no net>] of J11",
                     "pos": {
-                        "x": 30.54,
-                        "y": 63.08
+                        "x": 32.54,
+                        "y": 67.08
                     },
-                    "uuid": "518eec8f-a106-43ab-93f1-7098f87cd67e"
+                    "uuid": "718b8787-8da7-44d9-baba-d0579e077b3c"
                 },
                 {
                     "description": "PTH pad 20 [<no net>] of J10",
                     "pos": {
-                        "x": 30.54,
-                        "y": 62.86
+                        "x": 32.54,
+                        "y": 67.86
                     },
-                    "uuid": "c5477006-af82-4e10-8a46-bd5cf3359028"
+                    "uuid": "9526b813-926e-404e-8f25-fe8b6e490990"
                 }
             ],
-            "severity": "warning",
-            "type": "hole_to_hole"
+            "severity": "error",
+            "type": "solder_mask_bridge"
         },
         {
-            "description": "Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)",
+            "description": "Rear solder mask aperture bridges items with different nets",
             "items": [
                 {
-                    "description": "NPTH pad of J5",
+                    "description": "PTH pad 6 [<no net>] of J11",
                     "pos": {
-                        "x": 31.91,
-                        "y": 75.46
+                        "x": 32.54,
+                        "y": 67.08
                     },
-                    "uuid": "cdcb1354-a70f-4f39-b96e-0ffc1ee329a2"
+                    "uuid": "718b8787-8da7-44d9-baba-d0579e077b3c"
                 },
                 {
-                    "description": "PTH pad 16 [<no net>] of J11",
+                    "description": "PTH pad 20 [<no net>] of J10",
                     "pos": {
-                        "x": 30.54,
-                        "y": 75.78
+                        "x": 32.54,
+                        "y": 67.86
                     },
-                    "uuid": "df29d658-7d00-4eab-aa0f-d00dbf58e3f3"
+                    "uuid": "9526b813-926e-404e-8f25-fe8b6e490990"
                 }
             ],
-            "severity": "warning",
-            "type": "hole_to_hole"
+            "severity": "error",
+            "type": "solder_mask_bridge"
         },
         {
-            "description": "Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)",
+            "description": "Front solder mask aperture bridges items with different nets",
             "items": [
                 {
-                    "description": "PTH pad 17 [<no net>] of J11",
+                    "description": "PTH pad 19 [<no net>] of J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 78.32
+                        "x": 30.0,
+                        "y": 67.86
                     },
-                    "uuid": "32faae8f-c952-4158-8f7f-0382c1f2c286"
+                    "uuid": "47b251ef-e9b0-4c2b-9ffb-7167c7fc9390"
                 },
                 {
-                    "description": "PTH pad 7 [<no net>] of J5",
+                    "description": "PTH pad 5 [<no net>] of J11",
                     "pos": {
-                        "x": 28.096,
-                        "y": 78.0
+                        "x": 30.0,
+                        "y": 67.08
                     },
-                    "uuid": "bee63a33-9087-401a-87b6-71c2dd99dca9"
+                    "uuid": "f2025154-6025-433b-b888-a73ba029f95d"
                 }
             ],
-            "severity": "warning",
-            "type": "hole_to_hole"
+            "severity": "error",
+            "type": "solder_mask_bridge"
         },
         {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
+            "description": "Rear solder mask aperture bridges items with different nets",
             "items": [
                 {
-                    "description": "Segment of J10 on F.Silkscreen",
+                    "description": "PTH pad 1 [<no net>] of J11",
                     "pos": {
-                        "x": 26.62,
-                        "y": 41.27
+                        "x": 30.0,
+                        "y": 62.0
                     },
-                    "uuid": "d7e0d116-971e-4786-a0fa-2da96305a833"
+                    "uuid": "f26af3f8-76ef-49a2-9498-453d3c834146"
                 },
                 {
-                    "description": "Segment of J11 on F.Silkscreen",
+                    "description": "PTH pad 15 [<no net>] of J10",
                     "pos": {
-                        "x": 26.62,
-                        "y": 59.27
+                        "x": 30.0,
+                        "y": 62.78
                     },
-                    "uuid": "e546ee94-eb52-49c9-aea2-94ea427df176"
+                    "uuid": "aa92bb66-d3c1-4ced-8630-9ac6d951294b"
                 }
             ],
-            "severity": "warning",
-            "type": "silk_overlap"
+            "severity": "error",
+            "type": "solder_mask_bridge"
         },
         {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
+            "description": "Front solder mask aperture bridges items with different nets",
             "items": [
                 {
-                    "description": "Segment of J11 on F.Silkscreen",
+                    "description": "PTH pad 2 [<no net>] of J11",
                     "pos": {
-                        "x": 26.62,
-                        "y": 58.0
+                        "x": 32.54,
+                        "y": 62.0
                     },
-                    "uuid": "22117a50-663f-41a3-a350-cfe1ecaf41d1"
+                    "uuid": "eae49dca-0e48-409b-94cd-b3902320d11b"
                 },
                 {
-                    "description": "Segment of J10 on F.Silkscreen",
+                    "description": "PTH pad 16 [<no net>] of J10",
                     "pos": {
-                        "x": 26.62,
-                        "y": 41.27
+                        "x": 32.54,
+                        "y": 62.78
                     },
-                    "uuid": "d7e0d116-971e-4786-a0fa-2da96305a833"
+                    "uuid": "9abe9262-8598-4c56-8b0c-0155224ba209"
                 }
             ],
-            "severity": "warning",
-            "type": "silk_overlap"
+            "severity": "error",
+            "type": "solder_mask_bridge"
         },
         {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
+            "description": "Rear solder mask aperture bridges items with different nets",
             "items": [
                 {
-                    "description": "Segment of J11 on F.Silkscreen",
+                    "description": "PTH pad 2 [<no net>] of J11",
                     "pos": {
-                        "x": 26.62,
-                        "y": 59.27
+                        "x": 32.54,
+                        "y": 62.0
                     },
-                    "uuid": "49c0982d-0d08-432b-95c3-20ceb90c6efd"
+                    "uuid": "eae49dca-0e48-409b-94cd-b3902320d11b"
                 },
                 {
-                    "description": "Segment of J10 on F.Silkscreen",
+                    "description": "PTH pad 16 [<no net>] of J10",
                     "pos": {
-                        "x": 26.62,
-                        "y": 41.27
+                        "x": 32.54,
+                        "y": 62.78
                     },
-                    "uuid": "d7e0d116-971e-4786-a0fa-2da96305a833"
+                    "uuid": "9abe9262-8598-4c56-8b0c-0155224ba209"
                 }
             ],
-            "severity": "warning",
-            "type": "silk_overlap"
+            "severity": "error",
+            "type": "solder_mask_bridge"
         },
         {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
+            "description": "Front solder mask aperture bridges items with different nets",
             "items": [
                 {
-                    "description": "Segment of J11 on F.Silkscreen",
+                    "description": "PTH pad 15 [<no net>] of J10",
                     "pos": {
-                        "x": 26.62,
-                        "y": 56.62
+                        "x": 30.0,
+                        "y": 62.78
                     },
-                    "uuid": "4ed348e1-0872-4f91-a151-d823a9a52665"
+                    "uuid": "aa92bb66-d3c1-4ced-8630-9ac6d951294b"
                 },
                 {
-                    "description": "Segment of J10 on F.Silkscreen",
+                    "description": "PTH pad 1 [<no net>] of J11",
                     "pos": {
-                        "x": 26.62,
-                        "y": 41.27
+                        "x": 30.0,
+                        "y": 62.0
                     },
-                    "uuid": "d7e0d116-971e-4786-a0fa-2da96305a833"
+                    "uuid": "f26af3f8-76ef-49a2-9498-453d3c834146"
                 }
             ],
-            "severity": "warning",
-            "type": "silk_overlap"
+            "severity": "error",
+            "type": "solder_mask_bridge"
         },
         {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
+            "description": "Silkscreen clipped by board edge",
             "items": [
                 {
-                    "description": "Segment of J11 on F.Silkscreen",
+                    "description": "Segment on Edge.Cuts",
                     "pos": {
-                        "x": 31.92,
-                        "y": 56.62
+                        "x": 0.0,
+                        "y": 90.0
                     },
-                    "uuid": "05066a78-d0fe-46fa-a135-4e4569e842ba"
+                    "uuid": "567437c9-0098-42fc-9022-523f33069447"
                 },
                 {
-                    "description": "Segment of J10 on F.Silkscreen",
-                    "pos": {
-                        "x": 31.92,
-                        "y": 38.62
-                    },
-                    "uuid": "c2f7d255-f205-43c1-85d2-021f0095e1aa"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "Segment of J11 on F.Silkscreen",
-                    "pos": {
-                        "x": 29.27,
-                        "y": 56.62
-                    },
-                    "uuid": "37a5db26-31c4-4bcd-b877-cd61fd2fb880"
-                },
-                {
-                    "description": "Segment of J10 on F.Silkscreen",
-                    "pos": {
-                        "x": 31.92,
-                        "y": 38.62
-                    },
-                    "uuid": "c2f7d255-f205-43c1-85d2-021f0095e1aa"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "Segment of J5 on F.Silkscreen",
-                    "pos": {
-                        "x": 17.24,
-                        "y": 69.89
-                    },
-                    "uuid": "bfd83cd6-dd2e-4032-9153-31a7f3ce58ae"
-                },
-                {
-                    "description": "Segment of J11 on F.Silkscreen",
-                    "pos": {
-                        "x": 26.62,
-                        "y": 59.27
-                    },
-                    "uuid": "e546ee94-eb52-49c9-aea2-94ea427df176"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "Segment of J11 on F.Silkscreen",
-                    "pos": {
-                        "x": 31.92,
-                        "y": 56.62
-                    },
-                    "uuid": "05066a78-d0fe-46fa-a135-4e4569e842ba"
-                },
-                {
-                    "description": "Segment of J5 on F.Silkscreen",
-                    "pos": {
-                        "x": 17.24,
-                        "y": 69.89
-                    },
-                    "uuid": "bfd83cd6-dd2e-4032-9153-31a7f3ce58ae"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "Segment of J5 on F.Silkscreen",
-                    "pos": {
-                        "x": 17.195,
-                        "y": 85.86
-                    },
-                    "uuid": "4521ecf1-8e9b-407d-a8d8-d6a65befcd00"
-                },
-                {
-                    "description": "PCB text 'USB-C · Eth · CAN · UART · 18650 · KiCad headless' on F.Silkscreen",
+                    "description": "PCB text 'SoM / USB-C / ports  |  wire bezel pins here' on F.Silkscreen",
                     "pos": {
                         "x": 3.0,
                         "y": 84.0
                     },
-                    "uuid": "a4077d3f-0574-4b61-a996-ca8eceef9a26"
+                    "uuid": "14fee470-3707-4e09-908f-0b8ed1474cd0"
                 }
             ],
             "severity": "warning",
-            "type": "silk_overlap"
+            "type": "silk_edge_clearance"
         },
         {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
+            "description": "Silkscreen clipped by board edge",
             "items": [
                 {
-                    "description": "Segment of J11 on F.Silkscreen",
+                    "description": "Segment on Edge.Cuts",
                     "pos": {
-                        "x": 26.62,
-                        "y": 59.27
+                        "x": 0.0,
+                        "y": 90.0
                     },
-                    "uuid": "e546ee94-eb52-49c9-aea2-94ea427df176"
+                    "uuid": "567437c9-0098-42fc-9022-523f33069447"
                 },
                 {
-                    "description": "Segment of J10 on F.Silkscreen",
-                    "pos": {
-                        "x": 26.62,
-                        "y": 64.24
-                    },
-                    "uuid": "f2ffbf2e-0ca2-46ca-a809-00ad7bedacdd"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)",
-            "items": [
-                {
-                    "description": "Segment of J11 on F.Silkscreen",
-                    "pos": {
-                        "x": 31.92,
-                        "y": 56.62
-                    },
-                    "uuid": "05066a78-d0fe-46fa-a135-4e4569e842ba"
-                },
-                {
-                    "description": "Segment of J10 on F.Silkscreen",
-                    "pos": {
-                        "x": 26.62,
-                        "y": 64.24
-                    },
-                    "uuid": "f2ffbf2e-0ca2-46ca-a809-00ad7bedacdd"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0917 mm)",
-            "items": [
-                {
-                    "description": "Reference field of U11",
-                    "pos": {
-                        "x": 95.0,
-                        "y": 69.6
-                    },
-                    "uuid": "b9460dd1-714c-451f-bb9a-14a2fb381321"
-                },
-                {
-                    "description": "Polygon of U11 on F.Silkscreen",
-                    "pos": {
-                        "x": 93.55,
-                        "y": 70.49
-                    },
-                    "uuid": "cd385815-4ebd-4819-a0a5-261b527d20d3"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0664 mm)",
-            "items": [
-                {
-                    "description": "Reference field of U12",
-                    "pos": {
-                        "x": 108.0,
-                        "y": 69.6
-                    },
-                    "uuid": "37f897ab-93a4-4e62-b3a2-f1affa392401"
-                },
-                {
-                    "description": "Polygon of U12 on F.Silkscreen",
-                    "pos": {
-                        "x": 106.55,
-                        "y": 70.49
-                    },
-                    "uuid": "7cbb9492-1b48-4c32-982f-af2640061dbd"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_overlap"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "PCB text 'USB-C · Eth · CAN · UART · 18650 · KiCad headless' on F.Silkscreen",
-                    "pos": {
-                        "x": 3.0,
-                        "y": 84.0
-                    },
-                    "uuid": "a4077d3f-0574-4b61-a996-ca8eceef9a26"
-                },
-                {
-                    "description": "PTH pad 1 [<no net>] of H4",
-                    "pos": {
-                        "x": 6.0,
-                        "y": 84.0
-                    },
-                    "uuid": "f8e71277-fe09-444a-873f-d15fe7db579c"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "PCB text 'CMFD BOARD-B CARRIER + SoM  #137' on F.Silkscreen",
+                    "description": "PCB text 'CMFD BOARD-B  CARRIER' on F.Silkscreen",
                     "pos": {
                         "x": 3.0,
                         "y": 87.0
                     },
-                    "uuid": "97c5685d-a182-4fe6-865f-c638cf5552c9"
+                    "uuid": "aac3ec93-b3c1-4038-b76d-2dd9904799c5"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_edge_clearance"
+        },
+        {
+            "description": "Drilled hole too close to other hole (board setup constraints min 0.4995 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 15 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.78
+                    },
+                    "uuid": "aa92bb66-d3c1-4ced-8630-9ac6d951294b"
                 },
                 {
-                    "description": "PTH pad 1 [<no net>] of H4",
+                    "description": "PTH pad 1 [<no net>] of J11",
                     "pos": {
-                        "x": 6.0,
+                        "x": 30.0,
+                        "y": 62.0
+                    },
+                    "uuid": "f26af3f8-76ef-49a2-9498-453d3c834146"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Drilled hole too close to other hole (board setup constraints min 0.4995 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 16 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 62.78
+                    },
+                    "uuid": "9abe9262-8598-4c56-8b0c-0155224ba209"
+                },
+                {
+                    "description": "PTH pad 2 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 62.0
+                    },
+                    "uuid": "eae49dca-0e48-409b-94cd-b3902320d11b"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Drilled hole too close to other hole (board setup constraints min 0.4995 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 3 [<no net>] of J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 64.54
+                    },
+                    "uuid": "1822ae07-1658-4c44-9c32-c2a7ec2ae6d8"
+                },
+                {
+                    "description": "PTH pad 17 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 65.32
+                    },
+                    "uuid": "9f17d7c0-924f-47a6-97b7-aa755e2de8d8"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Drilled hole too close to other hole (board setup constraints min 0.4995 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 4 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 64.54
+                    },
+                    "uuid": "036dcd89-dc78-4939-9d4f-f245ac86f0db"
+                },
+                {
+                    "description": "PTH pad 18 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 65.32
+                    },
+                    "uuid": "127eb1d9-f466-4b8e-b891-0d21a8753b3a"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Drilled hole too close to other hole (board setup constraints min 0.4995 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 19 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 67.86
+                    },
+                    "uuid": "47b251ef-e9b0-4c2b-9ffb-7167c7fc9390"
+                },
+                {
+                    "description": "PTH pad 5 [<no net>] of J11",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 67.08
+                    },
+                    "uuid": "f2025154-6025-433b-b888-a73ba029f95d"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Drilled hole too close to other hole (board setup constraints min 0.4995 mm; actual 0.0000 mm)",
+            "items": [
+                {
+                    "description": "PTH pad 6 [<no net>] of J11",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 67.08
+                    },
+                    "uuid": "718b8787-8da7-44d9-baba-d0579e077b3c"
+                },
+                {
+                    "description": "PTH pad 20 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 67.86
+                    },
+                    "uuid": "9526b813-926e-404e-8f25-fe8b6e490990"
+                }
+            ],
+            "severity": "warning",
+            "type": "hole_to_hole"
+        },
+        {
+            "description": "Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7000 mm)",
+            "items": [
+                {
+                    "description": "PCB text 'SoM / USB-C / ports  |  wire bezel pins here' on F.Silkscreen",
+                    "pos": {
+                        "x": 3.0,
                         "y": 84.0
                     },
-                    "uuid": "f8e71277-fe09-444a-873f-d15fe7db579c"
+                    "uuid": "14fee470-3707-4e09-908f-0b8ed1474cd0"
+                }
+            ],
+            "severity": "warning",
+            "type": "text_height"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of J11 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 63.27
+                    },
+                    "uuid": "13e81401-6d72-48c4-98c3-372efee63747"
+                },
+                {
+                    "description": "Segment of J10 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 46.27
+                    },
+                    "uuid": "a58d569a-599b-46ec-8257-4b429fa6c02e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of J11 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 63.27
+                    },
+                    "uuid": "13e81401-6d72-48c4-98c3-372efee63747"
+                },
+                {
+                    "description": "Segment of J10 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 69.24
+                    },
+                    "uuid": "b7b22670-81c6-422e-a198-79771871f81b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of J10 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 69.24
+                    },
+                    "uuid": "b7b22670-81c6-422e-a198-79771871f81b"
+                },
+                {
+                    "description": "Segment of J11 on F.Silkscreen",
+                    "pos": {
+                        "x": 33.92,
+                        "y": 60.62
+                    },
+                    "uuid": "cc7ede41-1765-478e-942a-781ecb72ee32"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of J10 on F.Silkscreen",
+                    "pos": {
+                        "x": 33.92,
+                        "y": 43.62
+                    },
+                    "uuid": "6f84d582-88be-4155-9203-57bb11bc5fef"
+                },
+                {
+                    "description": "Segment of J11 on F.Silkscreen",
+                    "pos": {
+                        "x": 33.92,
+                        "y": 60.62
+                    },
+                    "uuid": "cc7ede41-1765-478e-942a-781ecb72ee32"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of J11 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 60.62
+                    },
+                    "uuid": "21de90fe-b4ea-4e88-aa75-765d36dcabd9"
+                },
+                {
+                    "description": "Segment of J10 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 46.27
+                    },
+                    "uuid": "a58d569a-599b-46ec-8257-4b429fa6c02e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of J10 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 46.27
+                    },
+                    "uuid": "a58d569a-599b-46ec-8257-4b429fa6c02e"
+                },
+                {
+                    "description": "Segment of J11 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 62.0
+                    },
+                    "uuid": "fc5edce0-fe2e-462b-9c03-3a3e3c96e37a"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of J11 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 63.27
+                    },
+                    "uuid": "0accfdcc-b439-4b69-b152-c94109fe9204"
+                },
+                {
+                    "description": "Segment of J10 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 46.27
+                    },
+                    "uuid": "a58d569a-599b-46ec-8257-4b429fa6c02e"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clearance",
+            "items": [
+                {
+                    "description": "Segment of J10 on F.Silkscreen",
+                    "pos": {
+                        "x": 33.92,
+                        "y": 43.62
+                    },
+                    "uuid": "6f84d582-88be-4155-9203-57bb11bc5fef"
+                },
+                {
+                    "description": "Segment of J11 on F.Silkscreen",
+                    "pos": {
+                        "x": 31.27,
+                        "y": 60.62
+                    },
+                    "uuid": "f6f6c174-b234-4655-9770-c0f8b01f9c65"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_overlap"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "PCB text 'SoM / USB-C / ports  |  wire bezel pins here' on F.Silkscreen",
+                    "pos": {
+                        "x": 3.0,
+                        "y": 84.0
+                    },
+                    "uuid": "14fee470-3707-4e09-908f-0b8ed1474cd0"
+                },
+                {
+                    "description": "NPTH pad of H4",
+                    "pos": {
+                        "x": 8.0,
+                        "y": 82.0
+                    },
+                    "uuid": "758721bd-ffc9-42c3-93c7-169816b524c2"
                 }
             ],
             "severity": "warning",
@@ -2728,20 +2122,20 @@
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Segment of J5 on F.Silkscreen",
+                    "description": "Segment of J10 on F.Silkscreen",
                     "pos": {
-                        "x": 17.24,
-                        "y": 69.89
+                        "x": 28.62,
+                        "y": 69.24
                     },
-                    "uuid": "bfd83cd6-dd2e-4032-9153-31a7f3ce58ae"
+                    "uuid": "b7b22670-81c6-422e-a198-79771871f81b"
                 },
                 {
-                    "description": "PTH pad 11 [<no net>] of J11",
+                    "description": "PTH pad 7 [<no net>] of J11",
                     "pos": {
-                        "x": 28.0,
-                        "y": 70.7
+                        "x": 30.0,
+                        "y": 69.62
                     },
-                    "uuid": "1988e80d-bd78-4a73-84d0-5cb0e20d0402"
+                    "uuid": "91d78297-91b1-483b-965c-58155041605a"
                 }
             ],
             "severity": "warning",
@@ -2751,20 +2145,20 @@
             "description": "Silkscreen clipped by solder mask",
             "items": [
                 {
-                    "description": "Segment of J5 on F.Silkscreen",
+                    "description": "Segment of J10 on F.Silkscreen",
                     "pos": {
-                        "x": 17.24,
-                        "y": 69.89
+                        "x": 28.62,
+                        "y": 69.24
                     },
-                    "uuid": "bfd83cd6-dd2e-4032-9153-31a7f3ce58ae"
+                    "uuid": "b7b22670-81c6-422e-a198-79771871f81b"
                 },
                 {
-                    "description": "PTH pad 12 [<no net>] of J11",
+                    "description": "PTH pad 8 [<no net>] of J11",
                     "pos": {
-                        "x": 30.54,
-                        "y": 70.7
+                        "x": 32.54,
+                        "y": 69.62
                     },
-                    "uuid": "6d5294f7-77ff-4689-b08a-4a51b22974dd"
+                    "uuid": "2ae0c320-c77d-4cff-99ea-e1cbceacf3ce"
                 }
             ],
             "severity": "warning",
@@ -2776,87 +2170,64 @@
                 {
                     "description": "Segment of J11 on F.Silkscreen",
                     "pos": {
-                        "x": 26.62,
-                        "y": 59.27
+                        "x": 28.62,
+                        "y": 60.62
                     },
-                    "uuid": "e546ee94-eb52-49c9-aea2-94ea427df176"
-                },
-                {
-                    "description": "PTH pad 5 [<no net>] of J5",
-                    "pos": {
-                        "x": 26.064,
-                        "y": 78.0
-                    },
-                    "uuid": "2bdf7cd5-9786-4fb3-9e04-4a1610121c1c"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Segment of J11 on F.Silkscreen",
-                    "pos": {
-                        "x": 26.62,
-                        "y": 59.27
-                    },
-                    "uuid": "e546ee94-eb52-49c9-aea2-94ea427df176"
-                },
-                {
-                    "description": "PTH pad 6 [<no net>] of J5",
-                    "pos": {
-                        "x": 27.08,
-                        "y": 79.78
-                    },
-                    "uuid": "63131fde-1ef3-48d4-84b8-8f4921cbf6e8"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Segment of J11 on F.Silkscreen",
-                    "pos": {
-                        "x": 31.92,
-                        "y": 56.62
-                    },
-                    "uuid": "05066a78-d0fe-46fa-a135-4e4569e842ba"
-                },
-                {
-                    "description": "NPTH pad of J5",
-                    "pos": {
-                        "x": 31.91,
-                        "y": 75.46
-                    },
-                    "uuid": "cdcb1354-a70f-4f39-b96e-0ffc1ee329a2"
-                }
-            ],
-            "severity": "warning",
-            "type": "silk_over_copper"
-        },
-        {
-            "description": "Silkscreen clipped by solder mask",
-            "items": [
-                {
-                    "description": "Reference field of J11",
-                    "pos": {
-                        "x": 29.27,
-                        "y": 55.62
-                    },
-                    "uuid": "576cbe35-6ba1-4131-8c19-88195421b6b7"
+                    "uuid": "21de90fe-b4ea-4e88-aa75-765d36dcabd9"
                 },
                 {
                     "description": "PTH pad 13 [<no net>] of J10",
                     "pos": {
-                        "x": 28.0,
-                        "y": 55.24
+                        "x": 30.0,
+                        "y": 60.24
                     },
-                    "uuid": "c3004107-2e9c-4dab-ba92-9fa36ca0e595"
+                    "uuid": "5b0ce84f-8b70-401a-81b1-ad9e0a5550d3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J11 on F.Silkscreen",
+                    "pos": {
+                        "x": 28.62,
+                        "y": 63.27
+                    },
+                    "uuid": "0accfdcc-b439-4b69-b152-c94109fe9204"
+                },
+                {
+                    "description": "PTH pad 15 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 62.78
+                    },
+                    "uuid": "aa92bb66-d3c1-4ced-8630-9ac6d951294b"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Segment of J11 on F.Silkscreen",
+                    "pos": {
+                        "x": 31.27,
+                        "y": 60.62
+                    },
+                    "uuid": "f6f6c174-b234-4655-9770-c0f8b01f9c65"
+                },
+                {
+                    "description": "PTH pad 14 [<no net>] of J10",
+                    "pos": {
+                        "x": 32.54,
+                        "y": 60.24
+                    },
+                    "uuid": "1515db9f-1a5a-4881-b842-a69f9b5a17d3"
                 }
             ],
             "severity": "warning",
@@ -2868,18 +2239,41 @@
                 {
                     "description": "Reference field of J11",
                     "pos": {
-                        "x": 29.27,
-                        "y": 55.62
+                        "x": 31.27,
+                        "y": 59.62
                     },
-                    "uuid": "576cbe35-6ba1-4131-8c19-88195421b6b7"
+                    "uuid": "52b28245-6dbf-4a66-b02b-284ffe2e4341"
+                },
+                {
+                    "description": "PTH pad 13 [<no net>] of J10",
+                    "pos": {
+                        "x": 30.0,
+                        "y": 60.24
+                    },
+                    "uuid": "5b0ce84f-8b70-401a-81b1-ad9e0a5550d3"
+                }
+            ],
+            "severity": "warning",
+            "type": "silk_over_copper"
+        },
+        {
+            "description": "Silkscreen clipped by solder mask",
+            "items": [
+                {
+                    "description": "Reference field of J11",
+                    "pos": {
+                        "x": 31.27,
+                        "y": 59.62
+                    },
+                    "uuid": "52b28245-6dbf-4a66-b02b-284ffe2e4341"
                 },
                 {
                     "description": "PTH pad 14 [<no net>] of J10",
                     "pos": {
-                        "x": 30.54,
-                        "y": 55.24
+                        "x": 32.54,
+                        "y": 60.24
                     },
-                    "uuid": "2a06753d-6cde-4e70-adae-299f2d725341"
+                    "uuid": "1515db9f-1a5a-4881-b842-a69f9b5a17d3"
                 }
             ],
             "severity": "warning",

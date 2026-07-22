@@ -1,5 +1,8 @@
 # CMFD hardware platform
 
+**Start here if you do not use KiCad:** [`ORDER-THIS.md`](ORDER-THIS.md)
+
+
 **Issue:** [#137](https://github.com/theesfeld/mfd/issues/137)  
 **Class:** Universal color multi-function display (F-16 CMFD *spirit* + late-80s industrial skin)  
 **Not:** flight-certified equipment · not an OEM F-16 LRU · not a single-board computer in a shell
