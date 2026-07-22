@@ -1,7 +1,0 @@
-Comment,Designator,Footprint,Quantity,Value
-Bezel OSB,J_BEZEL,PinHeader_1x20,1,OSB1-20
-Rockers,J_RK,PinHeader_1x04,1,rockers
-GND,J_GND,PinHeader_1x02,1,GND
-USB-C,J3,USB_C,1,USB-C
-RJ45,J5,RJ45,1,Eth
-SoM headers,J10 J11,2x10,2,SoM

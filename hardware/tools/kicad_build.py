@@ -197,6 +197,21 @@ def pin_offset(side, x, y, dist=5.5):
     return x + dist, y  # RIGHT
 
 
+def header_rot(side: str) -> float:
+    """Right-angle 1-pin header: plastic low, pin sticks outward (not taller than switch)."""
+    return {"TOP": 90.0, "BOT": 270.0, "LEFT": 180.0, "RIGHT": 0.0}[side]
+
+
+# Rocker centers: must stay fully outside 102 mm glass (frame band 0–23 / 125–148).
+# Cap size 12×9 → half 6×4.5; inset 16 keeps max extent at 22 < 23.
+ROCKER_POS = {
+    "GAIN": (16.0, 132.0),  # UL
+    "SYM": (132.0, 132.0),  # UR
+    "BRT": (16.0, 16.0),  # LL
+    "CON": (132.0, 16.0),  # LR
+}
+
+
 def build_board_a(path: Path):
     W, H = 148.0, 148.0
     cut = 102.0
@@ -210,20 +225,22 @@ def build_board_a(path: Path):
     edge_rect(board, cx0, cy0, cut, cut)
 
     silk(board, 22, H - 5, "CMFD BEZEL A", 1.0)
-    silk(board, 22, H - 8, "1 pin per button", 0.7)
+    silk(board, 22, H - 8, "RA headers outward — under frame", 0.65)
 
-    for i, (x, y) in enumerate([(16, 16), (W - 16, 16), (W - 16, H - 16), (16, H - 16)], 1):
+    # Mounting holes mid-side — free pure corners for GAIN/SYM/BRT/CON rockers
+    for i, (x, y) in enumerate([(12, 50), (W - 12, 50), (W - 12, H - 50), (12, H - 50)], 1):
         place(board, "MountingHole", "MountingHole_3.2mm_M3", f"H{i}", "M3", x, y)
 
     # One GND pin near bottom-center of frame (inside frame, outside glass)
     jgnd = place(
         board,
         "Connector_PinHeader_2.54mm",
-        "PinHeader_1x02_P2.54mm_Vertical",
+        "PinHeader_1x02_P2.54mm_Horizontal",
         "J_GND",
         "GND",
         W / 2,
-        20.0,
+        8.0,
+        270.0,
     )
     for pin in ("1", "2"):
         p = first_pad(jgnd, pin)
@@ -234,6 +251,7 @@ def build_board_a(path: Path):
         "# Bezel wiring (Board A)",
         "",
         "Each line is one Dupont wire (or harness).",
+        "Headers are **right-angle** (horizontal), pin toward outer edge — not taller than the 4.3 mm switch.",
         "",
         "| Button | Pin on board | Connect to MCU |",
         "|--------|--------------|----------------|",
@@ -259,11 +277,12 @@ def build_board_a(path: Path):
         jfp = place(
             board,
             "Connector_PinHeader_2.54mm",
-            "PinHeader_1x01_P2.54mm_Vertical",
+            "PinHeader_1x01_P2.54mm_Horizontal",
             f"J{oid}",
             f"OSB{oid}",
             hx,
             hy,
+            header_rot(side),
         )
         net = f"OSB{oid}"
         code = ensure_net(board, net)
@@ -285,29 +304,29 @@ def build_board_a(path: Path):
         sw[oid] = (sfp, side)
         lines.append(f"| OSB {oid} | **J{oid}** | any free GPIO (see firmware map) |")
 
-    # Rockers with local pins
-    rk = {
-        "GAIN": (26.0, H - 26.0),
-        "SYM": (W - 26.0, H - 26.0),
-        "BRT": (26.0, 26.0),
-        "CON": (W - 26.0, 26.0),
-    }
-    for i, (name, (x, y)) in enumerate(rk.items(), 1):
+    # Rockers with local pins — pure corners outside glass (see ROCKER_POS)
+    for i, (name, (x, y)) in enumerate(ROCKER_POS.items(), 1):
         sfp = place(board, "Button_Switch_THT", "SW_PUSH_6mm_H4.3mm", f"SW{i}", name, x, y)
-        # pin toward outer corner (away from glass / GND pads)
+        # pin toward outer corner (away from glass)
         hx = x + (-5.5 if x < W / 2 else 5.5)
         hy = y + (-5.5 if y < H / 2 else 5.5)
         hx = min(max(hx, 3.5), W - 3.5)
         hy = min(max(hy, 3.5), H - 3.5)
+        # corner → rotate header to point outward along the nearer outer edge
+        if abs(hx - x) >= abs(hy - y):
+            hrot = 180.0 if hx < x else 0.0
+        else:
+            hrot = 90.0 if hy > y else 270.0
 
         jfp = place(
             board,
             "Connector_PinHeader_2.54mm",
-            "PinHeader_1x01_P2.54mm_Vertical",
+            "PinHeader_1x01_P2.54mm_Horizontal",
             f"J_{name}",
             name,
             hx,
             hy,
+            hrot,
         )
         net = f"RK_{name}"
         code = ensure_net(board, net)
@@ -382,36 +401,93 @@ def build_board_a(path: Path):
 
 
 def build_board_b(path: Path):
+    """
+    Board B 120×90 — connectors on the FRONT edge (y≈0) to match rear-shell port band.
+
+    Case shell is 148×148; Board B sits centered → shell_x ≈ board_x + 14.
+    Case port windows (shell x): USB 30/48, RJ45 70, multipin 95, audio 115.
+    → board x: ~16, 34, 56, 81, 101.
+    M12 panel bulkheads are on the case wall (wired to J_M12); not mid-board.
+    """
     W, H = 120.0, 90.0
     board = new_board()
     ensure_net(board, "GND")
     edge_rect(board, 0, 0, W, H)
     silk(board, 3, H - 3, "CMFD BOARD-B  CARRIER", 1.1)
-    silk(board, 3, H - 6, "SoM / USB-C / ports  |  wire bezel pins here", 0.7)
+    silk(board, 3, H - 6, "ports on y=0 edge  |  wire bezel + M12 here", 0.65)
 
     for i, (x, y) in enumerate([(8, 8), (W - 8, 8), (W - 8, H - 8), (8, H - 8)], 1):
         place(board, "MountingHole", "MountingHole_3.2mm_M3", f"H{i}", "M3", x, y)
 
-    # 24-pin reception strip for bezel wires (1x20 + 1x4 rockers + space)
-    place(board, "Connector_PinHeader_2.54mm", "PinHeader_1x20_P2.54mm_Vertical", "J_BEZEL", "OSB1-20", 55, 18)
-    place(board, "Connector_PinHeader_2.54mm", "PinHeader_1x04_P2.54mm_Vertical", "J_RK", "rockers", 100, 18)
-    place(board, "Connector_PinHeader_2.54mm", "PinHeader_1x02_P2.54mm_Vertical", "J_GND", "GND", 110, 18)
+    # Bezel harness reception — back of board (y high), clear of front port edge
+    place(board, "Connector_PinHeader_2.54mm", "PinHeader_1x20_P2.54mm_Vertical", "J_BEZEL", "OSB1-20", 40, 78)
+    place(board, "Connector_PinHeader_2.54mm", "PinHeader_1x04_P2.54mm_Vertical", "J_RK", "rockers", 95, 78)
+    place(board, "Connector_PinHeader_2.54mm", "PinHeader_1x02_P2.54mm_Vertical", "J_GND", "GND", 110, 78)
 
+    # SoM mezzanine inboard
     place(board, "Connector_PinHeader_2.54mm", "PinHeader_2x10_P2.54mm_Vertical", "J10", "SoM_A", 30, 45)
     place(board, "Connector_PinHeader_2.54mm", "PinHeader_2x10_P2.54mm_Vertical", "J11", "SoM_B", 30, 62)
+
+    # --- Front edge (y small): face case port windows ---
+    # USB-C horizontal, mouth off the board edge (rot 270 → open toward -Y)
     place(
         board,
         "Connector_USB",
         "USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal",
         "J3",
-        "USB-C",
-        75,
-        50,
+        "USB-C charge",
+        16.0,
+        6.5,
+        270.0,
     )
-    place(board, "Connector_RJ", "RJ45_Amphenol_RJHSE5380", "J5", "Eth", 95, 70)
-    place(board, "Package_TO_SOT_SMD", "SOT-23-5", "U11", "3V3", 70, 72)
+    place(
+        board,
+        "Connector_USB",
+        "USB_C_Receptacle_GCT_USB4105-xx-A_16P_TopMnt_Horizontal",
+        "J4",
+        "USB-C data",
+        34.0,
+        6.5,
+        270.0,
+    )
+    # RJ45 mouth to edge
+    place(board, "Connector_RJ", "RJ45_Amphenol_RJHSE5380", "J5", "Eth", 56.0, 12.0, 270.0)
+    # CAN / multipin harness to M12 bulkheads on the case (not a mid-board USB)
+    place(
+        board,
+        "Connector_PinHeader_2.54mm",
+        "PinHeader_1x06_P2.54mm_Horizontal",
+        "J_M12",
+        "M12 harness",
+        81.0,
+        5.0,
+        270.0,
+    )
+    place(
+        board,
+        "Connector_PinHeader_2.54mm",
+        "PinHeader_1x04_P2.54mm_Horizontal",
+        "J6",
+        "CAN/UART",
+        96.0,
+        5.0,
+        270.0,
+    )
+    # Audio jack pads (case cutout) — use horizontal pin as stand-in land
+    place(
+        board,
+        "Connector_PinHeader_2.54mm",
+        "PinHeader_1x03_P2.54mm_Horizontal",
+        "J7",
+        "Audio",
+        108.0,
+        5.0,
+        270.0,
+    )
+
+    place(board, "Package_TO_SOT_SMD", "SOT-23-5", "U11", "3V3", 70, 55)
     for i in range(4):
-        place(board, "Capacitor_SMD", "C_0603_1608Metric", f"C{i+1}", "100nF", 55 + i * 4, 80)
+        place(board, "Capacitor_SMD", "C_0603_1608Metric", f"C{i+1}", "100nF", 55 + i * 4, 68)
 
     path.parent.mkdir(parents=True, exist_ok=True)
     pcbnew.SaveBoard(str(path), board)

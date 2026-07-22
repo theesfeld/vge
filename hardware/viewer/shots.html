@@ -103,15 +103,16 @@
       boardB: {
         w: 120, h: 90, thickness: 1.6,
         holes: [[8,8],[112,8],[112,82],[8,82]],
-        j_bezel: [55, 18], som_a: [30, 45], som_b: [30, 62],
-        usbc: [75, 50], rj45: [95, 70],
+        j_bezel: [40, 78], som_a: [30, 45], som_b: [30, 62],
+        usbc: [16, 6.5], usbc2: [34, 6.5], rj45: [56, 12],
+        m12_harness: [81, 5], can: [96, 5], audio: [108, 5],
       },
       osb_inset: 14, osb_span: 78,
-      rockers: { GAIN:[26,122], SYM:[122,122], BRT:[26,26], CON:[122,26] },
+      rockers: { GAIN:[16,132], SYM:[132,132], BRT:[16,16], CON:[132,16] },
       bom: {
         lcd: { xy: 102, z: 3.2 }, cell_d: 18.2, cell_h: 65,
         tray: { w: 42, h: 78, z: 22 },
-        osb_cap: { xy: 12, z: 6 }, rocker_cap: { w: 14, h: 10, z: 5 },
+        osb_cap: { xy: 12, z: 6 }, rocker_cap: { w: 12, h: 9, z: 5 },
       },
       colors: {
         silver: 0xb8c6d6, blue: 0x2a6db5, grey: 0x6a7585,
@@ -365,11 +366,13 @@
       const sh = box(32, 2, 22, mat.shield);
       sh.position.set(sa.x, B.thickness / 2 + 4.2, sa.z);
       g.add(sh);
-      // USB-C
-      const usb = box(9, 3.2, 7, mat.pin);
-      const u = pcbXZ(B.usbc[0], B.usbc[1], B.w, B.h);
-      usb.position.set(u.x, B.thickness / 2 + 1.8, u.z);
-      g.add(usb);
+      // USB-C ×2 on front edge
+      for (const key of ["usbc", "usbc2"]) {
+        const usb = box(9, 3.2, 7, mat.pin);
+        const u = pcbXZ(B[key][0], B[key][1], B.w, B.h);
+        usb.position.set(u.x, B.thickness / 2 + 1.8, u.z);
+        g.add(usb);
+      }
       // RJ45
       const rj = box(16, 13, 21, mat.sw);
       const r = pcbXZ(B.rj45[0], B.rj45[1], B.w, B.h);

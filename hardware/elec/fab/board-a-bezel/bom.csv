@@ -1,4 +1,0 @@
-Comment,Designator,Footprint,Quantity,Value
-Tactile 6x6,S1-S20 SW1-SW4,SW_PUSH_6mm,24,switch
-Header 1pin,J1-J20 J_GAIN J_SYM J_BRT J_CON,PinHeader_1x01,24,pin
-GND header,J_GND,PinHeader_1x02,1,GND

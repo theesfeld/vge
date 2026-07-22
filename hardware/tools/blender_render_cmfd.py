@@ -30,7 +30,19 @@ OSB_SPAN = 78.0
 CUT = 102.0
 BOARD_A_T = 1.6
 BOARD_B_W, BOARD_B_H = 120.0, 90.0
-ROCKERS = {"GAIN": (26.0, 122.0), "SYM": (122.0, 122.0), "BRT": (26.0, 26.0), "CON": (122.0, 26.0)}
+# Pure corners — fully outside 102 mm glass (matches kicad_build.ROCKER_POS)
+ROCKERS = {"GAIN": (16.0, 132.0), "SYM": (132.0, 132.0), "BRT": (16.0, 16.0), "CON": (132.0, 16.0)}
+# Board B front-edge ports (board mm, y near 0 → case shell_x = board_x + 14)
+BOARD_B_PORTS = {
+    "usb_c1": (16.0, 6.5),
+    "usb_c2": (34.0, 6.5),
+    "rj45": (56.0, 12.0),
+    "m12_harness": (81.0, 5.0),
+    "can": (96.0, 5.0),
+    "audio": (108.0, 5.0),
+}
+# M12 panel bulkheads on case left wall (shell mm)
+M12_SHELL = [(0.0, 28.0, 28.0), (0.0, 56.0, 28.0), (0.0, 84.0, 28.0)]
 
 
 # ---------------------------------------------------------------------------
@@ -102,6 +114,7 @@ def M():
         "rj45": make_mat("RJ45", (0.45, 0.35, 0.10), 0.1, 0.55),
         "floor": make_mat("Floor", (0.06, 0.06, 0.07), 0.04, 0.9),
         "hdr_plastic": make_mat("HdrPlastic", (0.04, 0.04, 0.04), 0.04, 0.6),
+        "metal": make_mat("Metal", (0.50, 0.52, 0.55), 0.9, 0.28),
     }
 
 
@@ -239,6 +252,36 @@ def to_center(x, y):
     return x - OUTER / 2.0, y - OUTER / 2.0
 
 
+def ra_header_mm(name, x, y, z_board, m, side):
+    """
+    Right-angle 1-pin header: plastic ~2.5 mm tall (below switch 4.3 mm),
+    pin sticks outward horizontally — never a tall tower next to the button.
+    """
+    cx, cy = to_center(x, y)
+    z = z_board + BOARD_A_T / 2 + 1.25
+    # plastic body
+    box_mm(f"{name}_body", (2.5, 2.5, 2.5), (cx, cy, z), m["hdr_plastic"])
+    # pin bar outward
+    if side == "TOP":
+        box_mm(f"{name}_pin", (0.6, 6.0, 0.6), (cx, cy + 3.5, z), m["pin"])
+    elif side == "BOT":
+        box_mm(f"{name}_pin", (0.6, 6.0, 0.6), (cx, cy - 3.5, z), m["pin"])
+    elif side == "LEFT":
+        box_mm(f"{name}_pin", (6.0, 0.6, 0.6), (cx - 3.5, cy, z), m["pin"])
+    else:
+        box_mm(f"{name}_pin", (6.0, 0.6, 0.6), (cx + 3.5, cy, z), m["pin"])
+
+
+def osb_side(oid):
+    if 1 <= oid <= 5:
+        return "TOP"
+    if 6 <= oid <= 10:
+        return "RIGHT"
+    if 11 <= oid <= 15:
+        return "BOT"
+    return "LEFT"
+
+
 # ---------------------------------------------------------------------------
 # Geometry builders
 # ---------------------------------------------------------------------------
@@ -258,15 +301,12 @@ def build_board_a(z_mm, m):
         box_mm(name, size, loc, m["fr4"])
 
     z_sw = z_mm + t / 2 + 2.15
-    z_pin = z_mm + t / 2 + 4.0
     for oid, x, y in osb_centers():
         cx, cy = to_center(x, y)
         box_mm(f"SW{oid}", (6.0, 6.0, 3.5), (cx, cy, z_sw), m["switch"])
         box_mm(f"ST{oid}", (3.2, 3.2, 1.2), (cx, cy, z_sw + 2.0), m["stem"])
         px, py = pin_side_offset(oid, x, y)
-        pcx, pcy = to_center(px, py)
-        box_mm(f"PN{oid}", (1.6, 1.6, 8.0), (pcx, pcy, z_pin), m["pin"])
-        # pad ring under switch
+        ra_header_mm(f"PN{oid}", px, py, z_mm, m, osb_side(oid))
         box_mm(f"PD{oid}", (7.2, 7.2, 0.1), (cx, cy, z_mm + t / 2 + 0.05), m["pad"])
 
     for name, (x, y) in ROCKERS.items():
@@ -275,28 +315,65 @@ def build_board_a(z_mm, m):
         box_mm(f"RKST_{name}", (3.2, 3.2, 1.2), (cx, cy, z_sw + 2.0), m["stem"])
         hx = x + (-5.5 if x < 74 else 5.5)
         hy = y + (-5.5 if y < 74 else 5.5)
-        box_mm(f"RKPN_{name}", (1.6, 1.6, 8.0), (hx - OUTER / 2, hy - OUTER / 2, z_pin), m["pin"])
+        # outward side for corner
+        if abs(hx - x) >= abs(hy - y):
+            side = "LEFT" if hx < x else "RIGHT"
+        else:
+            side = "TOP" if hy > y else "BOT"
+        ra_header_mm(f"RKPN_{name}", hx, hy, z_mm, m, side)
 
 
 def build_board_b(z_mm, m):
+    """Board B 120×90 — ports on front edge (local y negative = case port wall)."""
+    # local coords: board centered at origin; KiCad y=0 is front edge → local y = y - 45
+    def bxy(kx, ky):
+        return kx - BOARD_B_W / 2.0, ky - BOARD_B_H / 2.0
+
     box_mm("BoardB", (BOARD_B_W, BOARD_B_H, 1.6), (0, 0, z_mm), m["fr4"])
-    # SoM footprint + shield can
-    box_mm("SoM", (45, 32, 2.5), (-12, 8, z_mm + 2.0), m["som"])
-    box_mm("Shield", (40, 28, 2.0), (-12, 8, z_mm + 4.0), m["shield"])
-    # USB-C
-    box_mm("USBC", (9.0, 7.5, 3.2), (28, -32, z_mm + 2.2), m["usb"])
+    # SoM inboard
+    sx, sy = bxy(30, 50)
+    box_mm("SoM", (45, 32, 2.5), (sx, sy, z_mm + 2.0), m["som"])
+    box_mm("Shield", (40, 28, 2.0), (sx, sy, z_mm + 4.0), m["shield"])
+
+    # USB-C ×2 on front edge (mouth toward -Y)
+    for i, key in enumerate(("usb_c1", "usb_c2")):
+        kx, ky = BOARD_B_PORTS[key]
+        x, y = bxy(kx, ky)
+        box_mm(f"USBC{i}", (9.0, 7.5, 3.2), (x, y, z_mm + 2.0), m["usb"])
+        # shell mouth sticking past edge
+        box_mm(f"USBC{i}_mouth", (8.5, 2.0, 2.8), (x, y - 4.5, z_mm + 2.0), m["metal"])
+
     # RJ45
-    box_mm("RJ45", (16, 21, 13), (40, 15, z_mm + 7.0), m["rj45"])
-    # 2×20 + 1×20 header banks (bezel wires)
+    rx, ry = bxy(*BOARD_B_PORTS["rj45"])
+    box_mm("RJ45", (16, 14, 12), (rx, ry, z_mm + 6.5), m["rj45"])
+    box_mm("RJ45_mouth", (15, 3, 11), (rx, ry - 8, z_mm + 6.5), m["switch"])
+
+    # M12 harness + CAN + audio edge headers (horizontal, low)
+    for label, key, n in (("M12H", "m12_harness", 6), ("CAN", "can", 4), ("AUD", "audio", 3)):
+        kx, ky = BOARD_B_PORTS[key]
+        x, y = bxy(kx, ky)
+        box_mm(f"{label}_body", (n * 2.54, 2.5, 2.5), (x, y, z_mm + 1.8), m["hdr_plastic"])
+        box_mm(f"{label}_pins", (n * 2.54 - 1, 5.0, 0.6), (x, y - 3.5, z_mm + 1.8), m["pin"])
+
+    # Bezel harness at back of board
     for i in range(20):
-        box_mm(f"H1_{i}", (1.0, 1.0, 8.0), (-40 + i * 2.54, -35, z_mm + 4.5), m["pin"])
-        box_mm(f"H1b_{i}", (2.0, 2.2, 2.0), (-40 + i * 2.54, -35, z_mm + 1.5), m["hdr_plastic"])
-    for i in range(16):
-        box_mm(f"H2_{i}", (1.0, 1.0, 8.0), (-30 + i * 2.54, -28, z_mm + 4.5), m["pin"])
-        box_mm(f"H2b_{i}", (2.0, 2.2, 2.0), (-30 + i * 2.54, -28, z_mm + 1.5), m["hdr_plastic"])
-    # sensor header
-    for i in range(6):
-        box_mm(f"H3_{i}", (1.0, 1.0, 6.0), (35 + (i % 3) * 2.54, 35 + (i // 3) * 2.54, z_mm + 3.5), m["pin"])
+        x, y = bxy(40 - 10 + i * 2.54, 78)
+        box_mm(f"BEZ_{i}", (1.0, 1.0, 6.0), (x, y, z_mm + 3.5), m["pin"])
+        box_mm(f"BEZb_{i}", (2.0, 2.2, 2.0), (x, y, z_mm + 1.5), m["hdr_plastic"])
+
+
+def build_m12_panel(m, z0_mm=0.0):
+    """Three M12 panel bulkheads on left wall of shell (matches OpenSCAD cutouts)."""
+    for i, (sx, sy, sz) in enumerate(M12_SHELL):
+        # shell coords → centered assembly
+        cx, cy = sx - OUTER / 2.0, sy - OUTER / 2.0
+        cz = z0_mm + sz
+        # flange outside wall
+        cyl_mm(f"M12flange{i}", 10.0, 2.0, (cx - 2.0, cy, cz), m["metal"], rot=(0, math.pi / 2, 0))
+        # barrel through wall
+        cyl_mm(f"M12barrel{i}", 7.5, 8.0, (cx + 2.0, cy, cz), m["metal"], rot=(0, math.pi / 2, 0))
+        # hex nut inside
+        cyl_mm(f"M12nut{i}", 9.0, 3.0, (cx + 6.0, cy, cz), m["shield"], rot=(0, math.pi / 2, 0))
 
 
 def build_lcd(z_mm, m):
@@ -489,6 +566,7 @@ def shot_exploded(m):
     build_board_b(38, m)
     build_lcd(58, m)
     build_board_a(68, m)
+    build_m12_panel(m, z0_mm=0.0)
     front = import_stl(PRINT / "cmfd-front-bezel.stl", "Front", m["bezel"])
     if front:
         center_xy_bottom(front, 92)
@@ -510,6 +588,7 @@ def shot_closed(m):
     build_board_b(16, m)
     build_lcd(28, m)
     build_board_a(30, m)
+    build_m12_panel(m, z0_mm=0.0)
     front = import_stl(PRINT / "cmfd-front-bezel.stl", "Front", m["bezel"])
     if front:
         center_xy_bottom(front, 34)
@@ -517,7 +596,8 @@ def shot_closed(m):
     box_mm("Glass", (100, 100, 0.8), (0, 0, 48.2), m["glass"])
     instance_caps(m, 48.5)
     instance_rockers(m, 49.5)
-    auto_frame(azimuth_deg=48, elev_deg=28, pad=2.4, lens=50)
+    # side angle so M12 bulkheads + port band are both readable
+    auto_frame(azimuth_deg=55, elev_deg=26, pad=2.5, lens=48)
     render_still(OUT / "render-closed.png", (2560, 1920), 72)
 
 
@@ -536,8 +616,28 @@ def shot_board_b(m):
     setup_studio()
     m = M()
     build_board_b(0.0, m)
-    auto_frame(azimuth_deg=45, elev_deg=40, pad=2.0, lens=48)
+    # look at front edge where USB-C / RJ45 / M12 harness live
+    auto_frame(azimuth_deg=25, elev_deg=35, pad=2.1, lens=48, target_bias=(0, -20, 0))
     render_still(OUT / "render-board-b.png", (2400, 1800), 56)
+
+
+def shot_ports(m):
+    """Closed unit from the port corner: USB-C/RJ45 band + three M12 bulkheads."""
+    clear_scene()
+    setup_studio()
+    m = M()
+    rear = import_stl(PRINT / "cmfd-rear-shell.stl", "Rear", m["shell"])
+    if rear:
+        center_xy_bottom(rear, 0)
+    build_board_b(16, m)
+    build_m12_panel(m, z0_mm=0.0)
+    front = import_stl(PRINT / "cmfd-front-bezel.stl", "Front", m["bezel"])
+    if front:
+        center_xy_bottom(front, 34)
+    instance_caps(m, 48.5)
+    # hard-place camera looking at left-front corner (M12 wall + port band)
+    aim_camera((-0.22, -0.20, 0.10), (-0.05, -0.02, 0.028), lens=40)
+    render_still(OUT / "render-ports.png", (2400, 1800), 56)
 
 
 def shot_battery(m):
@@ -618,6 +718,7 @@ def main():
     shot_front_detail(m)
     shot_board_a(m)
     shot_board_b(m)
+    shot_ports(m)
     shot_battery(m)
     shot_case(m)
     shot_buttons(m)

@@ -24,10 +24,11 @@ osb_cap_xy = 12;
 osb_cap_z = 6;
 osb_inset = 14;       // KiCad inset from outer edge
 
-/* [Rocker — KiCad rk positions at 26 mm from edges] */
-rocker_w = 14;
-rocker_h = 10;
-rocker_inset = 26;
+/* [Rocker — pure corners, fully outside 102 mm glass (must match kicad ROCKER_POS)] */
+// Glass band starts at (outer_xy-glass_xy)/2 = 23 mm. Cap half-width must stay ≤ that.
+rocker_w = 12;
+rocker_h = 9;
+rocker_inset = 16;  // center at 16 mm from outer edge → extent 22 mm < 23 mm glass
 
 /* [Ports — rear deck] */
 port_z = 12;          // height of port window band from bottom
@@ -143,6 +144,7 @@ module rear_shell() {
         translate([wall / 2, wall / 2, rear_z - 3])
             rounded_cube([outer_xy - wall, outer_xy - wall, 3.2], corner_r - 1);
         // port windows — bottom rear face (y=0 side extruded)
+        // Align Board B front edge (board_x + 14 ≈ shell_x): USB 30/48, RJ45 70, harness 95, audio 115
         // USB-C x2
         translate([30, -0.1, port_z])
             cube([10, wall + 1, 4]);
@@ -151,12 +153,18 @@ module rear_shell() {
         // RJ45
         translate([70, -0.1, port_z - 1])
             cube([16, wall + 1, 10]);
-        // multipin CAN/UART
+        // multipin CAN/UART harness (to M12 bulkheads)
         translate([95, -0.1, port_z])
             cube([14, wall + 1, 6]);
         // audio
         translate([115, -0.1, port_z + 1])
             cylinder(h = wall + 1, d = 6.5, $fn = 24);
+        // M12 panel bulkheads — side wall (x=0), panel-mount kit (BOM full)
+        // M12×1 panel cut ~15 mm; three ports: power/CAN/sensor
+        for (zi = [0:2])
+            translate([-0.1, 28 + zi * 28, 28])
+                rotate([0, 90, 0])
+                    cylinder(h = wall + 1, d = 15.2, $fn = 36);
         // battery door opening (back face z)
         translate([outer_xy / 2 - 22, outer_xy / 2 - 40, -0.1])
             cube([44, 80, wall + 0.2]);

@@ -31,6 +31,16 @@ nix-shell -p blender --run 'blender -b -P hardware/tools/blender_render_cmfd.py'
 | `render-board-b.png` | Board B carrier layout |
 | `render-battery.png` | Battery tray STL + two 18650 cells |
 | `render-buttons.png` | OSB cap + rocker STLs on switch bodies |
+| `render-ports.png` | Side: three M12 bulkheads + USB/RJ45 port band |
+
+## Layout rules (do not regress)
+
+| Rule | Source of truth |
+|------|-----------------|
+| Rockers outside glass | Centers at 16 mm from outer edge; glass band 23–125 mm |
+| Board B ports on front edge | USB-C @ (16,6.5)/(34,6.5), RJ45 @ (56,12) — not board center |
+| M12 | Panel bulkheads on case left wall; `J_M12` harness on Board B edge |
+| Bezel pins | Right-angle headers, pin outward; plastic ≤ switch height |
 
 ## Stack order (must match build)
 

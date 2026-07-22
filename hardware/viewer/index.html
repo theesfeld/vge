@@ -103,15 +103,17 @@
       boardB: {
         w: 120, h: 90, thickness: 1.6,
         holes: [[8,8],[112,8],[112,82],[8,82]],
-        j_bezel: [55, 18], som_a: [30, 45], som_b: [30, 62],
-        usbc: [75, 50], rj45: [95, 70],
+        // ports on y≈0 front edge (case shell_x ≈ board_x + 14)
+        j_bezel: [40, 78], som_a: [30, 45], som_b: [30, 62],
+        usbc: [16, 6.5], usbc2: [34, 6.5], rj45: [56, 12],
+        m12_harness: [81, 5], can: [96, 5], audio: [108, 5],
       },
       osb_inset: 14, osb_span: 78,
-      rockers: { GAIN:[26,122], SYM:[122,122], BRT:[26,26], CON:[122,26] },
+      rockers: { GAIN:[16,132], SYM:[132,132], BRT:[16,16], CON:[132,16] },
       bom: {
         lcd: { xy: 102, z: 3.2 }, cell_d: 18.2, cell_h: 65,
         tray: { w: 42, h: 78, z: 22 },
-        osb_cap: { xy: 12, z: 6 }, rocker_cap: { w: 14, h: 10, z: 5 },
+        osb_cap: { xy: 12, z: 6 }, rocker_cap: { w: 12, h: 9, z: 5 },
       },
       colors: {
         silver: 0xb8c6d6, blue: 0x2a6db5, grey: 0x6a7585,
@@ -365,22 +367,29 @@
       const sh = box(32, 2, 22, mat.shield);
       sh.position.set(sa.x, B.thickness / 2 + 4.2, sa.z);
       g.add(sh);
-      // USB-C
-      const usb = box(9, 3.2, 7, mat.pin);
-      const u = pcbXZ(B.usbc[0], B.usbc[1], B.w, B.h);
-      usb.position.set(u.x, B.thickness / 2 + 1.8, u.z);
-      g.add(usb);
-      // RJ45
-      const rj = box(16, 13, 21, mat.sw);
+      // USB-C ×2 on front edge (not board center)
+      for (const key of ["usbc", "usbc2"]) {
+        const usb = box(9, 3.2, 7, mat.pin);
+        const u = pcbXZ(B[key][0], B[key][1], B.w, B.h);
+        usb.position.set(u.x, B.thickness / 2 + 1.8, u.z);
+        g.add(usb);
+      }
+      // RJ45 on front edge
+      const rj = box(16, 12, 14, mat.sw);
       const r = pcbXZ(B.rj45[0], B.rj45[1], B.w, B.h);
-      rj.position.set(r.x, B.thickness / 2 + 7, r.z);
+      rj.position.set(r.x, B.thickness / 2 + 6.5, r.z);
       g.add(rj);
-      // bezel wire header 1x20
+      // M12 harness land (wires to panel bulkheads on case)
+      const m12h = box(14, 2.5, 2.5, mat.sw);
+      const mh = pcbXZ(B.m12_harness[0], B.m12_harness[1], B.w, B.h);
+      m12h.position.set(mh.x, B.thickness / 2 + 1.5, mh.z);
+      g.add(m12h);
+      // bezel wire header 1x20 (back of board)
       for (let i = 0; i < 20; i++) {
-        const pin = mesh(new THREE.CylinderGeometry(0.32, 0.32, 7, 6), mat.pin);
-        const bx = B.j_bezel[0] - 24 + i * 2.54;
+        const pin = mesh(new THREE.CylinderGeometry(0.32, 0.32, 6, 6), mat.pin);
+        const bx = B.j_bezel[0] - 10 + i * 2.54;
         const p = pcbXZ(bx, B.j_bezel[1], B.w, B.h);
-        pin.position.set(p.x, B.thickness / 2 + 3.5, p.z);
+        pin.position.set(p.x, B.thickness / 2 + 3.2, p.z);
         g.add(pin);
       }
       // silk label plane
@@ -518,33 +527,37 @@
       top.receiveShadow = true;
       g.add(top);
 
-      // physical switches + pins (on frame only)
+      // switches + right-angle headers (plastic low, pin outward — not taller than switch)
+      function raHeader(side, px, pz) {
+        const body = box(2.5, 2.5, 2.5, mat.sw);
+        body.position.set(px, A.thickness + 1.25, pz);
+        g.add(body);
+        let pin;
+        if (side === "TOP") { pin = box(0.6, 0.6, 6, mat.pin); pin.position.set(px, A.thickness + 1.25, pz - 3.5); }
+        else if (side === "BOT") { pin = box(0.6, 0.6, 6, mat.pin); pin.position.set(px, A.thickness + 1.25, pz + 3.5); }
+        else if (side === "LEFT") { pin = box(6, 0.6, 0.6, mat.pin); pin.position.set(px - 3.5, A.thickness + 1.25, pz); }
+        else { pin = box(6, 0.6, 0.6, mat.pin); pin.position.set(px + 3.5, A.thickness + 1.25, pz); }
+        g.add(pin);
+      }
       for (const s of centers) {
         const lx = s.x - half, lz = -(s.y - half);
         const body = box(6, A.switch_z, 6, mat.sw);
         body.position.set(lx, A.thickness + A.switch_z / 2, lz);
         g.add(body);
         const p = pinOffset(s.side, s.x, s.y);
-        const px = p.x - half, pz = -(p.y - half);
-        const post = box(2, 8, 2, mat.pin);
-        post.position.set(px, A.thickness + 4, pz);
-        g.add(post);
-        const base = box(2.4, 2, 2.4, mat.sw);
-        base.position.set(px, A.thickness + 1, pz);
-        g.add(base);
+        raHeader(s.side, p.x - half, -(p.y - half));
       }
       for (const [name, [rx, ry]] of Object.entries(CMFD.rockers)) {
         const lx = rx - half, lz = -(ry - half);
         const body = box(6, A.switch_z, 6, mat.sw);
         body.position.set(lx, A.thickness + A.switch_z / 2, lz);
         g.add(body);
-        const hx = (rx + (rx < half ? -5.5 : 5.5));
-        const hy = (ry + (ry < half ? -5.5 : 5.5));
-        const px = Math.min(Math.max(hx, 3.5), 144.5) - half;
-        const pz = -(Math.min(Math.max(hy, 3.5), 144.5) - half);
-        const post = box(2, 8, 2, mat.pin);
-        post.position.set(px, A.thickness + 4, pz);
-        g.add(post);
+        const hx = Math.min(Math.max(rx + (rx < half ? -5.5 : 5.5), 3.5), 144.5);
+        const hy = Math.min(Math.max(ry + (ry < half ? -5.5 : 5.5), 3.5), 144.5);
+        const side = Math.abs(hx - rx) >= Math.abs(hy - ry)
+          ? (hx < rx ? "LEFT" : "RIGHT")
+          : (hy > ry ? "TOP" : "BOT");
+        raHeader(side, hx - half, -(hy - half));
       }
 
       addLayer("boardA", g, Y.boardA, new THREE.Vector3(0, 0.5, 0));

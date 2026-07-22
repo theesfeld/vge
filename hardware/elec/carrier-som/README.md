@@ -7,16 +7,20 @@
 
 ## Port map (see also docs/hardware/cmfd-connector-icd.md)
 
-| Ref | Function |
-|-----|----------|
-| J3 | USB-C primary — PD sink + data + flash |
-| J4 | USB-C aux |
-| J5 | Ethernet RJ45 |
-| J6 | CAN-H/L + UART + GND (isolated CAN) |
-| J7 | Audio out / mic |
-| J8 | 18650 pack sense/power |
-| J9 | Display FPC 40-pin |
-| J2 | B2B from Board A |
+All external connectors sit on the **front board edge** (`y ≈ 0`) so they line up with the rear-shell port windows.  
+M12 bulkheads are **panel-mount on the case wall** and wire to `J_M12`.
+
+| Ref | Board XY (mm) | Function |
+|-----|---------------|----------|
+| J3 | 16, 6.5 | USB-C primary — PD sink + data + flash |
+| J4 | 34, 6.5 | USB-C aux |
+| J5 | 56, 12 | Ethernet RJ45 |
+| J_M12 | 81, 5 | Harness to 3× M12 panel bulkheads (power / CAN / sensor) |
+| J6 | 96, 5 | CAN-H/L + UART + GND |
+| J7 | 108, 5 | Audio out / mic |
+| J_BEZEL | 40, 78 | OSB 1–20 from Board A |
+| J_RK | 95, 78 | Rocker lines |
+| J10 / J11 | 30,45 / 30,62 | SoM mezzanine |
 
 ## Power
 

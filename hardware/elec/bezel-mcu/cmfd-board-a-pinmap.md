@@ -1,6 +1,7 @@
 # Bezel wiring (Board A)
 
 Each line is one Dupont wire (or harness).
+Headers are **right-angle** (horizontal), pin toward outer edge — not taller than the 4.3 mm switch.
 
 | Button | Pin on board | Connect to MCU |
 |--------|--------------|----------------|
