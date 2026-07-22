@@ -618,8 +618,11 @@ fn option_legends(
 }
 
 /// Bottom L→R = OSB 15..11: OWN · slotA · slotB · slotC · DCLT
+///
+/// MLU: **active** format slot opens Master Menu when pressed. Mark it `*NAME`
+/// so the operator sees which key is MENU (not a dead re-select).
 fn format_select_bottom(fmt: &AutoFormatSelect) -> Osb5 {
-    let [a, b, c] = fmt.slot_labels();
+    let [a, b, c] = fmt.slot_labels_menu_marked();
     let dclt = match fmt.dclt {
         0 => "DCLT",
         1 => "DCL1",
@@ -734,6 +737,18 @@ fn chrome(
         c.y as f32 + page.font_px * 0.55,
         &head,
         WHITE,
+    );
+    // MLU nav cue + lab key map (POC). Production GPIO does not need key letters.
+    let nav = if menu {
+        "PICK FORMAT OSB  ·  SLOT KEY CLOSES MENU"
+    } else {
+        "LIT *SLOT = MENU  ·  OTHER SLOT = SELECT  ·  yuiop BOTTOM  ·  asdfg LEFT  ·  1-0 TOP/RIGHT"
+    };
+    page.label_centered(
+        c.center().0 as f32,
+        c.y as f32 + page.font_px * 1.35,
+        nav,
+        pal.dim,
     );
     if !v.vin.is_empty() && !menu {
         let os = format!("OS  {}", short_vin(&v.vin));

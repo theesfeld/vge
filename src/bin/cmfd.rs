@@ -203,24 +203,21 @@ fn main() -> io::Result<()> {
                 //   n/p  cycle · m Master Menu · Tab next format slot
                 // Dedicated OSB keys always go to bezel (see KeyboardBezel):
                 //   1-5 top options · 6-0 right · qwert bottom · asdfg left
+                // Lab cycle: n = next. Prev = arrows only (`p` is OSB 11 DCLT).
                 b'n' | b'N' => {
                     let next = cycle_auto(auto_page, 1, &available_pages);
                     goto_format(&mut auto_page, &mut fmt_sel, next, &available_pages);
                 }
-                b'p' | b'P' => {
-                    let prev = cycle_auto(auto_page, -1, &available_pages);
-                    goto_format(&mut auto_page, &mut fmt_sel, prev, &available_pages);
-                }
                 b'm' | b'M' => {
+                    // Lab: open Master Menu (production: press lit *format slot)
                     let allow = available_pages.as_slice();
                     if !allow.is_empty() {
                         let _ = fmt_sel.handle_osb(fmt_sel.active.osb(), osb_tick, allow);
                     }
                 }
-                // POC aliases only (production = OSB: SET/DRV UNIT, SET PAL). Not load-bearing.
-                b'u' | b'U' => vehicle.speed_unit = vehicle.speed_unit.cycle(),
                 // All OSB / rocker keys → BezelEvent (production input plane).
-                // 1-5 top · 6-0 right · qwert bottom · asdfg left · [ ] BRT …
+                // Numeric face map: 1-0 · yuiop bottom · asdfg left · [ ] BRT
+                // (UNIT/PAL only via SET OSBs — no letter steal of bottom OSB keys.)
                 _ => bezel_src.push_key_state(k, &bezel),
             }
             ki += 1;
@@ -536,17 +533,20 @@ fn print_banner(ver: &str) {
     eprintln!("  STARTUP");
     eprintln!("    CMFD power-on until capability probe finishes");
     eprintln!();
-    eprintln!("  DEDICATED OSB KEYS (page options stay on the page)");
-    eprintln!("    TOP    1 2 3 4 5     options for current format (e.g. Lights LO/HI/FOG)");
-    eprintln!("    RIGHT  6 7 8 9 0     options");
-    eprintln!("    BOTTOM q w e r t     OWN · fmtA · fmtB · fmtC · DCLT");
-    eprintln!("    LEFT   a s d f g     DTC · · · SET · BUS");
+    eprintln!("  OSB KEYS (numeric face map — matches OSB numbers / face sides)");
+    eprintln!("    TOP     1 2 3 4 5           OSB 1–5   page options");
+    eprintln!("    RIGHT   6 7 8 9 0           OSB 6–10  page options");
+    eprintln!("    BOTTOM  y u i o p           OSB 15–11 OWN · *A · B · C · DCLT");
+    eprintln!("            (legacy q w e r t same strip)");
+    eprintln!("    LEFT    a s d f g           OSB 16–20 DTC · · · SET · BUS");
     eprintln!();
-    eprintln!("  FORMAT CHANGE");
-    eprintln!("    n/p or arrows  cycle ·  m  Master Menu ·  e/r (w/e) switch slots");
-    eprintln!("    Press active slot (lit) → Master Menu · GO formats only");
+    eprintln!("  FORMAT (MLU)");
+    eprintln!("    Other format slot  →  select that format");
+    eprintln!("    Lit *slot (active) →  MASTER MENU  (then pick a format OSB)");
+    eprintln!("    n/p or arrows      →  cycle formats (lab only)");
+    eprintln!("    m                  →  open Master Menu (lab only)");
     eprintln!();
-    eprintln!("  OTHER  u unit · c color · [ ] BRT · Esc quit");
+    eprintln!("  OTHER  [ ] BRT · Esc quit  ·  UNIT/PAL on SET page OSBs");
     eprintln!("  Drive: ./cmfd.sh  ·  MFD_OBD_BT=00:04:3E:96:B8:F1");
     eprintln!();
 }

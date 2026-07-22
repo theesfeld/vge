@@ -337,9 +337,7 @@ pub fn decode_mode01(payload: &[u8]) -> Result<LiveValue> {
             0x1F | 0x21 | 0x31 => ((data[0] as u16) << 8 | data[1] as u16) as f64,
             0x23 => ((data[0] as u16) << 8 | data[1] as u16) as f64 * 10.0,
             // Catalyst temp: (A*256+B)/10 - 40
-            0x3C | 0x3D => {
-                ((data[0] as u16) << 8 | data[1] as u16) as f64 / 10.0 - 40.0
-            }
+            0x3C | 0x3D => ((data[0] as u16) << 8 | data[1] as u16) as f64 / 10.0 - 40.0,
             // Equiv ratio: (A*256+B)/32768
             0x44 => ((data[0] as u16) << 8 | data[1] as u16) as f64 / 32768.0,
             0x42 => ((data[0] as u16) << 8 | data[1] as u16) as f64 / 1000.0,

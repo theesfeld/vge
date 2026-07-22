@@ -8,11 +8,11 @@ See **[`hardware-bezel.md`](hardware-bezel.md)** for production OSB/rocker types
 |------|----------|------------|
 | Top options | `1`–`5` | OSB 1–5 |
 | Right options | `6`–`9` `0` | OSB 6–10 |
-| Bottom | `q` `w` `e` `r` `t` | OSB 15–11 (OWN · formats · DCLT) |
-| Left | `a` `s` `d` `f` `g` | OSB 16–20 (DTC · SET · BUS) |
+| Bottom L→R | `y` `u` `i` `o` `p` (or qwert) | OSB 15–11 OWN · \*A · B · C · DCLT |
+| Left bottom→top | `a` `s` `d` `f` `g` | OSB 16–20 DTC · · · SET · BUS |
 | BRT | `[` `]` | BRT rocker |
 
-Format change: press bottom format slots or **`m`** Master Menu (lab). Hardware: active format OSB only.
+**Format (MLU):** other slot = select · lit **\*** slot = **Master Menu** · lab `m` = menu · lab `n`/arrows = cycle.
 
 ## Command
 

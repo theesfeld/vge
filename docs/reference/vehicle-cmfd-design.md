@@ -57,10 +57,12 @@
 |------|-----|----------|------|
 | **Top** | 1–5 | `1`–`5` | **Page options** (Lights: LO HI FOG DRL INT) |
 | **Right** | 6–10 | `6`–`9` `0` | **Page options** |
-| **Bottom** | 15–11 | `q` `w` `e` `r` `t` | OWN · fmtA · fmtB · fmtC · DCLT |
+| **Bottom** | 15–11 | `y` `u` `i` `o` `p` (legacy qwert) | OWN · **\*fmtA** · fmtB · fmtC · DCLT |
 | **Left** | 16–20 | `a` `s` `d` `f` `g` | DTC · · · SET · BUS |
 
-**Hard rule:** top/right keys are **never** format jumps. Format change only via bottom slots 12–14, Master Menu (`m`), or n/p cycle.
+**Hard rule:** top/right keys are **never** format jumps. Format change only via bottom slots 12–14 + Master Menu.
+
+**MLU:** lit `*` format slot = Master Menu. Other slots = select. On-glass cue always.
 
 **Example — LIGHTS:** `1`=LO · `2`=HI · `3`=FOG · `4`=DRL · `5`=INT. Not ENG/FUEL.
 

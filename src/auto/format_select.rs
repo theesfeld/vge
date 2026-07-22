@@ -150,6 +150,41 @@ impl AutoFormatSelect {
         ]
     }
 
+    /// Slot legends with `*` on the **active** slot (press = Master Menu, MLU).
+    pub fn slot_labels_menu_marked(&self) -> [&'static str; 3] {
+        if self.menu_open {
+            return self.slot_labels();
+        }
+        let raw = self.slot_labels();
+        let mark = |i: usize, s: &'static str| -> &'static str {
+            if s.is_empty() || self.active as usize != i {
+                return s;
+            }
+            // Fixed strings — OSB legends are short Technical Names.
+            match s {
+                "ENG" => "*ENG",
+                "DRV" => "*DRV",
+                "ATT" => "*ATT",
+                "FUEL" => "*FUEL",
+                "FLUD" => "*FLUD",
+                "ELEC" => "*ELEC",
+                "CHAS" => "*CHAS",
+                "BODY" => "*BODY",
+                "LITE" => "*LITE",
+                "CLIM" => "*CLIM",
+                "CAM" => "*CAM",
+                "RNG" => "*RNG",
+                "MAP" => "*MAP",
+                "DTC" => "*DTC",
+                "BUS" => "*BUS",
+                "OWN" => "*OWN",
+                "SET" => "*SET",
+                _ => s,
+            }
+        };
+        [mark(0, raw[0]), mark(1, raw[1]), mark(2, raw[2])]
+    }
+
     pub fn cycle_dclt(&mut self) {
         self.dclt = (self.dclt + 1) % 3;
     }

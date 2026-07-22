@@ -152,20 +152,31 @@ impl BezelSource for NullBezel {
     }
 }
 
-/// POC: map ASCII keys → **dedicated OSB sides** (real bezel later).
+/// POC: **numeric face map** — keys track OSB numbers / face geometry.
 ///
-/// | Side | Keys | OSB |
+/// ```text
+///        1 2 3 4 5          top options
+///   g                    6
+///   f                    7     right: 6 7 8 9 0
+///   d    [ GLASS ]       8
+///   s                    9
+///   a                   0
+///      y  u  i  o  p       bottom L→R = OSB 15..11
+///     OWN A  B  C DCLT
+/// ```
+///
+/// | Face | Keys | OSB |
 /// |------|------|-----|
-/// | **Top options** | `1` `2` `3` `4` `5` | 1–5 |
-/// | **Right options** | `6` `7` `8` `9` `0` | 6–10 |
-/// | **Bottom** | `q` `w` `e` `r` `t` | 15–11 (OWN · slotA · slotB · slotC · DCLT) |
-/// | **Left** | `a` `s` `d` `f` `g` | 16–20 (DTC · · · SET · BUS bottom→top) |
+/// | Top | `1`–`5` | 1–5 |
+/// | Right | `6`–`9` `0` | 6–10 |
+/// | Bottom L→R | `y` `u` `i` `o` `p` | **15 · 14 · 13 · 12 · 11** |
+/// | Left bottom→top | `a` `s` `d` `f` `g` | **16 · 17 · 18 · 19 · 20** |
+///
+/// Legacy `qwert` still maps the same bottom strip (muscle memory).
 ///
 /// Knobs: `[` `]` BRT · `;` `'` CON · `-` `=` SYM · `,` `.` GAIN
 ///
-/// **Hard rule:** these keys are **never** format-select shortcuts.
-/// Format change is Master Menu / n·p / bottom slots 12–14 only.
-/// On LIGHTS, `1`=`LO` … `5`=`INT` — not ENG/FUEL jumps.
+/// **Hard rule:** top/right are **never** format jumps (options / Master Menu picks only).
 #[derive(Default)]
 pub struct KeyboardBezel {
     pending: Vec<BezelEvent>,
@@ -179,33 +190,38 @@ impl KeyboardBezel {
     /// Feed raw key bytes (from raw stdin).
     pub fn push_key(&mut self, key: u8) {
         match key {
+            // Top options = OSB number
             b'1' => self.pending.push(BezelEvent::OsbDown(1)),
             b'2' => self.pending.push(BezelEvent::OsbDown(2)),
             b'3' => self.pending.push(BezelEvent::OsbDown(3)),
             b'4' => self.pending.push(BezelEvent::OsbDown(4)),
             b'5' => self.pending.push(BezelEvent::OsbDown(5)),
+            // Right options
             b'6' => self.pending.push(BezelEvent::OsbDown(6)),
             b'7' => self.pending.push(BezelEvent::OsbDown(7)),
             b'8' => self.pending.push(BezelEvent::OsbDown(8)),
             b'9' => self.pending.push(BezelEvent::OsbDown(9)),
             b'0' => self.pending.push(BezelEvent::OsbDown(10)),
+            // Bottom L→R OSB 15..11 (numeric-face primary)
+            b'y' | b'Y' => self.pending.push(BezelEvent::OsbDown(15)), // OWN
+            b'u' | b'U' => self.pending.push(BezelEvent::OsbDown(14)), // slot A
+            b'i' | b'I' => self.pending.push(BezelEvent::OsbDown(13)), // slot B
+            b'o' | b'O' => self.pending.push(BezelEvent::OsbDown(12)), // slot C
+            b'p' | b'P' => self.pending.push(BezelEvent::OsbDown(11)), // DCLT
+            // Legacy bottom row (same OSBs)
             b'q' | b'Q' => self.pending.push(BezelEvent::OsbDown(15)),
             b'w' | b'W' => self.pending.push(BezelEvent::OsbDown(14)),
             b'e' | b'E' => self.pending.push(BezelEvent::OsbDown(13)),
             b'r' | b'R' => self.pending.push(BezelEvent::OsbDown(12)),
             b't' | b'T' => self.pending.push(BezelEvent::OsbDown(11)),
-            b'a' | b'A' => self.pending.push(BezelEvent::OsbDown(16)),
-            b's' | b'S' => self.pending.push(BezelEvent::OsbDown(17)),
-            b'd' | b'D' => self.pending.push(BezelEvent::OsbDown(18)),
-            b'f' | b'F' => self.pending.push(BezelEvent::OsbDown(19)),
-            b'g' | b'G' => self.pending.push(BezelEvent::OsbDown(20)),
-            b'[' => self
-                .pending
-                .push(BezelEvent::Knob(BezelKnob::Brightness, 0.0)), // filled by state
+            // Left bottom→top OSB 16..20
+            b'a' | b'A' => self.pending.push(BezelEvent::OsbDown(16)), // DTC
+            b's' | b'S' => self.pending.push(BezelEvent::OsbDown(17)), // blank / menu MAP
+            b'd' | b'D' => self.pending.push(BezelEvent::OsbDown(18)), // blank / menu ATT
+            b'f' | b'F' => self.pending.push(BezelEvent::OsbDown(19)), // SET
+            b'g' | b'G' => self.pending.push(BezelEvent::OsbDown(20)), // BUS
             _ => {}
         }
-        // Nudge knobs with -/= and ;/'
-        // Handled in push_key_with_state
     }
 
     /// Feed key with access to current levels (for ± nudges).

@@ -164,12 +164,26 @@ trait BezelSource {
 
 ## 6. POC keyboard map (lab only — not production hardware)
 
+**Numeric face map** (keys track OSB numbers / face sides):
+
+```text
+         1  2  3  4  5
+   g                    6
+   f                    7
+   d     [  GLASS  ]    8
+   s                    9
+   a                    0
+      y   u   i   o   p
+     15  14  13  12  11
+```
+
 | Face side | Keys | OSB |
 |-----------|------|-----|
 | Top options | `1` `2` `3` `4` `5` | 1–5 |
 | Right options | `6` `7` `8` `9` `0` | 6–10 |
-| Bottom | `q` `w` `e` `r` `t` | 15, 14, 13, 12, 11 |
-| Left | `a` `s` `d` `f` `g` | 16, 17, 18, 19, 20 |
+| Bottom L→R | `y` `u` `i` `o` `p` | **15 · 14 · 13 · 12 · 11** (OWN · A · B · C · DCLT) |
+| Bottom legacy | `q` `w` `e` `r` `t` | same as yuiop |
+| Left bottom→top | `a` `s` `d` `f` `g` | **16 · 17 · 18 · 19 · 20** (DTC · · · SET · BUS) |
 | BRT −/+ | `[` `]` | Knob Brightness |
 | CON −/+ | `;` `'` | Knob Contrast |
 | SYM −/+ | `-` `=` | Knob Symbology |
@@ -179,11 +193,17 @@ trait BezelSource {
 
 | Key | Alias for | Production path |
 |-----|-----------|-----------------|
-| `n` / `p` / arrows | Format cycle | Slots + Master Menu |
-| `m` | Open Master Menu | Press active format slot |
-| `c` | Color palette | SET → OSB **PAL/MODE** |
-| `u` | Speed unit | SET/DRV → OSB **UNIT** |
+| `n` / arrows | Format cycle | Slots + Master Menu |
+| `m` | Open Master Menu | Press **lit** `*` format slot |
 | Esc | Quit process | Host power / app lifecycle |
+
+**MLU nav (product):**
+
+| Press | Result |
+|-------|--------|
+| Non-active format slot 12/13/14 | Show that format |
+| **Active** (lit `*`) format slot | **Master Menu** |
+| OWN / DCLT / DTC / SET / BUS | Direct jump |
 
 **Acceptance test:** every product function works with **only** OSB 1–20 + 4 rockers (no letter shortcuts).
 
@@ -241,3 +261,4 @@ trait BezelSource {
 | Date | Change |
 |------|--------|
 | 2026-07-22 | Initial freeze for hardware design (#113) |
+| 2026-07-22 | Lab numeric face map + MLU SOI (`*` = menu); #129 |
