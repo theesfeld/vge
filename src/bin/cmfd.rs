@@ -1,7 +1,7 @@
 //! **cmfd** — live vehicle color MFD (systems pages, OBD/UDS, capture).
 //!
-//! This is the **product glass**, not a toy demo. Offline synthetic data only
-//! appears when no adapter is configured (`bus_state = SIM`).
+//! Product glass only. **No SIM / no synthetic vehicle data.** Until OBD is
+//! live, gauges and channels stay empty (`OFF` / `SEARCH` / `RECONN`).
 //!
 //! Jet **formats** are not in this path; widgets remain in the library for later.
 //!
@@ -17,7 +17,7 @@ use std::io;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::time::Instant;
 
-use mfd::auto::{self, AutoFormatSelect, AutoPage, DemoProbe, FormatSelectAction, VehicleSnapshot};
+use mfd::auto::{self, AutoFormatSelect, AutoPage, FormatSelectAction, VehicleSnapshot};
 use mfd::bezel::{BezelEvent, BezelSource, BezelState, KeyboardBezel};
 use mfd::font::{draw_text, text_width};
 use mfd::frame::FramePacer;
@@ -98,18 +98,18 @@ fn main() -> io::Result<()> {
         "SET" | "SETUP" => AutoPage::Setup,
         _ => AutoPage::Eng,
     };
+    // Empty until live OBD fills fields — never invent vehicle data.
     let mut vehicle = VehicleSnapshot::default();
     let mut color_mode = ColorMode::ColorMfd;
     let mut osb_tick: u32 = 0;
-    // Startup BIT until capability probe finishes (adaptive pages).
-    let mut demo_probe = DemoProbe::start();
+    // Startup BIT until live capability probe finishes (adaptive pages).
     let mut boot_done = false;
     let mut available_pages: Vec<AutoPage> = Vec::new();
     // Frozen after BIT — avoid cloning VehicleCaps (HashSets) every frame.
     let mut caps_cached: Option<mfd::auto::VehicleCaps> = None;
     let mut fmt_sel = AutoFormatSelect::default();
     let mut warn_eng = WarningEngine::new();
-    let mut fog_ok = true;
+    let mut fog_ok = false;
 
     #[cfg(feature = "obd")]
     let obd_feed = mfd::obd::ObdFeed::try_start_from_env();
@@ -119,13 +119,13 @@ fn main() -> io::Result<()> {
         eprintln!("OBD: {s}");
         s
     } else {
-        eprintln!("OBD: SIM (set MFD_OBD_BT / MFD_OBD_PORT / MFD_OBD_REPLAY for live truck)");
-        "SIM".into()
+        eprintln!("OBD: NO LINK (feed failed to start — glass shows no data)");
+        "NO LINK".into()
     };
     #[cfg(not(feature = "obd"))]
     let obd_status = {
-        eprintln!("OBD: SIM (obd feature off)");
-        "SIM".to_string()
+        eprintln!("OBD: NO LINK (obd feature off — glass shows no data)");
+        "NO LINK".to_string()
     };
 
     #[cfg(target_os = "linux")]
@@ -299,11 +299,6 @@ fn main() -> io::Result<()> {
         let t = t0.elapsed().as_secs_f32();
         frame_i = frame_i.wrapping_add(1);
 
-        #[cfg(feature = "obd")]
-        let use_obd = obd_feed.is_some();
-        #[cfg(not(feature = "obd"))]
-        let use_obd = false;
-
         // After BIT, reuse frozen caps (no HashSet clone / page rebuild per frame).
         // During BIT only: clone probe progress for the status screen.
         let mut bit_caps: Option<mfd::auto::VehicleCaps> = None;
@@ -312,10 +307,10 @@ fn main() -> io::Result<()> {
             let polled = if let Some(ref feed) = obd_feed {
                 feed.caps()
             } else {
-                demo_probe.tick().clone()
+                mfd::auto::VehicleCaps::no_link()
             };
             #[cfg(not(feature = "obd"))]
-            let polled = demo_probe.tick().clone();
+            let polled = mfd::auto::VehicleCaps::no_link();
 
             if polled.ready {
                 boot_done = true;
@@ -348,14 +343,10 @@ fn main() -> io::Result<()> {
             .or(bit_caps.as_ref())
             .expect("caps available during BIT or after");
 
-        if use_obd {
-            #[cfg(feature = "obd")]
-            if let Some(ref feed) = obd_feed {
-                feed.apply_to(&mut vehicle);
-            }
-        } else if boot_done {
-            // In-place SIM update — avoid full VehicleSnapshot rebuild every frame.
-            auto::demo_vehicle_into(&mut vehicle, t);
+        // Live OBD only — vehicle stays empty until apply_to fills fields.
+        #[cfg(feature = "obd")]
+        if let Some(ref feed) = obd_feed {
+            feed.apply_to(&mut vehicle);
         }
 
         #[cfg(target_os = "linux")]
@@ -379,17 +370,7 @@ fn main() -> io::Result<()> {
             auto::draw_bit_screen(&mut page, &pal, caps_now, t);
         } else {
             let font_px = page.font_px;
-            // Offline SIM only: force brief alerts so flash/bingo can be checked
-            // without a truck. Live OBD path never invents faults.
-            if !use_obd {
-                if (t as i32 % 20) < 4 {
-                    vehicle.park_brake = true;
-                    vehicle.speed_mph = vehicle.speed_mph.max(8.0);
-                }
-                if vehicle.fuel < 0.20 {
-                    vehicle.fuel = vehicle.fuel.min(0.12);
-                }
-            }
+            // Warnings only from real snapshot fields (zeros/false when no link).
             let active = warn_eng.tick(&vehicle);
             auto::draw_auto_with_video(
                 &mut page,

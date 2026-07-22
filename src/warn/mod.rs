@@ -44,8 +44,13 @@ pub enum WarnLevel {
 }
 
 /// Evaluate snapshot → active list (order = priority).
+///
+/// No warnings when the bus is not **LIVE** (empty / SEARCH / OFF must not invent BINGO).
 pub fn evaluate(v: &VehicleSnapshot) -> Vec<ActiveWarn> {
     let mut out = Vec::new();
+    if v.bus_state != "LIVE" {
+        return out;
+    }
     if v.fuel <= BINGO_FUEL {
         out.push(ActiveWarn {
             id: WarnId::Bingo,

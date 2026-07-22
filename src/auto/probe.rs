@@ -90,7 +90,8 @@ impl DemoProbe {
         }
 
         if t >= 2.85 {
-            self.caps = VehicleCaps::demo_complete();
+            // No synthetic vehicle: NO LINK caps only (product path uses live OBD probe).
+            self.caps = VehicleCaps::no_link();
             self.done = true;
         }
         &self.caps

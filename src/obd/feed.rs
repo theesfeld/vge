@@ -1,8 +1,8 @@
 //! Background poller → [`VehicleSnapshot`](crate::auto::VehicleSnapshot).
 //!
-//! **Link policy:** when BT/serial/replay env is set, the feed **always starts**
-//! and **keeps searching / reconnecting** until the process exits. A single failed
-//! connect does **not** drop the glass to silent SIM.
+//! **Link policy:** feed **always starts** (default truck BT MAC if env unset)
+//! and **keeps searching / reconnecting** until the process exits. Glass never
+//! invents vehicle data — empty until LIVE.
 //!
 //! Startup: resilient connect → capability probe (BIT) → DTC + Mode 01 / Ford DID poll.
 //! Optional **capture** via `MFD_OBD_CAPTURE` (same process owns Bluetooth — only one
@@ -61,8 +61,7 @@ impl ObdFeed {
     /// Start if `MFD_OBD_PORT`, `MFD_OBD_BT`, or `MFD_OBD_REPLAY` is set.
     ///
     /// Starts the worker **immediately** even if the dongle is offline — the
-    /// worker keeps searching / reconnecting. Never fails open into silent SIM
-    /// when OBD env is configured.
+    /// worker keeps searching / reconnecting. Glass stays empty until LIVE.
     pub fn try_start_from_env() -> Option<Self> {
         let opts = ConnectOpts::from_env()?;
         match Self::start_with_opts(opts) {

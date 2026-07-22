@@ -55,7 +55,7 @@ cargo run --release --bin cmfd
 MFD_TERM=kitty cargo run --release --bin cmfd
 ```
 
-Default: **vehicle CMFD** (ENG bank), **30 Hz**. Without OBD env → offline **SIM** data only.
+Default: **vehicle CMFD** (ENG bank), **30 Hz**. **No SIM** — until OBD is live, glass shows empty data and SEARCH/RECONN.
 
 ### Auto pages (default) — jump keys
 
