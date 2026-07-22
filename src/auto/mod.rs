@@ -861,65 +861,157 @@ pub fn draw_auto_with_video(
             );
         }
         AutoPage::Fluid => {
+            // Four small gauges (OIL · ECT · TFT · IAT) + dense numeric matrix.
+            let gw = (c.w - 12) / 4;
+            let gh = (c.h as f32 * 0.42) as i32;
+            let temps = [
+                ("OIL", v.oil_temp, v.oil_temp_c, pal.caution),
+                ("ECT", v.coolant, v.coolant_c, pal.primary),
+                ("TFT", v.trans_temp, v.trans_temp_c, pal.nav),
+                ("IAT", v.iat, v.iat_c, pal.readout),
+            ];
+            for (i, (lab, norm, deg, col)) in temps.iter().enumerate() {
+                let gx = c.x + 2 + i as i32 * (gw + 2);
+                round_gauge(
+                    page.surface,
+                    Rect::new(gx, c.y, gw, gh),
+                    RoundGaugeOpts {
+                        value: (*norm).clamp(0.0, 1.0),
+                        redline: Some(0.85),
+                        label: lab,
+                        color: *col,
+                        font_px: fh * 0.55,
+                        ..Default::default()
+                    },
+                );
+                label(
+                    page.surface,
+                    gx as f32 + 2.0,
+                    (c.y + gh - (fh * 0.9) as i32) as f32,
+                    &format!("{:.0}C", deg),
+                    pal.readout,
+                    fh * 0.6,
+                );
+            }
             let lines = channels::channels_in_group(v, "FLUID")
                 .into_iter()
                 .map(|ch| ch.line())
                 .collect::<Vec<_>>();
-            numeric_matrix(page.surface, c.inset(2), &lines, fh * 0.95, pal.readout, 2);
+            numeric_matrix(
+                page.surface,
+                Rect::new(c.x, c.y + gh + 4, c.w, (c.h - gh - 6).max(20)),
+                &lines,
+                fh * 0.8,
+                pal.readout,
+                2,
+            );
         }
         AutoPage::Elec => {
-            value_readout(
+            let batt_w = (c.w as f32 * 0.48) as i32;
+            // Battery as round gauge (11–15 V mapped ~0..1 via v.battery).
+            round_gauge(
                 page.surface,
-                c.center().0 as f32,
-                c.y as f32 + c.h as f32 * 0.3,
-                "BATT",
-                &format!("{:.1}", v.battery_v),
-                "V",
-                pal.nav,
-                fh * 0.8,
-                fh * 2.2,
+                Rect::new(c.x, c.y, batt_w, (c.h as f32 * 0.7) as i32),
+                RoundGaugeOpts {
+                    value: v.battery.clamp(0.0, 1.0),
+                    redline: Some(0.92),
+                    label: "BATT",
+                    color: pal.nav,
+                    font_px: fh * 0.75,
+                    ..Default::default()
+                },
             );
             value_readout(
                 page.surface,
-                c.center().0 as f32,
-                c.y as f32 + c.h as f32 * 0.62,
+                c.x as f32 + batt_w as f32 * 0.5,
+                c.y as f32 + c.h as f32 * 0.78,
+                "V",
+                &format!("{:.1}", v.battery_v),
+                "V",
+                pal.nav,
+                fh * 0.65,
+                fh * 1.4,
+            );
+            value_readout(
+                page.surface,
+                c.x as f32 + batt_w as f32 + (c.w - batt_w) as f32 * 0.5,
+                c.y as f32 + c.h as f32 * 0.22,
                 "LOAD",
                 &format!("{:.0}", v.load * 100.0),
                 "%",
                 pal.caution,
-                fh * 0.75,
-                fh * 1.8,
+                fh * 0.7,
+                fh * 1.6,
+            );
+            tape(
+                page.surface,
+                Rect::new(
+                    c.x + batt_w + 6,
+                    c.y + (c.h as f32 * 0.4) as i32,
+                    (c.w - batt_w - 12).max(24),
+                    (c.h as f32 * 0.35) as i32,
+                ),
+                "LOAD",
+                v.load,
+                pal.caution,
+                fh * 0.65,
+                false,
             );
             progress_strip(
                 page.surface,
-                Rect::new(c.x + 12, c.bottom() - 22, c.w - 24, 14),
+                Rect::new(c.x + 12, c.bottom() - 18, c.w - 24, 12),
                 v.load,
                 pal.caution,
                 pal.structure,
             );
         }
         AutoPage::Drive => {
+            // Speed gauge + gear numeric + channel dump.
+            let spd_w = (c.w as f32 * 0.42) as i32;
+            let spd_n = (v.speed_mph / 120.0).clamp(0.0, 1.0);
+            round_gauge(
+                page.surface,
+                Rect::new(c.x, c.y, spd_w, (c.h as f32 * 0.55) as i32),
+                RoundGaugeOpts {
+                    value: spd_n,
+                    redline: Some(0.85),
+                    label: "SPD",
+                    color: pal.readout,
+                    font_px: fh * 0.7,
+                    ..Default::default()
+                },
+            );
             value_readout(
                 page.surface,
-                c.x as f32 + c.w as f32 * 0.3,
-                c.y as f32 + c.h as f32 * 0.2,
-                "SPD",
+                c.x as f32 + spd_w as f32 * 0.5,
+                c.y as f32 + c.h as f32 * 0.52,
+                v.speed_unit.name(),
                 &format!("{:.0}", v.speed_unit.from_mph(v.speed_mph)),
                 v.speed_unit.name(),
                 pal.readout,
-                fh * 0.75,
-                fh * 2.0,
+                fh * 0.6,
+                fh * 1.3,
             );
             value_readout(
                 page.surface,
                 c.x as f32 + c.w as f32 * 0.72,
-                c.y as f32 + c.h as f32 * 0.2,
+                c.y as f32 + c.h as f32 * 0.18,
                 "GEAR",
                 v.gear.label(),
                 "",
                 pal.nav,
                 fh * 0.75,
                 fh * 1.8,
+            );
+            // Mini RPM tape on right of speed
+            tape(
+                page.surface,
+                Rect::new(c.x + spd_w + 4, c.y + 4, 28, (c.h as f32 * 0.5) as i32),
+                "RPM",
+                (v.rpm / v.rpm_redline).clamp(0.0, 1.0),
+                pal.primary,
+                fh * 0.5,
+                false,
             );
             // Park brake: red flash field when on
             let park_items = [StatusItem {
@@ -1262,12 +1354,18 @@ pub fn draw_auto_with_video(
             }
         }
         AutoPage::Bus => {
-            // Everything: full channel dump (numeric preferred).
+            // Everything: full channel dump (dense 3-col numerics).
             let lines: Vec<String> = channels::all_channels(v)
                 .into_iter()
                 .map(|ch| format!("{} {}", ch.group, ch.line()))
                 .collect();
-            numeric_matrix(page.surface, c.inset(2), &lines, fh * 0.62, pal.readout, 2);
+            let cols = if lines.len() > 28 { 3 } else { 2 };
+            let fsz = if lines.len() > 40 {
+                fh * 0.52
+            } else {
+                fh * 0.62
+            };
+            numeric_matrix(page.surface, c.inset(2), &lines, fsz, pal.readout, cols);
         }
         AutoPage::Own => {
             let id = vehicle_profile::identity_line();
