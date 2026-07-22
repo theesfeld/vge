@@ -1,16 +1,15 @@
 //! **Demo only** — loads pure-asm **libvge** and draws instrument vectors.
 //!
-//! This is not a framebuffer game loop. Each frame is:
-//!   clear → call several draw functions → present
+//! Layout (first real use):
+//! - Large **2019 Ford F-150** style tachometer (0–7000 RPM)
+//! - Tape gauges: fuel, coolant temp, transmission temp, battery
 //!
-//! First real use: **needle gauges** and **tape gauges**. The demo shows
-//! multiple draw types at once (line_aa, line_thick, circle, rect_fill,
-//! polyline, line_xf + rotate).
+//! Prefer **1px** strokes. Needle tip uses library lifespan for a short trail.
 //!
 //! ```text
 //! make
 //! cargo run --release --bin vge-demo
-//! VGE_TTL=10 cargo run --release --bin vge-demo   # optional needle trail
+//! VGE_TTL=14 cargo run --release --bin vge-demo   # tip trail length (frames)
 //! ```
 //!
 //! Quit: `q` / Esc / Ctrl+C.
@@ -27,10 +26,21 @@ use vge::term::{
     terminal_cells, OverlayState, Viewport,
 };
 use vge::{
-    engine_version, using_assembly, Surface, Xform, AMBER, CYAN, GREEN, GREEN_DIM, RED, WHITE,
+    engine_version, using_assembly, Color, Surface, AMBER, CYAN, GREEN, GREEN_DIM, RED, WHITE,
 };
 
 static RUNNING: AtomicBool = AtomicBool::new(true);
+
+// --- 2019 F-150 style tach (cluster scale, not a dyno sheet) ---
+/// Face full scale (×1000 markings 0…7).
+const RPM_MAX: f32 = 7000.0;
+/// Approximate red-zone start on 2018–2020 F-150 clusters (~5.5k).
+/// Engine cut varies by powertrain (3.5 EcoBoost ~6k, 5.0 higher).
+const REDLINE_RPM: f32 = 5500.0;
+/// Arc sweep for 0 → RPM_MAX (270°, lower-left through top to lower-right).
+const TACH_SWEEP: f32 = PI * 1.5;
+/// Angle at 0 RPM (screen: y down). Lower-left.
+const TACH_ANG0: f32 = PI * 0.75;
 
 fn main() -> io::Result<()> {
     let ver = engine_version();
@@ -38,23 +48,19 @@ fn main() -> io::Result<()> {
         eprintln!("error: demo requires pure-asm libvge (x86_64)");
         std::process::exit(1);
     }
-    eprintln!("loaded libvge {ver} (assembly) · gauge draw demo");
+    eprintln!("loaded libvge {ver} (assembly) · 2019 F-150 tach + tapes");
 
     install_sigint();
     let hz = std::env::var("VGE_HZ")
         .ok()
         .and_then(|s| s.parse().ok())
         .unwrap_or(120u32);
-    let width = std::env::var("VGE_WIDTH")
+    // Tip trail frames (default on — needle must have a tip trail).
+    let tip_ttl = std::env::var("VGE_TTL")
         .ok()
         .and_then(|s| s.parse().ok())
-        .unwrap_or(1i32)
+        .unwrap_or(16u32)
         .max(1);
-    // Optional trail on the moving needle tip only (library lifespan).
-    let needle_ttl = std::env::var("VGE_TTL")
-        .ok()
-        .and_then(|s| s.parse().ok())
-        .filter(|&n: &u32| n > 0);
 
     let backend = detect_backend();
     let (tc, tr) = terminal_cells();
@@ -67,7 +73,7 @@ fn main() -> io::Result<()> {
     let (w, h) = surface_size_for_viewport(backend, vp);
 
     let mut scanout = Surface::new(w, h);
-    let mut trail = DisplayList::with_capacity(128);
+    let mut tip_trail = DisplayList::with_capacity(64);
     let mut ostate = OverlayState::new();
     let mut pacer = if hz == 0 {
         None
@@ -75,17 +81,12 @@ fn main() -> io::Result<()> {
         Some(FramePacer::new(hz))
     };
 
-    let mode = match needle_ttl {
-        Some(n) => format!("ttl={n}"),
-        None => "draw".to_string(),
-    };
-
     enter_overlay()?;
     {
         let mut out = io::stdout().lock();
         write!(
             out,
-            "\x1b[1;1H\x1b[2K\x1b[32mlibvge\x1b[0m {ver} · gauges · {mode} · {backend:?} · {w}x{h} · q quit"
+            "\x1b[1;1H\x1b[2K\x1b[32mlibvge\x1b[0m {ver} · F-150 tach 0–7k · redline {REDLINE_RPM:.0}+ · tip ttl={tip_ttl} · {backend:?} · q quit"
         )?;
         out.flush()?;
     }
@@ -102,103 +103,54 @@ fn main() -> io::Result<()> {
         }
         let t = t0.elapsed().as_secs_f32();
 
-        // Instrument values (smooth wall-clock motion).
-        let rpm = 0.5 + 0.45 * (t * 0.7).sin();
-        let oil = 0.35 + 0.25 * (t * 0.4).cos();
-        let speed = 0.5 + 0.4 * (t * 0.55).sin();
-        let fuel = 0.7 + 0.2 * (t * 0.25).cos();
-        let spin = t * 1.1;
+        // Demo motion only (no OBD).
+        let rpm = 800.0 + 4200.0 * (0.5 + 0.5 * (t * 0.55).sin());
+        let fuel = 0.62 + 0.08 * (t * 0.12).cos();
+        let coolant = 0.45 + 0.12 * (t * 0.18).sin(); // ~normal band mid-scale
+        let trans = 0.40 + 0.15 * (t * 0.22).cos();
+        let battery = 0.55 + 0.08 * (t * 0.3).sin(); // ~13–14 V band on 10–16 scale
 
         let tb = Instant::now();
-        // Clear once. Then issue independent draws — not a scene graph.
         scanout.clear_transparent();
 
-        let margin = (w.min(h) as f32 * 0.06).max(12.0) as i32;
-        let col_w = (w as i32 - margin * 3) / 2;
-        let row_h = (h as i32 - margin * 3) / 2;
+        // Layout: large tach left/center; four 1px tapes stacked on the right.
+        let m = (w.min(h) as f32 * 0.04).max(8.0) as i32;
+        let tape_w = ((w as f32) * 0.16).max(36.0) as i32;
+        let gap = m / 2;
+        let tach_right = w as i32 - m - tape_w - gap;
+        let tach_cx = m + (tach_right - m) / 2;
+        let tach_cy = h as i32 / 2;
+        let tach_r = ((tach_right - m).min(h as i32 - 2 * m) / 2 - 4).max(40);
 
-        // Top-left: RPM needle (circle + ticks + thick needle + AA tip)
-        draw_needle_gauge(
-            &mut scanout,
-            margin + col_w / 2,
-            margin + row_h / 2,
-            (col_w.min(row_h) / 2 - 4).max(20),
-            rpm,
-            GREEN,
-            "RPM",
-            width,
-        );
+        draw_f150_tach(&mut scanout, tach_cx, tach_cy, tach_r, rpm);
 
-        // Top-right: oil needle (second gauge; cyan)
-        draw_needle_gauge(
-            &mut scanout,
-            margin * 2 + col_w + col_w / 2,
-            margin + row_h / 2,
-            (col_w.min(row_h) / 2 - 4).max(20),
-            oil,
-            CYAN,
-            "OIL",
-            width,
-        );
+        // 1px needle + tip trail (library lifespan).
+        let tip = needle_tip(tach_cx, tach_cy, tach_r, rpm);
+        draw_needle_1px(&mut scanout, tach_cx, tach_cy, tach_r, rpm);
+        tip_trail.tick();
+        tip_trail.set_lifespan(tip_ttl);
+        tip_trail.set_color(RED);
+        // Short cross at tip so the trail is visible as 1px marks.
+        tip_trail.line(tip.0 - 1, tip.1, tip.0 + 1, tip.1);
+        tip_trail.line(tip.0, tip.1 - 1, tip.0, tip.1 + 1);
+        tip_trail.stroke_life(&mut scanout, true);
 
-        // Bottom-left: vertical tape (speed)
-        draw_tape_gauge(
-            &mut scanout,
-            margin,
-            margin * 2 + row_h,
-            col_w,
-            row_h,
-            speed,
-            true,
-            AMBER,
-            "SPD",
-            width,
-        );
-
-        // Bottom-right: horizontal tape (fuel)
-        draw_tape_gauge(
-            &mut scanout,
-            margin * 2 + col_w,
-            margin * 2 + row_h,
-            col_w,
-            row_h,
-            fuel,
-            false,
-            GREEN,
-            "FUEL",
-            width,
-        );
-
-        // Fun: small rotated diamond via vge_line_xf + vge_xform_rotate
-        draw_spin_mark(
-            &mut scanout,
-            w as i32 / 2,
-            h as i32 / 2,
-            (w.min(h) as f32 * 0.04).max(8.0),
-            spin,
-            WHITE,
-            width,
-        );
-
-        // Optional: needle tip trails (library lifespan on a short list only)
-        if let Some(ttl) = needle_ttl {
-            trail.tick();
-            trail.set_lifespan(ttl);
-            trail.set_width(width.max(1));
-            let r = (col_w.min(row_h) / 2 - 4).max(20) as f32;
-            let ang = needle_angle(rpm);
-            let cx = (margin + col_w / 2) as f32;
-            let cy = (margin + row_h / 2) as f32;
-            let tip_x = cx + (r * 0.88) * ang.cos();
-            let tip_y = cy + (r * 0.88) * ang.sin();
-            trail.set_color(RED);
-            trail.line(
-                tip_x as i32 - 2,
-                tip_y as i32,
-                tip_x as i32 + 2,
-                tip_y as i32,
-            );
-            trail.stroke_life(&mut scanout, true);
+        // Four vertical tapes on the right.
+        let tape_x = w as i32 - m - tape_w;
+        let tape_top = m;
+        let tape_h_total = h as i32 - 2 * m;
+        let n_tapes = 4i32;
+        let tape_gap = gap.max(4);
+        let tape_h = (tape_h_total - tape_gap * (n_tapes - 1)) / n_tapes;
+        let tapes: [(f32, Color, &str); 4] = [
+            (fuel.clamp(0.0, 1.0), AMBER, "FUEL"),
+            (coolant.clamp(0.0, 1.0), CYAN, "COOL"),
+            (trans.clamp(0.0, 1.0), GREEN, "TRNS"),
+            (battery.clamp(0.0, 1.0), WHITE, "BATT"),
+        ];
+        for (i, &(val, color, _name)) in tapes.iter().enumerate() {
+            let y = tape_top + i as i32 * (tape_h + tape_gap);
+            draw_tape_1px(&mut scanout, tape_x, y, tape_w, tape_h, val, color);
         }
 
         beam_sum += tb.elapsed();
@@ -219,7 +171,7 @@ fn main() -> io::Result<()> {
             let mut out = io::stdout().lock();
             write!(
                 out,
-                "\x1b[1;1H\x1b[2K\x1b[32mlibvge\x1b[0m {ver} · gauges · {mode} · beam={d}µs present={p}µs fps={fps:.0} · q quit"
+                "\x1b[1;1H\x1b[2K\x1b[32mlibvge\x1b[0m {ver} · F-150 · {rpm:.0} rpm · beam={d}µs present={p}µs fps={fps:.0} · q quit"
             )?;
             out.flush()?;
             n = 0;
@@ -234,187 +186,137 @@ fn main() -> io::Result<()> {
     Ok(())
 }
 
-/// Map 0..1 value to needle angle (left-stop through top to right-stop).
-/// About −210° … +30° in screen coords (y down).
-fn needle_angle(value01: f32) -> f32 {
-    let v = value01.clamp(0.0, 1.0);
-    let start = -PI * 0.75; // −135° from +x ≈ upper-left sweep start
-    let sweep = PI * 1.5; // 270° arc
-    start + v * sweep
+#[inline]
+fn rpm_to_angle(rpm: f32) -> f32 {
+    let v = (rpm / RPM_MAX).clamp(0.0, 1.0);
+    TACH_ANG0 + v * TACH_SWEEP
 }
 
-/// Needle gauge: `circle` bezel, `line`/`line_aa` ticks, `line_thick` needle,
-/// hub `circle`. Value in 0..1.
-#[allow(clippy::too_many_arguments)]
-fn draw_needle_gauge(
-    s: &mut Surface,
-    cx: i32,
-    cy: i32,
-    r: i32,
-    value01: f32,
-    color: u32,
-    _label: &str,
-    stroke_w: i32,
-) {
-    let r = r.max(12);
-    // Bezel — circle outline (libvge vge_circle)
-    s.circle(cx, cy, r, GREEN_DIM);
-    if r > 16 {
-        s.circle(cx, cy, r - 3, GREEN_DIM);
-    }
+fn needle_tip(cx: i32, cy: i32, r: i32, rpm: f32) -> (i32, i32) {
+    let a = rpm_to_angle(rpm);
+    let len = r as f32 * 0.88;
+    (cx + (len * a.cos()) as i32, cy + (len * a.sin()) as i32)
+}
 
-    // Major ticks — AA hairlines
-    let n_ticks = 9;
-    for i in 0..n_ticks {
-        let v = i as f32 / (n_ticks - 1) as f32;
-        let a = needle_angle(v);
-        let (cos, sin) = (a.cos(), a.sin());
-        let outer = r as f32;
-        let inner = r as f32 * if i % 2 == 0 { 0.78 } else { 0.86 };
+/// Static face: 1px outline, ticks, redline **arc** inside the radius.
+fn draw_f150_tach(s: &mut Surface, cx: i32, cy: i32, r: i32, _rpm: f32) {
+    let r = r.max(24);
+    // 1px bezel (outline only).
+    s.circle(cx, cy, r, GREEN_DIM);
+
+    // Major ticks every 1000 RPM (0…7).
+    for k in 0..=7 {
+        let rpm = k as f32 * 1000.0;
+        let a = rpm_to_angle(rpm);
+        let (c, sn) = (a.cos(), a.sin());
+        let outer = r as f32 * 0.98;
+        // Longer ticks at 0 and every 2k.
+        let inner = r as f32 * if k % 2 == 0 { 0.86 } else { 0.90 };
         s.line_aa(
-            cx + (outer * cos) as i32,
-            cy + (outer * sin) as i32,
-            cx + (inner * cos) as i32,
-            cy + (inner * sin) as i32,
-            GREEN_DIM,
+            cx + (outer * c) as i32,
+            cy + (outer * sn) as i32,
+            cx + (inner * c) as i32,
+            cy + (inner * sn) as i32,
+            if rpm >= REDLINE_RPM { RED } else { GREEN_DIM },
         );
     }
 
-    // Needle body — thick stroke (vge_line_thick)
-    let a = needle_angle(value01);
-    let (cos, sin) = (a.cos(), a.sin());
-    let tip = r as f32 * 0.88;
-    let tail = r as f32 * 0.15;
-    let x0 = cx + (-tail * cos) as i32;
-    let y0 = cy + (-tail * sin) as i32;
-    let x1 = cx + (tip * cos) as i32;
-    let y1 = cy + (tip * sin) as i32;
-    let tw = stroke_w.clamp(2, 5);
-    s.line_thick(x0, y0, x1, y1, color, tw);
-    // Crisp tip hairline over the thick body
-    s.line_aa(x0, y0, x1, y1, color);
+    // Minor ticks every 500 between majors.
+    for k in 0..14 {
+        if k % 2 == 0 {
+            continue;
+        }
+        let rpm = k as f32 * 500.0;
+        let a = rpm_to_angle(rpm);
+        let (c, sn) = (a.cos(), a.sin());
+        let outer = r as f32 * 0.98;
+        let inner = r as f32 * 0.93;
+        s.line_aa(
+            cx + (outer * c) as i32,
+            cy + (outer * sn) as i32,
+            cx + (inner * c) as i32,
+            cy + (inner * sn) as i32,
+            if rpm >= REDLINE_RPM { RED } else { GREEN_DIM },
+        );
+    }
 
-    // Hub
-    s.circle(cx, cy, (r / 12).max(2), color);
-    s.circle(cx, cy, (r / 20).max(1), WHITE);
+    // Redline arc: 1px chain inside the gauge radius (not on the bezel).
+    draw_redline_arc(s, cx, cy, (r as f32 * 0.94) as i32, REDLINE_RPM, RPM_MAX);
+
+    // Small 1px hub ring (static).
+    s.circle(cx, cy, (r / 28).max(2), GREEN_DIM);
 }
 
-/// Tape gauge: frame with `line`/`polyline`, optional thin `rect_fill` band,
-/// moving index mark. `vertical == true` → value rises upward.
-#[allow(clippy::too_many_arguments)]
-fn draw_tape_gauge(
-    s: &mut Surface,
-    x: i32,
-    y: i32,
-    w: i32,
-    h: i32,
-    value01: f32,
-    vertical: bool,
-    color: u32,
-    _label: &str,
-    stroke_w: i32,
-) {
+/// Redline as a 1px arc of short AA segments from `rpm0` to `rpm1`.
+fn draw_redline_arc(s: &mut Surface, cx: i32, cy: i32, r_arc: i32, rpm0: f32, rpm1: f32) {
+    let r = r_arc.max(8) as f32;
+    let a0 = rpm_to_angle(rpm0);
+    let a1 = rpm_to_angle(rpm1);
+    // Chord length ~2px → segment count.
+    let arc_len = (a1 - a0).abs() * r;
+    let segs = ((arc_len / 2.0).ceil() as i32).clamp(8, 256);
+    let mut prev = (cx + (r * a0.cos()) as i32, cy + (r * a0.sin()) as i32);
+    for i in 1..=segs {
+        let t = i as f32 / segs as f32;
+        let a = a0 + (a1 - a0) * t;
+        let cur = (cx + (r * a.cos()) as i32, cy + (r * a.sin()) as i32);
+        s.line_aa(prev.0, prev.1, cur.0, cur.1, RED);
+        prev = cur;
+    }
+}
+
+/// 1px needle from hub to tip (AA hairline).
+fn draw_needle_1px(s: &mut Surface, cx: i32, cy: i32, r: i32, rpm: f32) {
+    let a = rpm_to_angle(rpm);
+    let (c, sn) = (a.cos(), a.sin());
+    let tip = r as f32 * 0.88;
+    let tail = r as f32 * 0.12;
+    let x0 = cx + (-tail * c) as i32;
+    let y0 = cy + (-tail * sn) as i32;
+    let x1 = cx + (tip * c) as i32;
+    let y1 = cy + (tip * sn) as i32;
+    s.line_aa(x0, y0, x1, y1, GREEN);
+    // 1px hub dot.
+    s.plot(cx, cy, WHITE);
+}
+
+/// Vertical 1px tape: frame, ticks, value bar as a single AA line + index.
+fn draw_tape_1px(s: &mut Surface, x: i32, y: i32, w: i32, h: i32, value01: f32, color: Color) {
     let v = value01.clamp(0.0, 1.0);
     let x1 = x + w;
     let y1 = y + h;
-
-    // Frame — polyline closed box (vge_polyline)
+    // 1px frame.
     s.polyline(&[(x, y), (x1, y), (x1, y1), (x, y1), (x, y)], GREEN_DIM);
 
-    // Inner rail ticks
-    if vertical {
-        let mid_x = x + w / 2;
-        let n = 11;
-        for i in 0..n {
-            let t = i as f32 / (n - 1) as f32;
-            let yy = y1 - ((h as f32) * t) as i32;
-            let half = if i % 5 == 0 { w / 5 } else { w / 10 };
-            s.line_aa(mid_x - half, yy, mid_x + half, yy, GREEN_DIM);
-        }
-        // Filled value band (vge_rect_fill) — dim strip under the index
-        let fill_h = ((h as f32) * v) as i32;
-        if fill_h > 1 {
-            let band = (w / 8).max(2);
-            s.rect_fill(mid_x - band, y1 - fill_h, mid_x + band, y1 - 1, GREEN_DIM);
-        }
-        // Index chevron — polyline
-        let iy = y1 - ((h as f32) * v) as i32;
-        let arm = (w / 4).max(6);
-        s.polyline(
-            &[
-                (mid_x - arm, iy),
-                (mid_x, iy),
-                (mid_x - arm / 2, iy - arm / 3),
-                (mid_x - arm / 2, iy + arm / 3),
-                (mid_x, iy),
-            ],
-            color,
-        );
-        // Index bar — thick
-        s.line_thick(mid_x - arm, iy, mid_x + arm, iy, color, stroke_w.max(2));
-    } else {
-        let mid_y = y + h / 2;
-        let n = 11;
-        for i in 0..n {
-            let t = i as f32 / (n - 1) as f32;
-            let xx = x + ((w as f32) * t) as i32;
-            let half = if i % 5 == 0 { h / 5 } else { h / 10 };
-            s.line_aa(xx, mid_y - half, xx, mid_y + half, GREEN_DIM);
-        }
-        let fill_w = ((w as f32) * v) as i32;
-        if fill_w > 1 {
-            let band = (h / 8).max(2);
-            s.rect_fill(x + 1, mid_y - band, x + fill_w, mid_y + band, GREEN_DIM);
-        }
-        let ix = x + ((w as f32) * v) as i32;
-        let arm = (h / 4).max(6);
-        s.polyline(
-            &[
-                (ix, mid_y - arm),
-                (ix, mid_y),
-                (ix - arm / 3, mid_y - arm / 2),
-                (ix + arm / 3, mid_y - arm / 2),
-                (ix, mid_y),
-            ],
-            color,
-        );
-        s.line_thick(ix, mid_y - arm, ix, mid_y + arm, color, stroke_w.max(2));
+    let mid_x = x + w / 2;
+    // Scale ticks (1px).
+    let n = 9;
+    for i in 0..n {
+        let t = i as f32 / (n - 1) as f32;
+        let yy = y1 - ((h as f32) * t) as i32;
+        let half = if i % 4 == 0 { w / 4 } else { w / 8 };
+        s.line_aa(mid_x - half, yy, mid_x + half, yy, GREEN_DIM);
     }
-}
 
-/// Rotating diamond using **vge_xform_rotate** + **vge_line_xf**.
-fn draw_spin_mark(
-    s: &mut Surface,
-    cx: i32,
-    cy: i32,
-    size: f32,
-    angle: f32,
-    color: u32,
-    stroke_w: i32,
-) {
-    // Translate to center, then rotate (asm xform path).
-    let m = Xform::identity()
-        .translate(cx as f32, cy as f32)
-        .rotate(angle);
+    // Value as 1px vertical bar (not a filled rect).
+    let fill_h = ((h as f32) * v) as i32;
+    if fill_h > 0 {
+        s.line_aa(mid_x, y1, mid_x, y1 - fill_h, color);
+    }
 
-    let a = size;
-    // Four edges of a diamond in local space → line_xf
-    let edges = [
-        (-a, 0.0, 0.0, -a),
-        (0.0, -a, a, 0.0),
-        (a, 0.0, 0.0, a),
-        (0.0, a, -a, 0.0),
-    ];
-    for (x0, y0, x1, y1) in edges {
-        s.line_xf(&m, x0, y0, x1, y1, color);
-    }
-    // Cross-hair (Bresenham fast + thick accent) so several draw kinds show up.
-    if stroke_w > 1 {
-        s.line_thick(cx - 2, cy, cx + 2, cy, color, stroke_w);
-    } else {
-        s.line_fast(cx - 3, cy, cx + 3, cy, color);
-        s.line_fast(cx, cy - 3, cx, cy + 3, color);
-    }
+    // Index: 1px horizontal hairline + short chevron polyline.
+    let iy = y1 - fill_h;
+    let arm = (w / 3).max(4);
+    s.line_aa(mid_x - arm, iy, mid_x + arm, iy, color);
+    s.polyline(
+        &[
+            (mid_x - arm, iy),
+            (mid_x - arm / 2, iy - 2),
+            (mid_x - arm / 2, iy + 2),
+            (mid_x - arm, iy),
+        ],
+        color,
+    );
 }
 
 fn poll_quit() -> io::Result<bool> {
