@@ -4,19 +4,24 @@
 > **Status:** active · Version: `0.1.0-dev.1` · License: MIT · [Issues](https://github.com/theesfeld/vge/issues)
 <!-- agents:status:end -->
 
-VGE is a **calligraphic stroke engine** for modern hosts.
+## Product: pure assembly library
 
-Aircraft HUDs and 1970s vector CRTs did not paint full bitmaps as their native model.  
-They held a **display list** of beam commands (MOVE / DRAW). A refresh processor retraced the list. Phosphor held the glow.
+**`libvge` is written in assembly.** It is not a Rust engine with an asm helper.
 
-VGE uses that model in 2026:
+| Artifact | Role |
+|----------|------|
+| `asm/x86_64/*.s` | **Implementation** |
+| `include/vge.h` | C ABI (any language) |
+| `build/libvge.a` / `.so` | Link: `-lvge -lm` |
+| Rust / demos | Optional thin consumers |
 
-1. **`DisplayList`** — live stroke commands (source of truth)
-2. **`refresh`** — phosphor decay + software beam through the list → scanout pixels
-3. **Present** — Kitty / half-block / Linux FB shows the scanout only
+```bash
+make && make test    # C smoke, no Rust
+make install         # ~/.local/{lib,include}
+```
 
-Hot path on **x86_64**: GNU assembly for beam pixel stores (`asm/x86_64/vge.s`).  
-Other targets use a portable C path with the same C ABI.
+Calligraphic model: stroke list → beam into pixels → present.  
+Raster/beam functions live in asm. Client languages may hold the display list.
 
 <p align="center">
   <img src="docs/demo-hud.png" alt="Vector HUD sample from VGE" width="640" />
@@ -92,13 +97,22 @@ leave_overlay()?;
 
 ## Install
 
+### Primary (assembly library)
+
+```bash
+git clone https://github.com/theesfeld/vge
+cd vge && make && make install
+# CFLAGS: -I$HOME/.local/include
+# LDFLAGS: -L$HOME/.local/lib -lvge -lm
+```
+
+### Optional Rust bindings (FFI only)
+
 ```toml
-# Cargo.toml
 vge = { git = "https://github.com/theesfeld/vge" }
 ```
 
-C header: `include/vge.h`  
-Link the static/shared library from `cargo build --release` (`libvge.a` / `libvge.so`).
+The Rust package **links** the assembly objects; it does not reimplement the engine.
 
 ---
 
@@ -247,18 +261,13 @@ vge_line(&s, 0, 0, 639, 359, 0x00FF46);
 ## Layout
 
 ```
-include/vge.h           C ABI
-asm/x86_64/vge.s        assembly hot path
-c/vge_portable.c        transforms, blit, decay, portable raster
-src/lib.rs              Rust API
-src/stroke.rs           DisplayList (calligraphic core)
-src/term.rs             terminal present + viewport overlay
-src/fb.rs               Linux framebuffer
-src/frame.rs            display refresh lock
-src/effects.rs          glow / bloom / radar / scanlines
-src/bin/vge-demo.rs     stroke-list HUD demo
-examples/bench.rs       FPS bench
-docs/demo-hud.png       sample image
+include/vge.h              public C ABI
+asm/x86_64/vge.s           plot/clear/line/circle
+asm/x86_64/vge_extra.s     thick/rect/blit/decay/export/xform/…
+Makefile                   builds libvge.a / libvge.so
+examples/c/smoke.c         pure-C link test
+c/vge_portable.c           reference only (non-x86_64 / VGE_FORCE_C)
+src/                       optional Rust FFI + demos (not the engine)
 ```
 
 ## Architecture note
