@@ -87,7 +87,43 @@ impl Default for VehicleCaps {
 }
 
 impl VehicleCaps {
-    /// Demo / offline probe result for SuperCrew 2.7 XLT-class truck.
+    /// No adapter / build without OBD: glass may open, but **no vehicle data**.
+    pub fn no_link() -> Self {
+        let mut c = Self {
+            ready: true,
+            progress: 1.0,
+            phase: "NO LINK".into(),
+            link: "OFF".into(),
+            ..Default::default()
+        };
+        // Hard formats only — probe did not run.
+        c.features = FeatureCaps {
+            fog_lights: false,
+            heated_seats: false,
+            heated_steering: false,
+            tpms: false,
+            abs: false,
+            camera: false,
+            park_sensors: false,
+            four_wd: false,
+            hvac: false,
+            ambient_temp: false,
+            oil_temp: false,
+            trans_temp: false,
+            fuel_level: false,
+            fuel_pressure: false,
+            attitude: true,
+            map: false,
+        };
+        c.lines = vec![BitLine {
+            name: "LINK".into(),
+            state: BitState::Nogo,
+        }];
+        c.finalize_pages();
+        c
+    }
+
+    /// Full feature set for SuperCrew-class lab probe (not used for synthetic vehicle data).
     pub fn demo_complete() -> Self {
         let mut c = Self {
             ready: true,

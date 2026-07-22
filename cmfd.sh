@@ -7,8 +7,7 @@
 #     2) open captures/drive-TIMESTAMP/
 #     3) run live cmfd glass with BT ELM + crush poll + capture to that dir
 #
-# This is the live product path (not a toy demo). Offline glass without OBD
-# shows SIM synthetic data only.
+# Live product path only. No SIM: until OBD is up the glass shows empty data.
 #
 # One Bluetooth adapter can serve only one RFCOMM client. Glass and capture
 # therefore share one process (ObdFeed writes frames.ndjson while drawing).

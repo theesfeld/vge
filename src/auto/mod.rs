@@ -28,7 +28,6 @@ pub mod vehicle_profile;
 pub use boot::draw_bit_screen;
 pub use caps::{BitLine, BitState, FeatureCaps, VehicleCaps};
 pub use format_select::{AutoFormatSelect, FormatSelectAction, FormatSlot};
-pub use probe::DemoProbe;
 
 use crate::bezel::BezelState;
 use crate::color::WHITE;
@@ -171,7 +170,7 @@ impl DriveMode {
     }
 }
 
-/// Full vehicle snapshot for auto pages (live OBD/CAN or offline SIM).
+/// Full vehicle snapshot for auto pages (live OBD/CAN only — never synthetic).
 ///
 /// Prefer **engineering units** on glass. Normalized 0..1 fields remain for tape widgets.
 #[derive(Clone, Debug)]
@@ -246,7 +245,7 @@ pub struct VehicleSnapshot {
     pub heading_deg: f32,
     pub vin: String,
     // ── OBD / Bluetooth link (OWN · SETUP · BUS · status strip) ───────────
-    /// `BT` · `SERIAL` · `REPLAY` · `SIM` · `OFF`
+    /// `BT` · `SERIAL` · `REPLAY` · `OFF`
     pub bus_kind: String,
     /// MAC, serial path, or replay path.
     pub bus_addr: String,
@@ -256,7 +255,7 @@ pub struct VehicleSnapshot {
     pub bus_adapter: String,
     /// ELM `ATDP` protocol string.
     pub bus_proto: String,
-    /// `LIVE` · `BIT` · `ERR` · `SIM` · `OFF`
+    /// `LIVE` · `BIT` · `ERR` · `SEARCH` · `RECONN` · `OFF`
     pub bus_state: String,
     /// Last bus error (empty if none).
     pub bus_error: String,
@@ -339,33 +338,34 @@ impl VehicleSnapshot {
 }
 
 impl Default for VehicleSnapshot {
+    /// Empty / no-data defaults. Glass stays blank until live OBD fills fields.
     fn default() -> Self {
         Self {
-            rpm: 900.0,
+            rpm: 0.0,
             rpm_redline: 6500.0,
             speed_mph: 0.0,
             throttle: 0.0,
-            fuel: 0.62,
-            battery: 0.72,
-            battery_v: 13.8,
-            load: 0.2,
-            oil_temp: 0.45,
-            coolant: 0.5,
-            trans_temp: 0.4,
-            iat: 0.35,
-            maf: 0.3,
-            exhaust_temp: 0.4,
-            oil_temp_c: 95.0,
-            coolant_c: 90.0,
-            trans_temp_c: 85.0,
-            iat_c: 28.0,
-            exhaust_temp_c: 320.0,
-            maf_gps: 8.0,
-            fuel_pressure_kpa: 350.0,
+            fuel: 0.0,
+            battery: 0.0,
+            battery_v: 0.0,
+            load: 0.0,
+            oil_temp: 0.0,
+            coolant: 0.0,
+            trans_temp: 0.0,
+            iat: 0.0,
+            maf: 0.0,
+            exhaust_temp: 0.0,
+            oil_temp_c: 0.0,
+            coolant_c: 0.0,
+            trans_temp_c: 0.0,
+            iat_c: 0.0,
+            exhaust_temp_c: 0.0,
+            maf_gps: 0.0,
+            fuel_pressure_kpa: 0.0,
             gear: GearSelect::Park,
-            gear_num: 1,
+            gear_num: 0,
             drive: DriveMode::TwoHigh,
-            light_low: true,
+            light_low: false,
             light_high: false,
             light_drive: false,
             light_fog: false,
@@ -374,23 +374,23 @@ impl Default for VehicleSnapshot {
             light_turn_r: false,
             light_interior: false,
             tire_fl: TireReading {
-                pressure: 35.0,
-                temp_c: 28.0,
+                pressure: 0.0,
+                temp_c: 0.0,
                 alert: false,
             },
             tire_fr: TireReading {
-                pressure: 35.0,
-                temp_c: 28.0,
+                pressure: 0.0,
+                temp_c: 0.0,
                 alert: false,
             },
             tire_rl: TireReading {
-                pressure: 34.0,
-                temp_c: 30.0,
+                pressure: 0.0,
+                temp_c: 0.0,
                 alert: false,
             },
             tire_rr: TireReading {
-                pressure: 34.0,
-                temp_c: 30.0,
+                pressure: 0.0,
+                temp_c: 0.0,
                 alert: false,
             },
             wheel_fl_kph: 0.0,
@@ -398,22 +398,22 @@ impl Default for VehicleSnapshot {
             wheel_rl_kph: 0.0,
             wheel_rr_kph: 0.0,
             brake_pedal: false,
-            park_brake: true,
+            park_brake: false,
             steer_deg: 0.0,
-            door_fl: true,
-            door_fr: true,
-            door_rl: true,
-            door_rr: true,
-            door_hatch: true,
-            belt_fl: true,
-            belt_fr: true,
+            door_fl: false,
+            door_fr: false,
+            door_rl: false,
+            door_rr: false,
+            door_hatch: false,
+            belt_fl: false,
+            belt_fr: false,
             belt_rl: false,
             belt_rr: false,
-            temp_out_c: 18.0,
-            temp_in_c: 22.0,
-            hvac_fan: 0.4,
-            hvac_set_c: 21.0,
-            hvac_ac: true,
+            temp_out_c: 0.0,
+            temp_in_c: 0.0,
+            hvac_fan: 0.0,
+            hvac_set_c: 0.0,
+            hvac_ac: false,
             hvac_defrost: false,
             dtc_count: 0,
             dtcs: Vec::new(),
@@ -422,142 +422,17 @@ impl Default for VehicleSnapshot {
             roll_deg: 0.0,
             heading_deg: 0.0,
             vin: String::new(),
-            bus_kind: "SIM".into(),
-            bus_addr: vehicle_profile::OBD_BT_MAC.into(),
-            bus_channel: "1".into(),
+            bus_kind: "OFF".into(),
+            bus_addr: String::new(),
+            bus_channel: "—".into(),
             bus_adapter: "—".into(),
             bus_proto: "—".into(),
-            bus_state: "SIM".into(),
+            bus_state: "OFF".into(),
             bus_error: String::new(),
             bus_ticks: 0,
             bus_capture: String::new(),
         }
     }
-}
-
-/// Demo ownship VIN (matches truck capture when no live OBD).
-pub const DEMO_VIN: &str = "1FTEW1EP9KFC73499";
-
-/// Animated demo vehicle (sinusoids) — host replaces with OBD/CAN.
-pub fn demo_vehicle(t: f32) -> VehicleSnapshot {
-    let mut v = VehicleSnapshot::default();
-    demo_vehicle_into(&mut v, t);
-    v
-}
-
-/// Update SIM snapshot **in place** (no full struct rebuild every frame).
-///
-/// Preserves user toggles: `speed_unit`, light/HVAC overrides from OSB options.
-pub fn demo_vehicle_into(v: &mut VehicleSnapshot, t: f32) {
-    let unit = v.speed_unit;
-    let light_low = v.light_low;
-    let light_high = v.light_high;
-    let light_drive = v.light_drive;
-    let light_fog = v.light_fog;
-    let light_interior = v.light_interior;
-    let hvac_ac = v.hvac_ac;
-    let hvac_defrost = v.hvac_defrost;
-    let hvac_fan_user = v.hvac_fan;
-
-    v.rpm = 900.0 + 2800.0 * (0.5 + 0.5 * (t * 0.55).sin());
-    v.speed_mph = 25.0 + 40.0 * (0.5 + 0.5 * (t * 0.35).sin());
-    v.throttle = 0.2 + 0.5 * (0.5 + 0.5 * (t * 0.8).sin());
-    v.fuel = 0.55 + 0.1 * (t * 0.08).cos();
-    v.battery_v = 12.6 + 1.4 * (0.5 + 0.5 * (t * 0.2).sin());
-    v.battery = ((v.battery_v - 11.0) / 4.0).clamp(0.0, 1.0);
-    v.load = 0.25 + 0.35 * (0.5 + 0.5 * (t * 0.5).cos());
-    v.oil_temp_c = 88.0 + 18.0 * (t * 0.12).sin();
-    v.coolant_c = 86.0 + 12.0 * (t * 0.1).sin();
-    v.trans_temp_c = 78.0 + 20.0 * (t * 0.15).cos();
-    v.iat_c = 22.0 + 14.0 * (t * 0.2).sin();
-    v.exhaust_temp_c = 280.0 + 180.0 * v.throttle;
-    v.maf_gps = 4.0 + 40.0 * v.throttle;
-    v.fuel_pressure_kpa = 280.0 + 120.0 * v.throttle;
-    v.oil_temp = ((v.oil_temp_c + 40.0) / 160.0).clamp(0.0, 1.0);
-    v.coolant = ((v.coolant_c + 40.0) / 160.0).clamp(0.0, 1.0);
-    v.trans_temp = ((v.trans_temp_c + 40.0) / 160.0).clamp(0.0, 1.0);
-    v.iat = ((v.iat_c + 40.0) / 120.0).clamp(0.0, 1.0);
-    v.maf = (v.maf_gps / 100.0).clamp(0.0, 1.0);
-    v.exhaust_temp = (v.exhaust_temp_c / 800.0).clamp(0.0, 1.0);
-    v.gear = if v.speed_mph < 2.0 {
-        GearSelect::Park
-    } else if (t * 0.15).sin() > 0.7 {
-        GearSelect::Manual
-    } else {
-        GearSelect::Drive
-    };
-    v.gear_num = 1 + ((v.speed_mph / 15.0) as u8).min(5);
-    v.drive = if (t * 0.07).sin() > 0.5 {
-        DriveMode::FourHigh
-    } else {
-        DriveMode::TwoHigh
-    };
-    // Preserve OSB light toggles (default light_low is true on VehicleSnapshot).
-    v.light_low = light_low;
-    v.light_high = light_high;
-    v.light_drive = light_drive;
-    v.light_fog = light_fog;
-    v.light_interior = light_interior;
-    v.light_turn_l = (t * 2.0).sin() > 0.3 && (t as i32 % 4 < 2);
-    v.light_brake = v.throttle < 0.15 && v.speed_mph > 10.0;
-    v.brake_pedal = v.light_brake;
-    v.park_brake = v.speed_mph < 1.0 && matches!(v.gear, GearSelect::Park);
-    v.steer_deg = 25.0 * (t * 0.4).sin();
-    let kph = v.speed_mph * 1.60934;
-    v.wheel_fl_kph = kph + (t * 1.1).sin();
-    v.wheel_fr_kph = kph + (t * 1.05).cos();
-    v.wheel_rl_kph = kph - 0.3;
-    v.wheel_rr_kph = kph + 0.2;
-    v.tire_fl.pressure = 34.0 + (t * 0.3).sin();
-    v.tire_fr.pressure = 35.0 + (t * 0.25).cos();
-    v.tire_rl.alert = (t * 0.05).sin() > 0.92;
-    if v.tire_rl.alert {
-        v.tire_rl.pressure = 22.0;
-    } else {
-        v.tire_rl.pressure = 34.0;
-    }
-    v.door_fr = (t * 0.04).sin() < 0.95;
-    v.temp_out_c = 12.0 + 8.0 * (t * 0.03).sin();
-    v.temp_in_c = 20.0 + 2.0 * (t * 0.1).cos();
-    v.hvac_ac = hvac_ac;
-    v.hvac_defrost = hvac_defrost;
-    v.hvac_fan = if hvac_fan_user > 0.01 {
-        hvac_fan_user
-    } else {
-        0.3 + 0.4 * (0.5 + 0.5 * (t * 0.2).sin())
-    };
-    v.pitch_deg = 18.0 * (t * 0.45).sin();
-    v.roll_deg = 32.0 * (t * 0.35).cos();
-    v.heading_deg = (t * 18.0) % 360.0;
-    // DTC list: update only when empty-path toggles (avoid realloc every frame).
-    let empty_bank = (t as i32 / 8) % 5 == 4;
-    if empty_bank {
-        v.dtcs.clear();
-    } else if v.dtcs.is_empty() {
-        v.dtcs.push(DtcEntry {
-            code: "P0420".into(),
-            kind: DtcKind::Stored,
-        });
-        v.dtcs.push(DtcEntry {
-            code: "P0171".into(),
-            kind: DtcKind::Stored,
-        });
-        v.dtcs.push(DtcEntry {
-            code: "C1234".into(),
-            kind: DtcKind::Pending,
-        });
-    }
-    v.dtc_count = v.dtcs.len() as u32;
-    if v.vin != DEMO_VIN {
-        v.vin.clear();
-        v.vin.push_str(DEMO_VIN);
-    }
-    if v.bus_state != "SIM" {
-        v.bus_state.clear();
-        v.bus_state.push_str("SIM");
-    }
-    v.speed_unit = unit;
-    v.bus_ticks = v.bus_ticks.wrapping_add(1);
 }
 
 /// Back-compat thin OBD view (older API).
@@ -1488,8 +1363,7 @@ pub fn draw_auto_with_video(
             numeric_matrix(page.surface, c.inset(4), &lines, fh * 1.0, pal.readout, 1);
         }
         AutoPage::Cam => {
-            // Fail-soft: no synthetic pod video unless explicitly offline SIM path
-            // (caller only passes live frames; empty = NO VIDEO).
+            // Live camera only; empty = NO VIDEO (never invents imagery).
             if let Some(fr) = cam_frame {
                 blit_grey_flir(page.surface, c.inset(4), fr, pal.primary, pal.structure);
                 crosshair(page.surface, c.center().0, c.center().1, 18, 4, pal.caution);
@@ -1668,11 +1542,11 @@ pub fn draw_auto_with_video(
         }
         AutoPage::Own => {
             let id = vehicle_profile::identity_line();
-            // Link state as hero status (LIVE / ERR / SIM).
+            // Link state as hero status (LIVE / ERR / SEARCH / RECONN / OFF).
             let link_col = match v.bus_state.as_str() {
                 "LIVE" => pal.primary,
                 "ERR" => pal.warning,
-                "BIT" => pal.caution,
+                "BIT" | "SEARCH" | "CONN" | "RECONN" => pal.caution,
                 _ => pal.dim,
             };
             value_readout(

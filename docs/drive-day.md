@@ -58,7 +58,7 @@ One ELM Bluetooth SPP client at a time. Drive mode runs **capture inside `cmfd`*
 
 ### Bluetooth must stay up
 
-Without OBD the product has no vehicle data. `cmfd` **does not** fall back to silent SIM when `MFD_OBD_BT` is set:
+Without OBD the product has **no vehicle data** (no SIM, no demo animation). `cmfd` keeps searching when BT is configured (default truck MAC):
 
 1. BlueZ power on + `connect` (shell assist + in-process)
 2. Prefer `MFD_OBD_BT` MAC; also try paired devices named like OBD / ELM / OBDLink / STN
@@ -125,10 +125,10 @@ Never clear DTCs, write DIDs, or security unlock.
 | BUS | Link header + full channel dump (2–3 columns) |
 | DTC | Fault list (read-only) |
 
-Bottom status strip on every page: `BT LIVE · …MAC…` (or `BT ERR` / `SIM` offline).  
+Bottom status strip on every page: `BT LIVE · …MAC…` (or `BT SEARCH` / `BT RECONN` / `OFF`).
 Open **OWN** (`o` / `w`) for the full link block.
 
-**Naming:** `cmfd` is the live product glass. **SIM** means offline synthetic data only (no adapter).
+**Naming:** `cmfd` is the live product glass only. There is no offline synthetic vehicle mode.
 
 ## After work
 

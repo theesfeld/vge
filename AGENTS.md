@@ -11,7 +11,7 @@ User-global process: `~/.config/agents/AGENTS.md`.
 - **Sensors:** prefer **vehicle OBD/CAN/UDS** for pitch/roll/heading; on-box gyro/compass only as fallback
 - **Low-level draw:** pure asm `libmfd` (`make` → `build/libmfd.a`)
 - **Text:** baked atlas `src/font_atlas_data.rs` from B612 Mono; re-bake with `--features bake_font`
-- **Live glass:** `./cmfd.sh` or `cargo run --release --bin cmfd` — **vehicle systems only** (jet formats remain in `src/jet/` for widgets reuse, not product path). Offline without OBD = SIM data.
+- **Live glass:** `./cmfd.sh` or `cargo run --release --bin cmfd` — **vehicle systems only** (jet formats remain in `src/jet/` for widgets reuse, not product path). **No SIM** — empty glass until OBD LIVE.
 
 ## Commands
 

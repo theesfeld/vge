@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Removed
+
+- **SIM / demo vehicle path:** product glass never invents RPM, speed, DTCs, or lights. Empty snapshot until OBD is LIVE. Default BT MAC when env unset. Warnings only when `bus_state == LIVE`. Refs #121.
+
 ### Fixed
 
 - **Bluetooth OBD link robustness:** feed always starts when `MFD_OBD_BT` is set; keeps searching (preferred MAC + OBD-named paired devices, RFCOMM channel scan, BlueZ connect assist); reconnects after link loss; glass shows SEARCH/RECONN. `cmfd.sh` powers BlueZ and pre-connects. Pair once with `bluetoothctl`. Refs #119.

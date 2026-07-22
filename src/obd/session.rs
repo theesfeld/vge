@@ -42,13 +42,18 @@ impl Default for ConnectOpts {
 }
 
 impl ConnectOpts {
-    /// Build opts from env. `None` if no OBD source is configured.
+    /// Build opts from env.
+    ///
+    /// Product default: when nothing is set, use the truck Bluetooth MAC
+    /// ([`crate::auto::vehicle_profile::OBD_BT_MAC`]) so glass never invents data —
+    /// it searches for OBD instead.
     pub fn from_env() -> Option<Self> {
         let replay = std::env::var_os("MFD_OBD_REPLAY").map(std::path::PathBuf::from);
         let port = std::env::var("MFD_OBD_PORT").ok().filter(|s| !s.is_empty());
-        let bt = std::env::var("MFD_OBD_BT").ok().filter(|s| !s.is_empty());
+        let mut bt = std::env::var("MFD_OBD_BT").ok().filter(|s| !s.is_empty());
         if replay.is_none() && port.is_none() && bt.is_none() {
-            return None;
+            // Default live path — never SIM.
+            bt = Some(crate::auto::vehicle_profile::OBD_BT_MAC.into());
         }
         let baud = std::env::var("MFD_OBD_BAUD")
             .ok()
