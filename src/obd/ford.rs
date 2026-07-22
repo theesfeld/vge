@@ -3,8 +3,8 @@
 //! ## Data sources
 //! - Live DID table: `docs/reference/ford-f150-forscan/live_parameters.csv`
 //! - Module list: `docs/reference/ford-f150-forscan/modules_can.csv`
-//! - FORScan **As-Built** export (config addresses, not live PIDs):  
-//!   `docs/reference/ford-f150-forscan/*.csv` from the public spreadsheet
+//! - FORScan **As-Built** export (config addresses, not live PIDs), **2019-only**:  
+//!   `docs/reference/ford-f150-forscan/*.csv`
 //! - Protocol: `docs/reference/ford-f150-uds-readonly.md`
 //!
 //! DIDs marked for verify must be confirmed on the live truck.  
