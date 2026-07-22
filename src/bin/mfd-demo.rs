@@ -23,6 +23,7 @@ use mfd::term::{
     detect_backend, enter_fullscreen, leave_fullscreen, mfd_face_inches, physical_mfd_layout,
     present_at_state_scratch, PpiSource, PresentScratch, PxSpaceSource, RawStdin,
 };
+use mfd::warn::WarningEngine;
 use mfd::{engine_version, using_assembly, Surface};
 
 static RUNNING: AtomicBool = AtomicBool::new(true);
@@ -100,6 +101,7 @@ fn main() -> io::Result<()> {
     let mut demo_probe = DemoProbe::start();
     let mut boot_done = false;
     let mut available_pages: Vec<AutoPage> = Vec::new();
+    let mut warn_eng = WarningEngine::new();
 
     #[cfg(feature = "obd")]
     let obd_feed = mfd::obd::ObdFeed::try_start_from_env();
@@ -320,6 +322,19 @@ fn main() -> io::Result<()> {
             auto::draw_bit_screen(&mut page, &pal, &caps_now, t);
         } else {
             let font_px = page.font_px;
+            // Force some demo alerts so flash/bingo is visible without real risk
+            if !use_obd {
+                // Brief park-brake flash window in demo
+                if (t as i32 % 20) < 4 {
+                    vehicle.park_brake = true;
+                    vehicle.speed_mph = vehicle.speed_mph.max(8.0);
+                }
+                // Bingo when fuel demo dips
+                if vehicle.fuel < 0.20 {
+                    vehicle.fuel = vehicle.fuel.min(0.12);
+                }
+            }
+            let active = warn_eng.tick(&vehicle);
             auto::draw_auto_with_video(
                 &mut page,
                 auto_page,
@@ -329,10 +344,21 @@ fn main() -> io::Result<()> {
                 t,
                 cam_frame.as_ref(),
                 Some(&caps_now),
+                Some(&active),
             );
             let feed = if use_obd { "OBD" } else { "DEMO" };
             let cam = if cam_frame.is_some() { "CAM" } else { "SYN" };
-            let status = format!("{} · {} · {} · n/p · [ ] BRT", auto_page.title(), feed, cam);
+            let aw = if active.is_empty() {
+                String::new()
+            } else {
+                format!(" · {}", active[0].label)
+            };
+            let status = format!(
+                "{} · {} · {}{aw} · n/p · [ ] BRT",
+                auto_page.title(),
+                feed,
+                cam
+            );
             draw_demo_status(page.surface, &status, pal.dim, font_px * 0.6);
         }
 
@@ -374,56 +400,25 @@ fn draw_demo_status(s: &mut Surface, text: &str, color: mfd::Color, px: f32) {
 fn print_banner(ver: &str) {
     eprintln!("═══════════════════════════════════════════════════════════");
     eprintln!("  mfd-demo  libmfd {ver}");
-    eprintln!("  Vehicle MFD (default) + jet CMFD");
+    eprintln!("  Vehicle CMFD — systems pages + BIT + warnings");
     eprintln!("═══════════════════════════════════════════════════════════");
     eprintln!();
-    eprintln!("  DOMAIN");
-    eprintln!("    Tab / a     AUTO vehicle pages   (default)");
-    eprintln!("    j           JET F-16 formats");
+    eprintln!("  DATA STACK");
+    eprintln!("    J1979 OBD-II  ·  UDS/CAN (0x22)  ·  Ford DID / As-Built labels");
     eprintln!();
-    eprintln!("  AUTO PAGES  (keys or OSB)");
-    eprintln!("    1 CLST   cluster  speed/RPM/gear/throttle");
-    eprintln!("    2 FUEL   fuel + battery + load tapes");
-    eprintln!("    3 TEMP   oil/coolant/trans/IAT/MAF/EGT");
-    eprintln!("    4 DRV    gear P/R/N/D/M · 2H/4H/4L");
-    eprintln!("    5 LITE   headlights fog brake turns interior");
-    eprintln!("    6 TPM    tire pressures + temps");
-    eprintln!("    7 BODY   doors + seat belts");
-    eprintln!("    8 CLIM   out/in temp HVAC");
-    eprintln!("    9 FLIR   camera / FLIR glass");
-    eprintln!("    0 RNG    collision / park ranges");
-    eprintln!("    v ATT    sphere horizon + compass on ball + HDG°/N-NW");
-    eprintln!("    x MAP    schematic topo with demo scroll (heading-up)");
-    eprintln!("    f DTC    fault codes (Mode 03/07/0A · read only · all at once)");
-    eprintln!("    o OBD    PID list");
-    eprintln!("    s SET    setup / units");
-    eprintln!("    n / p    next / previous auto page");
-    eprintln!("    u        cycle speed unit MPH/KM/H/KT");
+    eprintln!("  STARTUP");
+    eprintln!("    CMFD BIT screen until capability probe finishes");
     eprintln!();
-    eprintln!("  OSB (auto)");
-    eprintln!("    top     CLST FUEL TEMP DRV LITE");
-    eprintln!("    right   TPM  BODY CLIM FLIR RNG");
-    eprintln!("    left    OBD  SET  ATT  MAP  DTC");
+    eprintln!("  SYSTEMS  n/p  1 ENG 2 FUEL 3 FLUD 4 ELEC 5 DRV 6 CHAS …");
+    eprintln!("    b BUS  f DTC  v ATT  x MAP  w OWN  s SET  r RNG");
     eprintln!();
-    eprintln!("  BEZEL (real CMFD rockers)");
-    eprintln!("    [ ]     BRT brightness −/+   (yes — on real MFD)");
-    eprintln!("    ; '     CON contrast −/+");
-    eprintln!("    - =     SYM symbology −/+");
-    eprintln!("    , .     GAIN −/+");
+    eprintln!("  WARNINGS (speaker)");
+    eprintln!("    BINGO low fuel · ALERT park brake / tire / door");
+    eprintln!("    Red flash fields · master caution strip");
+    eprintln!("    MFD_AUDIO=0 mute · needs aplay (alsa-utils)");
     eprintln!();
-    eprintln!("  JET");
-    eprintln!("    OSB 12/13/14 format slots · m Master Menu · g widget QA");
-    eprintln!();
-    eprintln!("  SENSORS");
-    eprintln!("    MFD_CAMERA=/dev/video0|auto");
-    eprintln!("    MFD_FLIR_PATH=still.pgm");
-    eprintln!("    MFD_OBD_BT=00:04:3E:96:B8:F1   (truck Bluetooth ELM)");
-    eprintln!("    MFD_OBD_PORT=/dev/ttyUSB0|/dev/rfcomm0");
-    eprintln!("    MFD_OBD_REPLAY=docs/odbii-session");
-    eprintln!("    mfd-obd-capture --bt … --uds -o ./cap");
-    eprintln!("    MFD_RANGE=2.1,3.0,2.8,1.2");
-    eprintln!("    MFD_DOMAIN=auto|jet   MFD_AUTO_PAGE=ATT|MAP|FLIR|…");
-    eprintln!("    c color · Esc quit");
+    eprintln!("  BEZEL  [ ] BRT  ·  MFD_OBD_BT=00:04:3E:96:B8:F1");
+    eprintln!("  c color · Esc quit");
     eprintln!();
 }
 

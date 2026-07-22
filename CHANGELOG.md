@@ -4,6 +4,7 @@
 
 ### Added
 
+- **Warnings:** BINGO aural (low fuel), ALERT aural, red **flash** fields (park brake, …), master caution strip. Speaker via `aplay` PCM. Refs #90.
 - **Startup BIT + adaptive caps:** F-16-style power-on/BIT glass until probe finishes; pages/items omit NOGO options (fog, HSEAT, HSTR, TPMS, CAM, …). Refs #88.
 
 ### Changed

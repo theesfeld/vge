@@ -17,6 +17,7 @@
 
 #![allow(non_camel_case_types)]
 
+pub mod audio;
 pub mod auto;
 pub mod bezel;
 pub mod color;
@@ -31,6 +32,7 @@ pub mod palette;
 pub mod surface;
 pub mod term;
 pub mod video;
+pub mod warn;
 pub mod widget;
 
 pub use bezel::{BezelEvent, BezelKnob, BezelSource, BezelState, KeyboardBezel, NullBezel};
@@ -54,11 +56,16 @@ pub use term::{
 #[cfg(target_os = "linux")]
 pub use video::V4l2Source;
 pub use video::{blit_grey_flir, GreyFrame};
+pub use warn::{
+    evaluate as evaluate_warns, flash_on, flash_warn_on, ActiveWarn, WarnId, WarnLevel,
+    WarningEngine, BINGO_FUEL,
+};
 pub use widget::{
     attitude_ball, bearing_pointer, bezel_frame, bscope_grid, caution_box, content_after_osb,
-    crosshair, heading_cardinal, heading_display, heading_rose, horizon_cue, label, label_centered,
-    list_menu, numeric_readout, osb_chrome, progress_strip, range_display, range_rings,
-    round_gauge, schematic_topo_map, softkey_row, station_grid, status_grid, tape_gauge, tire_grid,
+    crosshair, flash_label, flash_label_centered, heading_cardinal, heading_display, heading_rose,
+    horizon_cue, label, label_centered, list_menu, master_warn_strip, numeric_readout, osb_chrome,
+    progress_strip, range_display, range_rings, round_gauge, schematic_topo_map, softkey_row,
+    station_grid, status_cell_flash, status_grid, status_grid_flash, tape_gauge, tire_grid,
     track_gate, value_readout, video_frame, RangeSnapshot, RoundGaugeOpts, SoftkeyLayout,
     StatusItem, TapeOpts, TapeOrientation, TireReading,
 };
