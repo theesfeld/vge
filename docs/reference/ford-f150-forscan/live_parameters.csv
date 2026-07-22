@@ -1,0 +1,36 @@
+parameter,module,req_addr,request_hex,example_response_hex,decode,priority,protocol,notes,verify
+Engine Coolant Temp (ECT),PCM,7E0,22F405,62F4055A,(B0-40) C,high,uds22,community,yes
+Intake Air Temp (IAT),PCM,7E0,22F40F,62F40F3C,(B0-40) C,medium,uds22,community,yes
+Transmission Fluid Temp,PCM,7E0,221E1C,621E1C1234,U16BE/16 C,medium,uds22,scaling verify,yes
+Engine Oil Temp (EOT),PCM,7E0,22F45C,62F45CXX,(B0-40) C,medium,uds22,DID may vary,yes
+Ambient Air Temp (AAT),PCM,7E0,22F457,62F457XX,(B0-40) C,low,uds22,or BCM,yes
+Engine Coolant Temp Mode01,PCM,7DF,0105,41055A,(B0-40) C,high,j1979,standard Mode 01,no
+Intake Air Temp Mode01,PCM,7DF,010F,410F53,(B0-40) C,medium,j1979,standard,no
+Oil Temp Mode01,PCM,7DF,015C,415CXX,(B0-40) C,medium,j1979,if supported,no
+Ambient Mode01,PCM,7DF,0146,4146XX,(B0-40) C,low,j1979,if supported,no
+RPM Mode01,PCM,7DF,010C,410CABCD,((A*256)+B)/4 rpm,very_high,j1979,standard,no
+Vehicle Speed Mode01,PCM,7DF,010D,410DXX,B0 km/h,high,j1979,standard,no
+Throttle Mode01,PCM,7DF,0111,4111XX,B0*100/255 %,high,j1979,standard,no
+Engine Load Mode01,PCM,7DF,0104,4104XX,B0*100/255 %,high,j1979,standard,no
+MAF Mode01,PCM,7DF,0110,4110ABCD,((A*256)+B)/100 g/s,medium,j1979,standard,no
+Fuel Level Mode01,PCM,7DF,012F,412FXX,B0*100/255 %,low,j1979,standard,no
+Control Module Voltage Mode01,PCM,7DF,0142,4142ABCD,((A*256)+B)/1000 V,medium,j1979,standard,no
+Fuel Level DID,PCM,7E0,22F41F,62F41FXX,B0*100/255 %,low,uds22,varies,yes
+Battery Voltage DID,PCM,7E0,22402C,62402CXX,B0/10 V,medium,uds22,varies,yes
+Gear / Selector,PCM,7E0,221E12,621E12XX,enum PRND,high,uds22,TCM/PCM,yes
+Brake / Park Status,ABS,760,222B00,622B00XX,bit flags,high,uds22,BCM/ABS,yes
+Wheel Speed seed,ABS,760,222B06,622B06XXXX,scaled km/h,high,uds22,FL/FR/RL/RR series,yes
+Steering Angle,PSCM,730,22VAR,signed16,degrees signed,high,uds22,discover DID,yes
+Tire Pressure seed,ABS,760,22TPMS,multibyte,kPa or PSI *scale,low,uds22,per wheel,yes
+Fuel Pressure,PCM,7E0,2203DC,varies,kPa,medium,uds22,varies,yes
+VIN Mode09,PCM,7DF,0902,4902...,ASCII 17,once,j1979,ownship,no
+VIN DID,PCM,7E0,22F190,62F190...,ASCII 17,once,uds22,ISO DID,no
+DTC Stored,PCM,7DF,03,43....,SAE DTC pairs,on_connect,j1979,read only,no
+DTC Pending,PCM,7DF,07,47....,SAE DTC pairs,on_connect,j1979,read only,no
+DTC Permanent,PCM,7DF,0A,4A....,SAE DTC pairs,on_connect,j1979,read only,no
+Session Extended,PCM,7E0,1003,5003...,session params,on_connect,uds,read path,no
+Tester Present,PCM,7E0,3E80,7E00,keep-alive,periodic,uds,suppress ok,no
+# Discovery ranges (poll and log positives; not fixed signals)
+DID scan F400-F4FF,PCM,7E0,22F4xx,62...,raw,discovery,uds22,fruitful on Ford,yes
+DID scan 1E00-1EFF,PCM,7E0,221Exx,62...,raw,discovery,uds22,trans/body-ish,yes
+DID scan 2B00-2BFF,ABS,760,222Bxx,62...,raw,discovery,uds22,brake/wheels,yes

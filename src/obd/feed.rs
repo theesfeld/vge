@@ -170,10 +170,7 @@ fn run_loop(mut session: Session, stop: Arc<AtomicBool>, tele: Arc<Mutex<Telemet
                         t.ticks = t.ticks.wrapping_add(1);
                     }
                 }
-                Ok(crate::obd::ford::DecodedDid::Text {
-                    name: "vin",
-                    value,
-                }) => {
+                Ok(crate::obd::ford::DecodedDid::Text { name: "vin", value }) => {
                     if let Ok(mut t) = tele.lock() {
                         if value.len() >= 11 {
                             t.vin = Some(value);
@@ -241,6 +238,18 @@ fn apply_telemetry(t: &Telemetry, v: &mut VehicleSnapshot) {
     }
     if let Some(c) = t.values.get("trans_temp_c") {
         v.trans_temp = ((*c as f32 + 40.0) / 160.0).clamp(0.0, 1.0);
+    }
+    if let Some(c) = t.values.get("oil_temp_c") {
+        v.oil_temp = ((*c as f32 + 40.0) / 160.0).clamp(0.0, 1.0);
+    }
+    if let Some(c) = t.values.get("ambient_temp_c") {
+        v.temp_out_c = *c as f32;
+    }
+    if let Some(f) = t.values.get("fuel_level_pct") {
+        v.fuel = (*f as f32 / 100.0).clamp(0.0, 1.0);
+    }
+    if let Some(volt) = t.values.get("battery_v") {
+        v.battery = (((*volt as f32) - 11.0) / 4.0).clamp(0.0, 1.0);
     }
     if let Some(c) = t.values.get("ambient_temp") {
         v.temp_out_c = *c as f32;

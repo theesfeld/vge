@@ -184,8 +184,33 @@ Code entry points:
 
 ---
 
+## FORScan spreadsheet (what we actually got)
+
+The public Google Sheet  
+[1uDSQ1Z5a2Wt8-kjrSiVSlDFGFHnfeuhb3RTMVz95730](https://docs.google.com/spreadsheets/d/1uDSQ1Z5a2Wt8-kjrSiVSlDFGFHnfeuhb3RTMVz95730/edit)  
+is a **FORScan As-Built / feature-config** workbook (module addresses like `726-48-02`), **not** a full Mode `0x22` live-data dump.
+
+Exported under **`docs/reference/ford-f150-forscan/`**:
+
+| File | Contents |
+|------|----------|
+| `INDEX.md` | All 55 tabs |
+| `NN_*.csv` | Per-module As-Built sheets |
+| `modules_index.csv` / `modules_can.csv` | Module ↔ CAN hint |
+| `asbuilt_address_prefixes.csv` | Address prefixes seen |
+| **`live_parameters.csv`** | Live glass parameters (Mode 01 + Mode 22) for the CMFD |
+
+**No public raw FORScan live-data dump** for the exact 2019 Crew Cab 2.7L XLT was found online (logs are usually private / VIN-bound).  
+To get “everything” for **your** truck: run `mfd-obd-capture --uds` and optional DID range scan on the live adapter.
+
+### FORScan protocol (for context)
+
+FORScan uses Ford HS-CAN / MS-CAN + UDS (ISO 14229 / ISO 15765), mainly Mode **0x22**, plus session / keep-alive.  
+It also supports **As-Built write** and programming — **mfd never does that**.
+
 ## Related
 
 - `docs/hardware.md` — vehicle-first sensors, display-only product
 - `docs/auto-sensors.md` — env and feed
-- Issue #68 native OBD · #73 display-only · #75 DTC page · #77 VIN
+- `docs/reference/ford-f150-forscan/` — spreadsheet export + live parameter table
+- Issue #68 native OBD · #73 display-only · #75 DTC page · #77 VIN · #79 Ford UDS

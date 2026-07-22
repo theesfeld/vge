@@ -1,9 +1,14 @@
 //! Ford F-150 (P552-class) **read-only** DID catalog and decode helpers.
 //!
-//! DIDs are community / reverse-engineering **hints**. Marked scaling must be
-//! confirmed on the live truck. See `docs/reference/ford-f150-uds-readonly.md`.
+//! ## Data sources
+//! - Live DID table: `docs/reference/ford-f150-forscan/live_parameters.csv`
+//! - Module list: `docs/reference/ford-f150-forscan/modules_can.csv`
+//! - FORScan **As-Built** export (config addresses, not live PIDs):  
+//!   `docs/reference/ford-f150-forscan/*.csv` from the public spreadsheet
+//! - Protocol: `docs/reference/ford-f150-uds-readonly.md`
 //!
-//! Display-only: never write DIDs.
+//! DIDs marked for verify must be confirmed on the live truck.  
+//! **Display-only:** never write DIDs or As-Built.
 
 use crate::obd::error::{Error, Result};
 use crate::obd::session::Session;
@@ -16,36 +21,44 @@ pub struct DidDef {
     pub name: &'static str,
     pub header: &'static str,
     pub scale: DidScale,
-    /// Poll weight: 0 = rare, 1 = medium, 2 = often (with Mode 01).
+    pub unit: &'static str,
+    /// Poll weight: 0 = rare/discovery, 1 = medium, 2 = high.
     pub priority: u8,
 }
 
 #[derive(Clone, Copy, Debug)]
 pub enum DidScale {
-    /// Single byte: `value = b0 as f64 + add` then `* mul` (e.g. temp: add=-40, mul=1).
+    /// `value = (b0 as f64 + add) * mul`
     U8AddMul { add: f64, mul: f64 },
-    /// Big-endian u16: `(b0<<8|b1) as f64 * mul + add`.
+    /// Big-endian u16: `(b0<<8|b1) as f64 * mul + add`
     U16Be { mul: f64, add: f64 },
-    /// ASCII string (VIN-class).
+    /// `b0 * mul` (e.g. fuel %)
+    U8Mul { mul: f64 },
+    /// ASCII string (VIN-class)
     Ascii,
-    /// Raw bytes — store as hex only.
+    /// Raw bytes as hex
     Raw,
 }
 
-/// PCM physical header (11-bit).
 pub const HDR_PCM: &str = "7E0";
-/// Functional broadcast.
 pub const HDR_FUNC: &str = "7DF";
+pub const HDR_ABS: &str = "760";
+pub const HDR_BCM: &str = "726";
+pub const HDR_IPC: &str = "720";
+pub const HDR_PSCM: &str = "730";
 
-/// Catalog for F-150 class (verify per vehicle).
+/// F-150 class catalog (community + user table). Verify on truck.
 pub const F150_DIDS: &[DidDef] = &[
+    // ── Identity ──────────────────────────────────────────────────────────
     DidDef {
         did: 0xF190,
         name: "vin",
         header: HDR_PCM,
         scale: DidScale::Ascii,
+        unit: "",
         priority: 0,
     },
+    // ── Temps (PCM) ───────────────────────────────────────────────────────
     DidDef {
         did: 0xF405,
         name: "coolant_temp_c",
@@ -54,7 +67,8 @@ pub const F150_DIDS: &[DidDef] = &[
             add: -40.0,
             mul: 1.0,
         },
-        priority: 1,
+        unit: "C",
+        priority: 2,
     },
     DidDef {
         did: 0xF40F,
@@ -64,37 +78,104 @@ pub const F150_DIDS: &[DidDef] = &[
             add: -40.0,
             mul: 1.0,
         },
+        unit: "C",
         priority: 1,
+    },
+    DidDef {
+        did: 0xF45C,
+        name: "oil_temp_c",
+        header: HDR_PCM,
+        scale: DidScale::U8AddMul {
+            add: -40.0,
+            mul: 1.0,
+        },
+        unit: "C",
+        priority: 1,
+    },
+    DidDef {
+        did: 0xF457,
+        name: "ambient_temp_c",
+        header: HDR_PCM,
+        scale: DidScale::U8AddMul {
+            add: -40.0,
+            mul: 1.0,
+        },
+        unit: "C",
+        priority: 0,
     },
     DidDef {
         did: 0x1E1C,
         name: "trans_temp_c",
         header: HDR_PCM,
-        // Community often uses /16 on 16-bit — confirm on truck.
         scale: DidScale::U16Be {
             mul: 1.0 / 16.0,
             add: 0.0,
         },
+        unit: "C",
         priority: 1,
     },
-    // Probe-only candidates (raw until scaled with capture)
+    // ── Fuel / battery ────────────────────────────────────────────────────
+    DidDef {
+        did: 0xF41F,
+        name: "fuel_level_pct",
+        header: HDR_PCM,
+        scale: DidScale::U8Mul { mul: 100.0 / 255.0 },
+        unit: "%",
+        priority: 0,
+    },
+    DidDef {
+        did: 0x402C,
+        name: "battery_v",
+        header: HDR_PCM,
+        scale: DidScale::U8Mul { mul: 0.1 },
+        unit: "V",
+        priority: 1,
+    },
+    // ── Gear ──────────────────────────────────────────────────────────────
+    DidDef {
+        did: 0x1E12,
+        name: "gear_raw",
+        header: HDR_PCM,
+        scale: DidScale::Raw,
+        unit: "",
+        priority: 2,
+    },
+    // ── ABS / body (headers are hints) ────────────────────────────────────
     DidDef {
         did: 0x2B00,
         name: "brake_park_raw",
-        header: HDR_PCM,
+        header: HDR_ABS,
         scale: DidScale::Raw,
-        priority: 0,
+        unit: "",
+        priority: 2,
+    },
+    DidDef {
+        did: 0x2B06,
+        name: "wheel_speed_seed_raw",
+        header: HDR_ABS,
+        scale: DidScale::Raw,
+        unit: "",
+        priority: 2,
     },
     DidDef {
         did: 0x2813,
         name: "steer_or_wheels_raw",
+        header: HDR_PSCM,
+        scale: DidScale::Raw,
+        unit: "",
+        priority: 1,
+    },
+    DidDef {
+        did: 0x03DC,
+        name: "fuel_pressure_raw",
         header: HDR_PCM,
         scale: DidScale::Raw,
+        unit: "",
         priority: 0,
     },
 ];
 
-/// DIDs to cycle in the live feed (medium priority and up).
+/// DIDs to cycle in the live feed (priority ≥ 1).
 pub fn feed_poll_dids() -> impl Iterator<Item = &'static DidDef> {
     F150_DIDS.iter().filter(|d| d.priority >= 1)
 }
@@ -111,11 +192,10 @@ pub fn decode_data(def: &DidDef, data: &[u8]) -> Result<DecodedDid> {
             let b0 = *data
                 .first()
                 .ok_or_else(|| Error::Decode(format!("{} empty", def.name)))?;
-            let v = (b0 as f64 + add) * mul;
             Ok(DecodedDid::Number {
                 name: def.name,
-                value: v,
-                unit: "C",
+                value: (b0 as f64 + add) * mul,
+                unit: def.unit,
             })
         }
         DidScale::U16Be { mul, add } => {
@@ -126,7 +206,17 @@ pub fn decode_data(def: &DidDef, data: &[u8]) -> Result<DecodedDid> {
             Ok(DecodedDid::Number {
                 name: def.name,
                 value: raw * mul + add,
-                unit: "C",
+                unit: def.unit,
+            })
+        }
+        DidScale::U8Mul { mul } => {
+            let b0 = *data
+                .first()
+                .ok_or_else(|| Error::Decode(format!("{} empty", def.name)))?;
+            Ok(DecodedDid::Number {
+                name: def.name,
+                value: b0 as f64 * mul,
+                unit: def.unit,
             })
         }
         DidScale::Ascii => {
@@ -199,14 +289,37 @@ mod tests {
         let def = F150_DIDS.iter().find(|d| d.did == 0xF405).unwrap();
         let d = decode_data(def, &[0x5A]).unwrap();
         match d {
-            // 0x5A = 90 raw; OBD formula (x - 40) = 50 °C
-            DecodedDid::Number { value, .. } => assert!((value - 50.0).abs() < 0.01),
+            // 0x5A=90; (90-40)=50 °C
+            DecodedDid::Number { value, unit, .. } => {
+                assert!((value - 50.0).abs() < 0.01);
+                assert_eq!(unit, "C");
+            }
             _ => panic!("expected number"),
         }
     }
 
     #[test]
-    fn catalog_has_vin() {
+    fn catalog_has_core() {
         assert!(F150_DIDS.iter().any(|d| d.did == 0xF190));
+        assert!(F150_DIDS.iter().any(|d| d.did == 0xF405));
+        assert!(F150_DIDS.iter().any(|d| d.did == 0x1E1C));
+        assert!(F150_DIDS.iter().any(|d| d.did == 0x2B00));
+    }
+
+    #[test]
+    fn live_parameters_csv_exists() {
+        let p = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("docs/reference/ford-f150-forscan/live_parameters.csv");
+        assert!(p.exists(), "missing {p:?}");
+        let text = std::fs::read_to_string(p).unwrap();
+        assert!(text.contains("22F405"));
+        assert!(text.contains("j1979"));
+    }
+
+    #[test]
+    fn forscan_index_exists() {
+        let p = std::path::Path::new(env!("CARGO_MANIFEST_DIR"))
+            .join("docs/reference/ford-f150-forscan/INDEX.md");
+        assert!(p.exists());
     }
 }
