@@ -4,6 +4,8 @@
 
 ### Added
 
+- **MLU M1 visual OCR** of CMFD figures (1-14…1-38, 3-2): widgets, OSB maps, Table 1-1 colors. `docs/reference/mlu-m1-visual-ocr.md`. Ownship cyan. Refs #56.
+
 - **MLU M1 CMFD model** (Pilot’s Guide 16PR14341): `FormatSelect` OSB **12/13/14** + Master Menu, per-page OSB maps, Table 1-1 colors (`Palette.track` yellow, cyan safety, white ownship). Digest `docs/reference/mlu-m1-cmfd.md`. F4-SMS page pattern noted. Refs #54.
 - **Real F-16-class MFD formats** from public manuals: Master **MENU**, **FCR** RWS B-scope, **HSD**, **SMS INV**, **TGP**. Demo starts on **FCR**. Refs #52.
 - **WIDG** gallery retained for widget QA (`g`). Refs #50.
@@ -23,6 +25,8 @@
 
 ### Added
 
+- **MLU M1 visual OCR** of CMFD figures (1-14…1-38, 3-2): widgets, OSB maps, Table 1-1 colors. `docs/reference/mlu-m1-visual-ocr.md`. Ownship cyan. Refs #56.
+
 - F-16 format catalog + public source notes (`docs/reference/f16-mfd-catalog.md`)
 - Widgets: range rings, bearing pointer, track gate, crosshair, B-scope, list, station grid, readout, caution, horizon, progress, video frame, full OSB chrome
 - Jet formats: SMS HSD TGP FCR/GM/SEA WPN HAD FLIR DTE TEST ENG FUEL CNI RESET ECM TFR HUD UFC PFL STORES BLANK
@@ -34,6 +38,8 @@
 - `FontSize` + `draw_text_size` API
 
 ### Added
+
+- **MLU M1 visual OCR** of CMFD figures (1-14…1-38, 3-2): widgets, OSB maps, Table 1-1 colors. `docs/reference/mlu-m1-visual-ocr.md`. Ownship cyan. Refs #56.
 
 - **Product rename:** library and demo are **MFD** (multi-function display)
 - **B612 Mono** embedded cockpit font (`fontdue` raster, AA coverage)

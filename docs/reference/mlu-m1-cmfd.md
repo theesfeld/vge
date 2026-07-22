@@ -10,6 +10,8 @@
 
 This digest is for **library design** (widgets + page layouts). Not certified flight data.
 
+**Visual OCR of figures** (shapes, OSB maps, color callouts): [`mlu-m1-visual-ocr.md`](mlu-m1-visual-ocr.md) · PNG renders under `docs/reference/mlu-m1-ocr/`.
+
 ---
 
 ## 1. Hardware (Figure 1-14)
@@ -81,9 +83,10 @@ Colorization is **primarily for HSD**; uncolored symbols stay **green** (classic
 | Role (MLU) | Color | Examples |
 |------------|-------|----------|
 | Safety cursors | **Cyan** | FCR cursor, HSD ghost A-A / A-G |
-| Ownship / nav data | **White** | Ownship, STPT/IP/TGT, routes, lines, FCR volume, bullseye data, text |
-| Tracks / bug | **Yellow** | Radar tracks, bugged target + alts |
-| Default / structure | **Green** | Range rings, SOI cue, non-colorized symbology |
+| HSD / FCR **ownship** | **Cyan** | Stick aircraft on HSD; + on FCR (Table 1-1 + Fig 1-18 text) |
+| STPT / routes / IP / TGT / text class | **White** | Nav geometry and labels |
+| Tracks / bug / preplan threat | **Yellow** | Radar tracks, bugged target, mark X, threat digits |
+| Default / structure | **Green** | Range rings, SOI, friend IFF, softkey mnemonics |
 | Threat / safety alert | **Red** | (break X / hostile class — use warning role) |
 | Glass | **Black** | Background |
 
