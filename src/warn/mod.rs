@@ -79,6 +79,8 @@ pub fn evaluate(v: &VehicleSnapshot) -> Vec<ActiveWarn> {
             level: WarnLevel::Warning,
         });
     }
+    // door_* true = closed. Only warn when a door is open while moving.
+    // Without body bus data, doors stay default-closed (no false AJAR).
     if (!v.door_fl || !v.door_fr || !v.door_rl || !v.door_rr || !v.door_hatch) && v.speed_mph > 1.0
     {
         out.push(ActiveWarn {

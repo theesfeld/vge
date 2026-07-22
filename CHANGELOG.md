@@ -4,6 +4,7 @@
 
 ### Fixed
 
+- **False DOOR AJAR / soft ERR on drive:** door defaults closed when no body DID; soft NO DATA/UDS NRC no longer paint bus ERR or drop LIVE. From capture `drive-20260722-061858`. Refs #125.
 - **cmfd owns Bluetooth connect:** BlueZ power/trust/connect/wait + scan + RFCOMM inside the feed; no operator `bluetoothctl connect` for normal use. Shell only notes the target MAC. Refs #123.
 
 ### Removed
