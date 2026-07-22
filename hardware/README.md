@@ -19,17 +19,19 @@
 
 ## Quick send-out
 
-### PCB fab (both boards)
+### PCB fab (both boards) — KiCad headless (preferred)
 
-1. Zip each folder under `elec/fab/board-a-bezel/` and `elec/fab/board-b-carrier/` (or use the pre-made zips if present).
-2. Upload to JLCPCB / PCBWay / your house.
-3. Order **2-layer**, 1.6 mm, HASL or ENIG, green or black solder mask.
-4. For assembly: upload matching `bom.csv` + `cpl.csv` (LCSC part numbers where filled).
+1. Upload `elec/fab/cmfd-board-a-kicad-gerbers.zip` and `elec/fab/cmfd-board-b-kicad-gerbers.zip`.
+2. Order **2-layer**, 1.6 mm, HASL or ENIG.
+3. Open boards in KiCad 10: `elec/bezel-mcu/cmfd-board-a.kicad_pcb`, `elec/carrier-som/cmfd-board-b.kicad_pcb`.
+4. Read DRC notes: `elec/fab/SEND-TO-FAB.md`.
 
 ```bash
-# regenerate fab outputs after design changes
-nix-shell -p python3Packages.numpy --run 'python3 hardware/tools/gen_pcbs.py'
+# rebuild .kicad_pcb + DRC + Gerbers/drill/pos
+nix-shell -p kicad zip --run 'bash hardware/tools/kicad_export.sh'
 ```
+
+Legacy geometry-only Gerbers: `python3 hardware/tools/gen_pcbs.py` (prefer KiCad zips for fab).
 
 ### 3D print
 

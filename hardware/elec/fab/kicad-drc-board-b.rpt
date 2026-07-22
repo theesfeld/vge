@@ -1,0 +1,514 @@
+** Drc report for cmfd-board-b.kicad_pcb **
+** Created on 2026-07-22T09:45:04 **
+** Report includes: Errors, Warnings **
+
+** Found 124 DRC violations **
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 58.0000 mm): PTH pad 1 [<no net>] of J11
+    @(28.0000 mm, 57.7800 mm): PTH pad 15 [<no net>] of J10
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 58.0000 mm): PTH pad 1 [<no net>] of J11
+    @(28.0000 mm, 57.7800 mm): PTH pad 15 [<no net>] of J10
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(30.5400 mm, 58.0000 mm): PTH pad 2 [<no net>] of J11
+    @(30.5400 mm, 57.7800 mm): PTH pad 16 [<no net>] of J10
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(30.5400 mm, 58.0000 mm): PTH pad 2 [<no net>] of J11
+    @(30.5400 mm, 57.7800 mm): PTH pad 16 [<no net>] of J10
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 60.5400 mm): PTH pad 3 [<no net>] of J11
+    @(28.0000 mm, 60.3200 mm): PTH pad 17 [<no net>] of J10
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 60.5400 mm): PTH pad 3 [<no net>] of J11
+    @(28.0000 mm, 60.3200 mm): PTH pad 17 [<no net>] of J10
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(30.5400 mm, 60.5400 mm): PTH pad 4 [<no net>] of J11
+    @(30.5400 mm, 60.3200 mm): PTH pad 18 [<no net>] of J10
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(30.5400 mm, 60.5400 mm): PTH pad 4 [<no net>] of J11
+    @(30.5400 mm, 60.3200 mm): PTH pad 18 [<no net>] of J10
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 63.0800 mm): PTH pad 5 [<no net>] of J11
+    @(28.0000 mm, 62.8600 mm): PTH pad 19 [<no net>] of J10
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 63.0800 mm): PTH pad 5 [<no net>] of J11
+    @(28.0000 mm, 62.8600 mm): PTH pad 19 [<no net>] of J10
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(30.5400 mm, 63.0800 mm): PTH pad 6 [<no net>] of J11
+    @(30.5400 mm, 62.8600 mm): PTH pad 20 [<no net>] of J10
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(30.5400 mm, 63.0800 mm): PTH pad 6 [<no net>] of J11
+    @(30.5400 mm, 62.8600 mm): PTH pad 20 [<no net>] of J10
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.1500 mm; actual 0.1337 mm)
+    Rule: board setup constraints hole; error
+    @(30.5400 mm, 73.2400 mm): PTH pad 14 [<no net>] of J11
+    @(31.9100 mm, 75.4600 mm): NPTH pad of J5
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.1500 mm; actual 0.1337 mm)
+    Rule: board setup constraints hole; error
+    @(30.5400 mm, 73.2400 mm): PTH pad 14 [<no net>] of J11
+    @(31.9100 mm, 75.4600 mm): NPTH pad of J5
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.1500 mm; actual 0.0000 mm)
+    Rule: board setup constraints hole; error
+    @(30.5400 mm, 75.7800 mm): PTH pad 16 [<no net>] of J11
+    @(31.9100 mm, 75.4600 mm): NPTH pad of J5
+[hole_clearance]: Hole clearance violation (board setup constraints hole clearance 0.1500 mm; actual 0.0000 mm)
+    Rule: board setup constraints hole; error
+    @(30.5400 mm, 75.7800 mm): PTH pad 16 [<no net>] of J11
+    @(31.9100 mm, 75.4600 mm): NPTH pad of J5
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 78.3200 mm): PTH pad 17 [<no net>] of J11
+    @(28.0960 mm, 78.0000 mm): PTH pad 7 [<no net>] of J5
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1257 mm)
+    Local override; error
+    @(28.0000 mm, 78.3200 mm): PTH pad 17 [<no net>] of J11
+    @(27.0800 mm, 79.7800 mm): PTH pad 6 [<no net>] of J5
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1257 mm)
+    Local override; error
+    @(28.0000 mm, 78.3200 mm): PTH pad 17 [<no net>] of J11
+    @(27.0800 mm, 79.7800 mm): PTH pad 6 [<no net>] of J5
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 78.3200 mm): PTH pad 17 [<no net>] of J11
+    @(28.0960 mm, 78.0000 mm): PTH pad 7 [<no net>] of J5
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 80.8600 mm): PTH pad 19 [<no net>] of J11
+    @(27.0800 mm, 79.7800 mm): PTH pad 6 [<no net>] of J5
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 80.8600 mm): PTH pad 19 [<no net>] of J11
+    @(29.1120 mm, 79.7800 mm): PTH pad 8 [<no net>] of J5
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 80.8600 mm): PTH pad 19 [<no net>] of J11
+    @(27.0800 mm, 79.7800 mm): PTH pad 6 [<no net>] of J5
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(28.0000 mm, 80.8600 mm): PTH pad 19 [<no net>] of J11
+    @(29.1120 mm, 79.7800 mm): PTH pad 8 [<no net>] of J5
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1904 mm)
+    Local override; error
+    @(30.5400 mm, 80.8600 mm): PTH pad 20 [<no net>] of J11
+    @(29.1120 mm, 79.7800 mm): PTH pad 8 [<no net>] of J5
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.1904 mm)
+    Local override; error
+    @(30.5400 mm, 80.8600 mm): PTH pad 20 [<no net>] of J11
+    @(29.1120 mm, 79.7800 mm): PTH pad 8 [<no net>] of J5
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(18.8000 mm, 8.3200 mm): Pad A1 [<no net>] of J3 on F.Cu
+    @(18.8000 mm, 8.3200 mm): Pad B12 [<no net>] of J3 on F.Cu
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(19.6000 mm, 8.3200 mm): Pad A4 [<no net>] of J3 on F.Cu
+    @(19.6000 mm, 8.3200 mm): Pad B9 [<no net>] of J3 on F.Cu
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(54.8000 mm, 8.3200 mm): Pad A1 [<no net>] of J4 on F.Cu
+    @(54.8000 mm, 8.3200 mm): Pad B12 [<no net>] of J4 on F.Cu
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(55.6000 mm, 8.3200 mm): Pad A4 [<no net>] of J4 on F.Cu
+    @(55.6000 mm, 8.3200 mm): Pad B9 [<no net>] of J4 on F.Cu
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(24.4000 mm, 8.3200 mm): Pad A9 [<no net>] of J3 on F.Cu
+    @(24.4000 mm, 8.3200 mm): Pad B4 [<no net>] of J3 on F.Cu
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(25.2000 mm, 8.3200 mm): Pad A12 [<no net>] of J3 on F.Cu
+    @(25.2000 mm, 8.3200 mm): Pad B1 [<no net>] of J3 on F.Cu
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(60.4000 mm, 8.3200 mm): Pad A9 [<no net>] of J4 on F.Cu
+    @(60.4000 mm, 8.3200 mm): Pad B4 [<no net>] of J4 on F.Cu
+[clearance]: Clearance violation ( clearance 0.2000 mm; actual 0.0000 mm)
+    Local override; error
+    @(61.2000 mm, 8.3200 mm): Pad A12 [<no net>] of J4 on F.Cu
+    @(61.2000 mm, 8.3200 mm): Pad B1 [<no net>] of J4 on F.Cu
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+    @(28.0000 mm, 40.0000 mm): Footprint J10
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0000 mm, 57.7800 mm): PTH pad 15 [<no net>] of J10
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(30.5400 mm, 57.7800 mm): PTH pad 16 [<no net>] of J10
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0000 mm, 60.3200 mm): PTH pad 17 [<no net>] of J10
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(30.5400 mm, 60.3200 mm): PTH pad 18 [<no net>] of J10
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0000 mm, 62.8600 mm): PTH pad 19 [<no net>] of J10
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(30.5400 mm, 62.8600 mm): PTH pad 20 [<no net>] of J10
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0000 mm, 58.0000 mm): PTH pad 1 [<no net>] of J11
+    @(28.0000 mm, 40.0000 mm): Footprint J10
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(30.5400 mm, 58.0000 mm): PTH pad 2 [<no net>] of J11
+    @(28.0000 mm, 40.0000 mm): Footprint J10
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0000 mm, 60.5400 mm): PTH pad 3 [<no net>] of J11
+    @(28.0000 mm, 40.0000 mm): Footprint J10
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(30.5400 mm, 60.5400 mm): PTH pad 4 [<no net>] of J11
+    @(28.0000 mm, 40.0000 mm): Footprint J10
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0000 mm, 63.0800 mm): PTH pad 5 [<no net>] of J11
+    @(28.0000 mm, 40.0000 mm): Footprint J10
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(30.5400 mm, 63.0800 mm): PTH pad 6 [<no net>] of J11
+    @(28.0000 mm, 40.0000 mm): Footprint J10
+[courtyards_overlap]: Courtyards overlap
+    Rule: board setup constraints courtyard; error
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+    @(22.0000 mm, 78.0000 mm): Footprint J5
+[npth_inside_courtyard]: NPTH inside courtyard
+    Local override; error
+    @(31.9100 mm, 75.4600 mm): NPTH pad of J5
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(26.0640 mm, 78.0000 mm): PTH pad 5 [<no net>] of J5
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(27.0800 mm, 79.7800 mm): PTH pad 6 [<no net>] of J5
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0960 mm, 78.0000 mm): PTH pad 7 [<no net>] of J5
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(29.1120 mm, 79.7800 mm): PTH pad 8 [<no net>] of J5
+    @(28.0000 mm, 58.0000 mm): Footprint J11
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0000 mm, 70.7000 mm): PTH pad 11 [<no net>] of J11
+    @(22.0000 mm, 78.0000 mm): Footprint J5
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(30.5400 mm, 70.7000 mm): PTH pad 12 [<no net>] of J11
+    @(22.0000 mm, 78.0000 mm): Footprint J5
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0000 mm, 73.2400 mm): PTH pad 13 [<no net>] of J11
+    @(22.0000 mm, 78.0000 mm): Footprint J5
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(30.5400 mm, 73.2400 mm): PTH pad 14 [<no net>] of J11
+    @(22.0000 mm, 78.0000 mm): Footprint J5
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0000 mm, 75.7800 mm): PTH pad 15 [<no net>] of J11
+    @(22.0000 mm, 78.0000 mm): Footprint J5
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(30.5400 mm, 75.7800 mm): PTH pad 16 [<no net>] of J11
+    @(22.0000 mm, 78.0000 mm): Footprint J5
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0000 mm, 78.3200 mm): PTH pad 17 [<no net>] of J11
+    @(22.0000 mm, 78.0000 mm): Footprint J5
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(30.5400 mm, 78.3200 mm): PTH pad 18 [<no net>] of J11
+    @(22.0000 mm, 78.0000 mm): Footprint J5
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(28.0000 mm, 80.8600 mm): PTH pad 19 [<no net>] of J11
+    @(22.0000 mm, 78.0000 mm): Footprint J5
+[pth_inside_courtyard]: PTH inside courtyard
+    Local override; error
+    @(30.5400 mm, 80.8600 mm): PTH pad 20 [<no net>] of J11
+    @(22.0000 mm, 78.0000 mm): Footprint J5
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(54.8000 mm, 8.3200 mm): Pad A1 [<no net>] of J4 on F.Cu
+    @(54.8000 mm, 8.3200 mm): Pad B12 [<no net>] of J4 on F.Cu
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(28.0000 mm, 58.0000 mm): PTH pad 1 [<no net>] of J11
+    @(28.0000 mm, 57.7800 mm): PTH pad 15 [<no net>] of J10
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(30.5400 mm, 58.0000 mm): PTH pad 2 [<no net>] of J11
+    @(30.5400 mm, 57.7800 mm): PTH pad 16 [<no net>] of J10
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(28.0000 mm, 63.0800 mm): PTH pad 5 [<no net>] of J11
+    @(28.0000 mm, 62.8600 mm): PTH pad 19 [<no net>] of J10
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(30.5400 mm, 63.0800 mm): PTH pad 6 [<no net>] of J11
+    @(30.5400 mm, 62.8600 mm): PTH pad 20 [<no net>] of J10
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(30.5400 mm, 63.0800 mm): PTH pad 6 [<no net>] of J11
+    @(30.5400 mm, 62.8600 mm): PTH pad 20 [<no net>] of J10
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(28.0000 mm, 80.8600 mm): PTH pad 19 [<no net>] of J11
+    @(27.0800 mm, 79.7800 mm): PTH pad 6 [<no net>] of J5
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(28.0000 mm, 80.8600 mm): PTH pad 19 [<no net>] of J11
+    @(29.1120 mm, 79.7800 mm): PTH pad 8 [<no net>] of J5
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(28.0000 mm, 80.8600 mm): PTH pad 19 [<no net>] of J11
+    @(29.1120 mm, 79.7800 mm): PTH pad 8 [<no net>] of J5
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(27.0800 mm, 79.7800 mm): PTH pad 6 [<no net>] of J5
+    @(28.0000 mm, 80.8600 mm): PTH pad 19 [<no net>] of J11
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(28.0960 mm, 78.0000 mm): PTH pad 7 [<no net>] of J5
+    @(28.0000 mm, 78.3200 mm): PTH pad 17 [<no net>] of J11
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(24.4000 mm, 8.3200 mm): Pad B4 [<no net>] of J3 on F.Cu
+    @(24.4000 mm, 8.3200 mm): Pad A9 [<no net>] of J3 on F.Cu
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(19.6000 mm, 8.3200 mm): Pad B9 [<no net>] of J3 on F.Cu
+    @(19.6000 mm, 8.3200 mm): Pad A4 [<no net>] of J3 on F.Cu
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(28.0000 mm, 62.8600 mm): PTH pad 19 [<no net>] of J10
+    @(28.0000 mm, 63.0800 mm): PTH pad 5 [<no net>] of J11
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(31.9100 mm, 75.4600 mm): NPTH pad of J5
+    @(30.5400 mm, 75.7800 mm): PTH pad 16 [<no net>] of J11
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(31.9100 mm, 75.4600 mm): NPTH pad of J5
+    @(30.5400 mm, 75.7800 mm): PTH pad 16 [<no net>] of J11
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(28.0000 mm, 57.7800 mm): PTH pad 15 [<no net>] of J10
+    @(28.0000 mm, 58.0000 mm): PTH pad 1 [<no net>] of J11
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(28.0000 mm, 60.3200 mm): PTH pad 17 [<no net>] of J10
+    @(28.0000 mm, 60.5400 mm): PTH pad 3 [<no net>] of J11
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(28.0000 mm, 60.3200 mm): PTH pad 17 [<no net>] of J10
+    @(28.0000 mm, 60.5400 mm): PTH pad 3 [<no net>] of J11
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(30.5400 mm, 60.3200 mm): PTH pad 18 [<no net>] of J10
+    @(30.5400 mm, 60.5400 mm): PTH pad 4 [<no net>] of J11
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(30.5400 mm, 60.3200 mm): PTH pad 18 [<no net>] of J10
+    @(30.5400 mm, 60.5400 mm): PTH pad 4 [<no net>] of J11
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(28.0000 mm, 78.3200 mm): PTH pad 17 [<no net>] of J11
+    @(28.0960 mm, 78.0000 mm): PTH pad 7 [<no net>] of J5
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(18.8000 mm, 8.3200 mm): Pad A1 [<no net>] of J3 on F.Cu
+    @(18.8000 mm, 8.3200 mm): Pad B12 [<no net>] of J3 on F.Cu
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(55.6000 mm, 8.3200 mm): Pad B9 [<no net>] of J4 on F.Cu
+    @(55.6000 mm, 8.3200 mm): Pad A4 [<no net>] of J4 on F.Cu
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(60.4000 mm, 8.3200 mm): Pad A9 [<no net>] of J4 on F.Cu
+    @(60.4000 mm, 8.3200 mm): Pad B4 [<no net>] of J4 on F.Cu
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(61.2000 mm, 8.3200 mm): Pad A12 [<no net>] of J4 on F.Cu
+    @(61.2000 mm, 8.3200 mm): Pad B1 [<no net>] of J4 on F.Cu
+[solder_mask_bridge]: Front solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(25.2000 mm, 8.3200 mm): Pad A12 [<no net>] of J3 on F.Cu
+    @(25.2000 mm, 8.3200 mm): Pad B1 [<no net>] of J3 on F.Cu
+[solder_mask_bridge]: Rear solder mask aperture bridges items with different nets
+    Rule: board setup solder mask min width; error
+    @(30.5400 mm, 58.0000 mm): PTH pad 2 [<no net>] of J11
+    @(30.5400 mm, 57.7800 mm): PTH pad 16 [<no net>] of J10
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(0.0000 mm, 90.0000 mm): Segment on Edge.Cuts
+    @(10.0000 mm, 68.0000 mm): PCB text 'MOD1 SoM mezzanine (RK3566 class)' on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0624 mm)
+    Rule: board setup constraints silk; warning
+    @(0.0000 mm, 90.0000 mm): Segment on Edge.Cuts
+    @(3.0000 mm, 84.0000 mm): PCB text 'USB-C · Eth · CAN · UART · 18650 · KiCad headless' on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(120.0000 mm, 90.0000 mm): Segment on Edge.Cuts
+    @(3.0000 mm, 87.0000 mm): PCB text 'CMFD BOARD-B CARRIER + SoM  #137' on F.Silkscreen
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)
+    Rule: board setup constraints; warning
+    @(28.0000 mm, 57.7800 mm): PTH pad 15 [<no net>] of J10
+    @(28.0000 mm, 58.0000 mm): PTH pad 1 [<no net>] of J11
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)
+    Rule: board setup constraints; warning
+    @(30.5400 mm, 58.0000 mm): PTH pad 2 [<no net>] of J11
+    @(30.5400 mm, 57.7800 mm): PTH pad 16 [<no net>] of J10
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)
+    Rule: board setup constraints; warning
+    @(28.0000 mm, 60.5400 mm): PTH pad 3 [<no net>] of J11
+    @(28.0000 mm, 60.3200 mm): PTH pad 17 [<no net>] of J10
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)
+    Rule: board setup constraints; warning
+    @(30.5400 mm, 60.3200 mm): PTH pad 18 [<no net>] of J10
+    @(30.5400 mm, 60.5400 mm): PTH pad 4 [<no net>] of J11
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)
+    Rule: board setup constraints; warning
+    @(28.0000 mm, 62.8600 mm): PTH pad 19 [<no net>] of J10
+    @(28.0000 mm, 63.0800 mm): PTH pad 5 [<no net>] of J11
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)
+    Rule: board setup constraints; warning
+    @(30.5400 mm, 63.0800 mm): PTH pad 6 [<no net>] of J11
+    @(30.5400 mm, 62.8600 mm): PTH pad 20 [<no net>] of J10
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)
+    Rule: board setup constraints; warning
+    @(31.9100 mm, 75.4600 mm): NPTH pad of J5
+    @(30.5400 mm, 75.7800 mm): PTH pad 16 [<no net>] of J11
+[hole_to_hole]: Drilled hole too close to other hole (board setup constraints min 0.2495 mm; actual 0.0000 mm)
+    Rule: board setup constraints; warning
+    @(28.0960 mm, 78.0000 mm): PTH pad 7 [<no net>] of J5
+    @(28.0000 mm, 78.3200 mm): PTH pad 17 [<no net>] of J11
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(3.0000 mm, 84.0000 mm): PCB text 'USB-C · Eth · CAN · UART · 18650 · KiCad headless' on F.Silkscreen
+    @(17.1950 mm, 85.8600 mm): Segment of J5 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.2400 mm, 69.8900 mm): Segment of J5 on F.Silkscreen
+    @(26.6200 mm, 59.2700 mm): Segment of J11 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(31.9200 mm, 56.6200 mm): Segment of J11 on F.Silkscreen
+    @(17.2400 mm, 69.8900 mm): Segment of J5 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(31.9200 mm, 38.6200 mm): Segment of J10 on F.Silkscreen
+    @(29.2700 mm, 56.6200 mm): Segment of J11 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(26.6200 mm, 41.2700 mm): Segment of J10 on F.Silkscreen
+    @(26.6200 mm, 56.6200 mm): Segment of J11 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(26.6200 mm, 41.2700 mm): Segment of J10 on F.Silkscreen
+    @(26.6200 mm, 58.0000 mm): Segment of J11 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(26.6200 mm, 59.2700 mm): Segment of J11 on F.Silkscreen
+    @(26.6200 mm, 41.2700 mm): Segment of J10 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(26.6200 mm, 41.2700 mm): Segment of J10 on F.Silkscreen
+    @(26.6200 mm, 59.2700 mm): Segment of J11 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(26.6200 mm, 64.2400 mm): Segment of J10 on F.Silkscreen
+    @(26.6200 mm, 59.2700 mm): Segment of J11 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(31.9200 mm, 56.6200 mm): Segment of J11 on F.Silkscreen
+    @(26.6200 mm, 64.2400 mm): Segment of J10 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(31.9200 mm, 38.6200 mm): Segment of J10 on F.Silkscreen
+    @(31.9200 mm, 56.6200 mm): Segment of J11 on F.Silkscreen
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0664 mm)
+    Rule: board setup constraints silk; warning
+    @(106.5500 mm, 70.4900 mm): Polygon of U12 on F.Silkscreen
+    @(108.0000 mm, 69.6000 mm): Reference field of U12
+[silk_overlap]: Silkscreen clearance (board setup constraints silk clearance 0.1000 mm; actual 0.0664 mm)
+    Rule: board setup constraints silk; warning
+    @(93.5500 mm, 70.4900 mm): Polygon of U11 on F.Silkscreen
+    @(95.0000 mm, 69.6000 mm): Reference field of U11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(3.0000 mm, 84.0000 mm): PCB text 'USB-C · Eth · CAN · UART · 18650 · KiCad headless' on F.Silkscreen
+    @(6.0000 mm, 84.0000 mm): PTH pad 1 [<no net>] of H4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(3.0000 mm, 87.0000 mm): PCB text 'CMFD BOARD-B CARRIER + SoM  #137' on F.Silkscreen
+    @(6.0000 mm, 84.0000 mm): PTH pad 1 [<no net>] of H4
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(29.2700 mm, 55.6200 mm): Reference field of J11
+    @(28.0000 mm, 55.2400 mm): PTH pad 13 [<no net>] of J10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(17.2400 mm, 69.8900 mm): Segment of J5 on F.Silkscreen
+    @(28.0000 mm, 70.7000 mm): PTH pad 11 [<no net>] of J11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(17.2400 mm, 69.8900 mm): Segment of J5 on F.Silkscreen
+    @(30.5400 mm, 70.7000 mm): PTH pad 12 [<no net>] of J11
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(29.2700 mm, 55.6200 mm): Reference field of J11
+    @(30.5400 mm, 55.2400 mm): PTH pad 14 [<no net>] of J10
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(26.6200 mm, 59.2700 mm): Segment of J11 on F.Silkscreen
+    @(26.0640 mm, 78.0000 mm): PTH pad 5 [<no net>] of J5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(26.6200 mm, 59.2700 mm): Segment of J11 on F.Silkscreen
+    @(27.0800 mm, 79.7800 mm): PTH pad 6 [<no net>] of J5
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(31.9200 mm, 56.6200 mm): Segment of J11 on F.Silkscreen
+    @(31.9100 mm, 75.4600 mm): NPTH pad of J5
+
+** Found 0 unconnected pads **
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Footprint component type doesn't match footprint pads
+
+** End of Report **

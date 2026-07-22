@@ -5,6 +5,7 @@
 ### Added
 
 - **Universal CMFD hardware design package:** two-board Gerbers (bezel MCU + SoM carrier), BOM/CPL, durable 3D-print STLs, connector ICD, power/flash docs, Three.js exploded view (`hardware/`, `docs/hardware/`, `site/hardware/`). Refs #137.
+- **KiCad headless PCB pipeline:** `kicad_build.py` + `kicad_export.sh` produce stock-footprint `.kicad_pcb`, DRC reports, and `kicad-cli` Gerbers/drill/pos. Refs #137.
 
 ### Changed
 

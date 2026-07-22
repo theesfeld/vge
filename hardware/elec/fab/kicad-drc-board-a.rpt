@@ -1,0 +1,414 @@
+** Drc report for cmfd-board-a.kicad_pcb **
+** Created on 2026-07-22T09:45:01 **
+** Report includes: Errors, Warnings **
+
+** Found 41 DRC violations **
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(52.0000 mm, 18.0000 mm): PTH pad 2 [OSB14] of S14
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(58.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S14
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(122.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(22.0000 mm, 122.5000 mm): PTH pad 2 [<no net>] of SW1
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(122.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(28.5000 mm, 122.5000 mm): PTH pad 2 [<no net>] of SW1
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(106.0000 mm, 18.0000 mm): PTH pad 2 [OSB11] of S11
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(112.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S11
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(88.0000 mm, 18.0000 mm): PTH pad 2 [OSB12] of S12
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(94.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S12
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(70.0000 mm, 18.0000 mm): PTH pad 2 [OSB13] of S13
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(76.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S13
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(122.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(118.0000 mm, 122.5000 mm): PTH pad 2 [<no net>] of SW2
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(34.0000 mm, 18.0000 mm): PTH pad 2 [OSB15] of S15
+[copper_edge_clearance]: Board edge clearance violation (board setup constraints edge clearance 0.2500 mm; actual 0.0000 mm)
+    Rule: board setup constraints edge; error
+    @(17.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(40.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S15
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0866 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(18.5000 mm, 29.0000 mm): PCB text 'BRT' on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(0.0000 mm, 140.0000 mm): Segment on Edge.Cuts
+    @(4.0000 mm, 134.0000 mm): PCB text 'KiCad headless · STM32G431 · OSB 1-20' on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(0.0000 mm, 140.0000 mm): Segment on Edge.Cuts
+    @(4.0000 mm, 137.0000 mm): PCB text 'CMFD BOARD-A BEZEL MCU  #137' on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(16.7500 mm, 104.0000 mm): Reference field of S20
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(14.5000 mm, 111.5000 mm): Segment of S20 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(19.0000 mm, 105.0000 mm): Segment of S20 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(16.7500 mm, 86.0000 mm): Reference field of S19
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(14.5000 mm, 93.5000 mm): Segment of S19 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(19.0000 mm, 87.0000 mm): Segment of S19 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(121.2500 mm, 20.0000 mm): Reference field of SW4
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(119.0000 mm, 27.5000 mm): Segment of SW4 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(123.5000 mm, 21.0000 mm): Segment of SW4 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(16.7500 mm, 68.0000 mm): Reference field of S18
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(14.5000 mm, 75.5000 mm): Segment of S18 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(19.0000 mm, 69.0000 mm): Segment of S18 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(16.7500 mm, 32.0000 mm): Reference field of S16
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(14.5000 mm, 39.5000 mm): Segment of S16 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(19.0000 mm, 33.0000 mm): Segment of S16 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(121.2500 mm, 116.0000 mm): Reference field of SW2
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(122.5000 mm, 17.5000 mm): Segment on Edge.Cuts
+    @(123.5000 mm, 117.0000 mm): Segment of SW2 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(16.7500 mm, 50.0000 mm): Reference field of S17
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(14.5000 mm, 57.5000 mm): Segment of S17 on F.Silkscreen
+[silk_edge_clearance]: Silkscreen clipped by board edge (board setup constraints silk clearance 0.1000 mm; actual 0.0000 mm)
+    Rule: board setup constraints silk; warning
+    @(17.5000 mm, 122.5000 mm): Segment on Edge.Cuts
+    @(19.0000 mm, 51.0000 mm): Segment of S17 on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(18.5000 mm, 29.0000 mm): PCB text 'BRT' on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(18.5000 mm, 125.0000 mm): PCB text 'GAIN' on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(114.5000 mm, 29.0000 mm): PCB text 'CON' on F.Silkscreen
+[text_height]: Text height out of range (board setup constraints silk text height min height 0.8000 mm; actual 0.7500 mm)
+    Rule: board setup constraints silk text height; warning
+    @(114.5000 mm, 125.0000 mm): PCB text 'SYM' on F.Silkscreen
+[silk_over_copper]: Silkscreen clipped by solder mask
+    Local override; warning
+    @(4.0000 mm, 134.0000 mm): PCB text 'KiCad headless · STM32G431 · OSB 1-20' on F.Silkscreen
+    @(7.0000 mm, 133.0000 mm): PTH pad 1 [<no net>] of H4
+
+** Found 59 unconnected pads **
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(13.5000 mm, 106.0000 mm): PTH pad 1 [OSB20] of S20
+    @(13.5000 mm, 110.5000 mm): PTH pad 2 [OSB20] of S20
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(20.0000 mm, 34.0000 mm): PTH pad 1 [GND] of S16
+    @(20.0000 mm, 38.5000 mm): PTH pad 2 [GND] of S16
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(20.0000 mm, 34.0000 mm): PTH pad 1 [GND] of S16
+    @(40.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(20.0000 mm, 38.5000 mm): PTH pad 2 [GND] of S16
+    @(20.0000 mm, 52.0000 mm): PTH pad 1 [GND] of S17
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(20.0000 mm, 52.0000 mm): PTH pad 1 [GND] of S17
+    @(20.0000 mm, 56.5000 mm): PTH pad 2 [GND] of S17
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(20.0000 mm, 56.5000 mm): PTH pad 2 [GND] of S17
+    @(20.0000 mm, 70.0000 mm): PTH pad 1 [GND] of S18
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(20.0000 mm, 70.0000 mm): PTH pad 1 [GND] of S18
+    @(20.0000 mm, 74.5000 mm): PTH pad 2 [GND] of S18
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(20.0000 mm, 74.5000 mm): PTH pad 2 [GND] of S18
+    @(20.0000 mm, 88.0000 mm): PTH pad 1 [GND] of S19
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(20.0000 mm, 88.0000 mm): PTH pad 1 [GND] of S19
+    @(20.0000 mm, 92.5000 mm): PTH pad 2 [GND] of S19
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(20.0000 mm, 92.5000 mm): PTH pad 2 [GND] of S19
+    @(20.0000 mm, 106.0000 mm): PTH pad 1 [GND] of S20
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(20.0000 mm, 106.0000 mm): PTH pad 1 [GND] of S20
+    @(20.0000 mm, 110.5000 mm): PTH pad 2 [GND] of S20
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(40.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S15
+    @(40.5000 mm, 13.5000 mm): PTH pad 1 [GND] of S15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(40.5000 mm, 126.5000 mm): PTH pad 1 [GND] of S1
+    @(40.5000 mm, 131.0000 mm): PTH pad 2 [GND] of S1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(40.5000 mm, 126.5000 mm): PTH pad 1 [GND] of S1
+    @(58.5000 mm, 126.5000 mm): PTH pad 1 [GND] of S2
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(40.5000 mm, 126.5000 mm): PTH pad 1 [GND] of S1
+    @(20.0000 mm, 110.5000 mm): PTH pad 2 [GND] of S20
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(58.5000 mm, 13.5000 mm): PTH pad 1 [GND] of S14
+    @(58.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S14
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(58.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S14
+    @(40.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(58.5000 mm, 126.5000 mm): PTH pad 1 [GND] of S2
+    @(58.5000 mm, 131.0000 mm): PTH pad 2 [GND] of S2
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(58.5000 mm, 126.5000 mm): PTH pad 1 [GND] of S2
+    @(76.5000 mm, 126.5000 mm): PTH pad 1 [GND] of S3
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(76.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S13
+    @(76.5000 mm, 13.5000 mm): PTH pad 1 [GND] of S13
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(76.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S13
+    @(58.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S14
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(76.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S13
+    @(94.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S12
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(76.5000 mm, 131.0000 mm): PTH pad 2 [GND] of S3
+    @(76.5000 mm, 126.5000 mm): PTH pad 1 [GND] of S3
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(76.5000 mm, 131.0000 mm): PTH pad 2 [GND] of S3
+    @(94.5000 mm, 131.0000 mm): PTH pad 2 [GND] of S4
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(94.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S12
+    @(94.5000 mm, 13.5000 mm): PTH pad 1 [GND] of S12
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(94.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S12
+    @(112.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S11
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(94.5000 mm, 126.5000 mm): PTH pad 1 [GND] of S4
+    @(94.5000 mm, 131.0000 mm): PTH pad 2 [GND] of S4
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(94.5000 mm, 131.0000 mm): PTH pad 2 [GND] of S4
+    @(112.5000 mm, 131.0000 mm): PTH pad 2 [GND] of S5
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(112.5000 mm, 13.5000 mm): PTH pad 1 [GND] of S11
+    @(112.5000 mm, 18.0000 mm): PTH pad 2 [GND] of S11
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(112.5000 mm, 131.0000 mm): PTH pad 2 [GND] of S5
+    @(112.5000 mm, 126.5000 mm): PTH pad 1 [GND] of S5
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(133.0000 mm, 38.5000 mm): PTH pad 2 [GND] of S10
+    @(133.0000 mm, 34.0000 mm): PTH pad 1 [GND] of S10
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(133.0000 mm, 52.0000 mm): PTH pad 1 [GND] of S9
+    @(133.0000 mm, 38.5000 mm): PTH pad 2 [GND] of S10
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(133.0000 mm, 56.5000 mm): PTH pad 2 [GND] of S9
+    @(133.0000 mm, 52.0000 mm): PTH pad 1 [GND] of S9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(133.0000 mm, 70.0000 mm): PTH pad 1 [GND] of S8
+    @(133.0000 mm, 56.5000 mm): PTH pad 2 [GND] of S9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(133.0000 mm, 74.5000 mm): PTH pad 2 [GND] of S8
+    @(133.0000 mm, 70.0000 mm): PTH pad 1 [GND] of S8
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(133.0000 mm, 88.0000 mm): PTH pad 1 [GND] of S7
+    @(133.0000 mm, 74.5000 mm): PTH pad 2 [GND] of S8
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(133.0000 mm, 92.5000 mm): PTH pad 2 [GND] of S7
+    @(133.0000 mm, 88.0000 mm): PTH pad 1 [GND] of S7
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(133.0000 mm, 106.0000 mm): PTH pad 1 [GND] of S6
+    @(133.0000 mm, 92.5000 mm): PTH pad 2 [GND] of S7
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(133.0000 mm, 110.5000 mm): PTH pad 2 [GND] of S6
+    @(133.0000 mm, 106.0000 mm): PTH pad 1 [GND] of S6
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(133.0000 mm, 110.5000 mm): PTH pad 2 [GND] of S6
+    @(112.5000 mm, 126.5000 mm): PTH pad 1 [GND] of S5
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(126.5000 mm, 70.0000 mm): PTH pad 1 [OSB8] of S8
+    @(126.5000 mm, 74.5000 mm): PTH pad 2 [OSB8] of S8
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(52.0000 mm, 13.5000 mm): PTH pad 1 [OSB14] of S14
+    @(52.0000 mm, 18.0000 mm): PTH pad 2 [OSB14] of S14
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(106.0000 mm, 126.5000 mm): PTH pad 1 [OSB5] of S5
+    @(106.0000 mm, 131.0000 mm): PTH pad 2 [OSB5] of S5
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(126.5000 mm, 106.0000 mm): PTH pad 1 [OSB6] of S6
+    @(126.5000 mm, 110.5000 mm): PTH pad 2 [OSB6] of S6
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(106.0000 mm, 13.5000 mm): PTH pad 1 [OSB11] of S11
+    @(106.0000 mm, 18.0000 mm): PTH pad 2 [OSB11] of S11
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(126.5000 mm, 88.0000 mm): PTH pad 1 [OSB7] of S7
+    @(126.5000 mm, 92.5000 mm): PTH pad 2 [OSB7] of S7
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(13.5000 mm, 88.0000 mm): PTH pad 1 [OSB19] of S19
+    @(13.5000 mm, 92.5000 mm): PTH pad 2 [OSB19] of S19
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(70.0000 mm, 126.5000 mm): PTH pad 1 [OSB3] of S3
+    @(70.0000 mm, 131.0000 mm): PTH pad 2 [OSB3] of S3
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(88.0000 mm, 13.5000 mm): PTH pad 1 [OSB12] of S12
+    @(88.0000 mm, 18.0000 mm): PTH pad 2 [OSB12] of S12
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(34.0000 mm, 126.5000 mm): PTH pad 1 [OSB1] of S1
+    @(34.0000 mm, 131.0000 mm): PTH pad 2 [OSB1] of S1
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(13.5000 mm, 70.0000 mm): PTH pad 1 [OSB18] of S18
+    @(13.5000 mm, 74.5000 mm): PTH pad 2 [OSB18] of S18
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(70.0000 mm, 13.5000 mm): PTH pad 1 [OSB13] of S13
+    @(70.0000 mm, 18.0000 mm): PTH pad 2 [OSB13] of S13
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(13.5000 mm, 34.0000 mm): PTH pad 1 [OSB16] of S16
+    @(13.5000 mm, 38.5000 mm): PTH pad 2 [OSB16] of S16
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(126.5000 mm, 52.0000 mm): PTH pad 1 [OSB9] of S9
+    @(126.5000 mm, 56.5000 mm): PTH pad 2 [OSB9] of S9
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(88.0000 mm, 126.5000 mm): PTH pad 1 [OSB4] of S4
+    @(88.0000 mm, 131.0000 mm): PTH pad 2 [OSB4] of S4
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(126.5000 mm, 34.0000 mm): PTH pad 1 [OSB10] of S10
+    @(126.5000 mm, 38.5000 mm): PTH pad 2 [OSB10] of S10
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(34.0000 mm, 13.5000 mm): PTH pad 1 [OSB15] of S15
+    @(34.0000 mm, 18.0000 mm): PTH pad 2 [OSB15] of S15
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(13.5000 mm, 52.0000 mm): PTH pad 1 [OSB17] of S17
+    @(13.5000 mm, 56.5000 mm): PTH pad 2 [OSB17] of S17
+[unconnected_items]: Missing connection between items
+    Local override; error
+    @(52.0000 mm, 126.5000 mm): PTH pad 1 [OSB2] of S2
+    @(52.0000 mm, 131.0000 mm): PTH pad 2 [OSB2] of S2
+
+** Found 0 Footprint errors **
+
+** Ignored checks **
+    - Footprint has no courtyard defined
+    - Track endpoint not centered on via
+    - Tuning profile track geometries
+    - Footprint doesn't match symbol's footprint filters
+    - Footprint component type doesn't match footprint pads
+
+** End of Report **
