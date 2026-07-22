@@ -1,7 +1,7 @@
 # VGE — pure assembly vector engine
 
 <!-- agents:status:begin -->
-> **Status:** active · Version: `0.1.0-dev.1` · **libvge = ASM only** · demo: 2019 F-150 tach + tapes · [#27](https://github.com/theesfeld/vge/issues/27) · MIT
+> **Status:** active · Version: `0.1.0-dev.1` · **libvge = ASM only** · MFD panel demo + bitmap font · [#29](https://github.com/theesfeld/vge/issues/29) · MIT
 <!-- agents:status:end -->
 
 ## This is assembly
@@ -31,16 +31,18 @@ make                    # build/libvge.a
 cargo run --release --bin vge-demo
 ```
 
-The demo **links pure-asm libvge** and draws instruments each frame.
+The demo **links pure-asm libvge** and draws a full-screen **MFD-style panel**.
 It does not reimplement the engine.
 
-**Model:** call `vge_line` / `vge_circle` / … into a pixel surface, then present.
-That surface is only scanout for the terminal or FB. The product is the draw API.
+**Honest model:** geometry lights **pixels** in a RAM surface (`vge_line`, `vge_circle`,
+bitmap `draw_text`, …). The terminal shows that surface (Kitty / half-block / FB).
+This is a **pixel instrument face**, not glass vectors in air.
 
-**Demo layout (1px strokes):**
-- Large **2019 Ford F-150** style tach: face **0–7000 RPM**, redline **arc** from **~5500** (cluster red zone; cut varies by engine)
-- **1px** bezel, **1px** needle, **tip trail** via lifespan (`VGE_TTL`, default 16)
-- Tapes: **fuel**, **coolant**, **transmission temp**, **battery**
+**Demo (black glass, high contrast):**
+- Full alternate screen (not a transparent overlay)
+- Softkey legend row + status strip (bitmap font)
+- Large F-150 style tach **0–7000 RPM**, redline arc **~5500+**, scale digits
+- Tapes with labels: **FUEL**, **COOL**, **TRNS**, **BATT**
 
 
 ## Performance (read this first)
@@ -172,29 +174,23 @@ fb.present_from(&back);
 ## Demo
 
 ```bash
-# Default: F-150 tach + four tapes (120 Hz, 1px, tip trail on)
+# Default: full-screen MFD panel (60 Hz)
 cargo run --release --bin vge-demo
 
-# Longer / shorter needle tip trail (frames)
-VGE_TTL=24 cargo run --release --bin vge-demo
+# Prefer Kitty / Ghostty for sharp present
+VGE_TERM=kitty cargo run --release --bin vge-demo
 
-# 60 Hz
-VGE_HZ=60 cargo run --release --bin vge-demo
-
-# Linux video RAM path
-cargo run --release --bin vge-demo -- --fb
+# Cap density if the terminal stutters
+VGE_MAX_W=960 VGE_MAX_H=540 cargo run --release --bin vge-demo
 ```
 
 | Flag / env | Effect |
 |------------|--------|
-| (default) | Large F-150 tach + fuel / cool / trans / batt tapes |
-| `VGE_TTL=N` | Needle tip trail length in frames (default 16) |
-| `--fb` | RAM draw + blit to `/dev/fb0` |
-| `VGE_HZ=120` | Default: phase-lock 120 Hz |
-| `VGE_HZ=60` | Phase-lock 60 Hz |
+| (default) | Full-screen black MFD: tach + labeled tapes + text |
+| `VGE_HZ=60` | Default phase-lock 60 Hz |
 | `VGE_HZ=0` | Uncapped (throughput test) |
-| `VGE_TERM=kitty\|half\|ascii` | Force present backend |
-| `VGE_MAX_W` / `VGE_MAX_H` | Cap pixel buffer (default 960×540) |
+| `VGE_TERM=kitty\|half\|ascii` | Force present backend (Kitty is sharpest) |
+| `VGE_MAX_W` / `VGE_MAX_H` | Cap pixel buffer (default 1280×720) |
 
 Quit: `q`, Esc, or Ctrl+C.
 
@@ -219,7 +215,15 @@ Quit: `q`, Esc, or Ctrl+C.
 | `refresh(surface)` | Transparent clear + stroke living (full opacity) |
 | `refresh_life(surface, fade)` | Transparent clear + stroke with optional trail fade |
 
-**Update models:** full-scene rebuild → `refresh` (1× stroke). Few vectors move → `sweep`. CRT/radar trails → `set_lifespan` + `tick` + `refresh_life` / `stroke_life`.
+### Bitmap font (MFD legends)
+
+| Function | Description |
+|----------|-------------|
+| `draw_text(surface, x, y, s, color, scale)` | 5×7 solid glyphs (A–Z, 0–9, basic punctuation) |
+| `draw_text_centered(…)` | Center a line on a point |
+| `text_width` / `text_height` | Layout helpers |
+
+**Update models:** full-scene rebuild → `refresh` or `clear` + draws. Sparse motion → `sweep`. Optional trails → lifespan API.
 
 ### Geometry scanout (C + Rust)
 

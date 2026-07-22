@@ -4,12 +4,14 @@
 
 ### Added
 
-- **Per-stroke lifespan** on `DisplayList`: `set_lifespan`, `tick`, `TimedStroke`, `stroke_life` / `refresh_life` (fade by remaining life)
-- Demo: **2019 F-150 style tach** (0–7000 RPM, redline arc ~5500+, 1px needle + tip trail) and tapes: fuel, coolant, trans temp, battery
+- **Bitmap font** (`font::draw_text`, 5×7) for MFD legends and scale digits
+- **Per-stroke lifespan** on `DisplayList`: `set_lifespan`, `tick`, `TimedStroke`, `stroke_life` / `refresh_life`
+- Demo: full-screen **MFD panel** — black glass, softkeys, F-150 tach 0–7k with redline arc, labeled tapes
 
 ### Changed
 
-- Demo is instrument-oriented (clear → independent draws → present); prefer 1px AA strokes
+- Demo uses **alternate screen + black face** (not transparent overlay)
+- Default present density raised (Kitty 8×16 px/cell, caps 1280×720)
 
 ### Fixed
 
