@@ -1,44 +1,50 @@
 # CMFD studio stills (build-accurate)
 
-**Source of truth for geometry:** Three.js viewer rendered from KiCad + OpenSCAD + BOM  
-(`hardware/viewer/index.html`). Photoreal variants are **image edits of those captures**, not freehand AI.
+**Rule:** only show frames after visual QA. Geometry comes from **KiCad** and **OpenSCAD STLs**, not freestyle AI.
 
-## Accurate captures (from viewer)
+## KiCad raytrace (real PCB)
 
-| File | Shot |
-|------|------|
-| `cmfd-accurate-hero.png` | Slight explode, product angle |
-| `cmfd-accurate-closed.png` | Closed unit |
-| `cmfd-accurate-exploded.png` | Full explode |
-| `cmfd-accurate-elec.png` | Electronics only (Board A **frame** + LCD **in hole**) |
-| `cmfd-accurate-front.png` | Front view |
-| `viewer-proof.png` | Load proof |
+Generated with `kicad-cli pcb render` from the fab boards.
 
-## Photoreal polish (edited from accurate frames)
+| File | Content |
+|------|---------|
+| `kicad-board-a-top.png` | Board A passive switch frame, top |
+| `kicad-board-a-iso.png` | Board A isometric |
+| `kicad-board-b-top.png` | Board B carrier, top |
+| `kicad-board-b-iso.png` | Board B isometric |
 
-| File | From |
-|------|------|
-| `cmfd-studio-closed.jpg` | accurate-closed |
-| `cmfd-studio-exploded.jpg` | accurate-exploded |
-| `cmfd-studio-electronics.jpg` | accurate-elec |
+## Blender Cycles (STLs + layout-true boards)
+
+Script: `hardware/tools/blender_render_cmfd.py`
+
+```bash
+nix-shell -p blender --run 'blender -b -P hardware/tools/blender_render_cmfd.py'
+```
+
+| File | Content |
+|------|---------|
+| `render-exploded.png` | Full stack explode: rear, battery, Board B, Board A, bezel, OSB, rockers |
+| `render-closed.png` | Closed product |
+| `render-front-detail.png` | Front 3/4: OSB ring, rockers, glass |
+| `render-case.png` | Rear shell + front bezel STLs |
+| `render-board-a-lcd.png` | Board A frame + LCD in cutout (layout match) |
+| `render-board-b.png` | Board B carrier layout |
+| `render-battery.png` | Battery tray STL + two 18650 cells |
+| `render-buttons.png` | OSB cap + rocker STLs on switch bodies |
 
 ## Stack order (must match build)
 
 ```
-front bezel + OSB caps
-Board A FR4 **frame** (102 mm cutout)
-LCD / glass **in the cutout**  ← never under a solid PCB
+front bezel + OSB caps + rockers
+Board A FR4 frame (102 mm cutout)
+LCD / glass in the cutout
 Board B carrier
 18650 tray
 rear shell
 ```
 
-## How to open the viewer
+## Do not ship
 
-```bash
-cd hardware/viewer
-python3 -m http.server 8765
-# open http://127.0.0.1:8765/
-```
-
-Layout is **inlined** so `file://` also works if Three.js CDN is reachable once.
+- Freestyle AI product art
+- Three.js screenshots “polished” into fake boards
+- Frames with screen under a solid PCB
