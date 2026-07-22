@@ -494,8 +494,8 @@ fn draw_hsd_page(s: &mut Surface, c: Rect, pal: &Palette, t: f32) {
         s.circle(cx, cy, rr, pal.nav);
     }
     tick_cardinal(s, cx, cy, r_in, pal.primary);
-    // Ownship white (Table 1-1 ownship data).
-    ownship(s, cx, cy, pal.readout);
+    // Ownship cyan stick aircraft (MLU Table 1-1 / Fig 1-19).
+    ownship(s, cx, cy, pal.nav);
 
     // FCR search volume wedge (±30°, out to outer ring)
     let hdg = t * 8.0;
