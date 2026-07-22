@@ -32,6 +32,11 @@ name = "mfd-demo"
 path = "src/bin/mfd-demo.rs"
 
 [[bin]]
+name = "mfd-obd-capture"
+path = "src/bin/mfd-obd-capture.rs"
+required-features = ["obd"]
+
+[[bin]]
 name = "bake-font-atlas"
 path = "src/bin/bake-font-atlas.rs"
 required-features = ["bake_font"]
@@ -40,13 +45,15 @@ required-features = ["bake_font"]
 default = ["obd"]
 ## Host-only: regenerate `src/font_atlas_data.rs` from B612 TTF.
 bake_font = ["dep:fontdue"]
-## Live OBD-II via path dep on theesfeld/obdtui `obd-io` crate.
-obd = ["dep:obd-io"]
+## Native OBD-II / UDS (ELM + Bluetooth SPP + capture). No obdtui.
+obd = ["dep:serialport", "dep:serde", "dep:serde_json"]
 
 [dependencies]
 libc = "0.2"
 fontdue = { version = "0.9", optional = true }
-obd-io = { path = "../obdtui/crates/obd-io", optional = true }
+serialport = { version = "4", optional = true, default-features = false }
+serde = { version = "1", optional = true, features = ["derive"] }
+serde_json = { version = "1", optional = true }
 
 [build-dependencies]
 cc = "1"

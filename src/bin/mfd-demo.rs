@@ -6,7 +6,8 @@
 //! cargo run --release --bin mfd-demo
 //! MFD_DOMAIN=jet cargo run --release --bin mfd-demo
 //! MFD_CAMERA=auto cargo run --release --bin mfd-demo
-//! MFD_OBD_PORT=/dev/ttyUSB0 cargo run --release --bin mfd-demo
+//! MFD_OBD_BT=00:04:3E:96:B8:F1 cargo run --release --bin mfd-demo
+//! MFD_OBD_REPLAY=docs/odbii-session cargo run --release --bin mfd-demo
 //! ```
 
 use std::io;
@@ -112,14 +113,14 @@ fn main() -> io::Result<()> {
     let mut osb_tick: u32 = 0;
 
     #[cfg(feature = "obd")]
-    let obd_feed = auto::obd_feed::ObdFeed::try_start_from_env();
+    let obd_feed = mfd::obd::ObdFeed::try_start_from_env();
     #[cfg(feature = "obd")]
     let obd_status = if let Some(ref f) = obd_feed {
         let s = f.status_line();
         eprintln!("OBD: {s}");
         s
     } else {
-        eprintln!("OBD: DEMO (set MFD_OBD_PORT or MFD_OBD_REPLAY)");
+        eprintln!("OBD: DEMO (MFD_OBD_BT / MFD_OBD_PORT / MFD_OBD_REPLAY)");
         "DEMO".into()
     };
     #[cfg(not(feature = "obd"))]
@@ -519,7 +520,10 @@ fn print_banner(ver: &str) {
     eprintln!("  SENSORS");
     eprintln!("    MFD_CAMERA=/dev/video0|auto");
     eprintln!("    MFD_FLIR_PATH=still.pgm");
-    eprintln!("    MFD_OBD_PORT=/dev/ttyUSB0  MFD_OBD_REPLAY=…");
+    eprintln!("    MFD_OBD_BT=00:04:3E:96:B8:F1   (truck Bluetooth ELM)");
+    eprintln!("    MFD_OBD_PORT=/dev/ttyUSB0|/dev/rfcomm0");
+    eprintln!("    MFD_OBD_REPLAY=docs/odbii-session");
+    eprintln!("    mfd-obd-capture --bt … --uds -o ./cap");
     eprintln!("    MFD_RANGE=2.1,3.0,2.8,1.2");
     eprintln!("    MFD_DOMAIN=auto|jet   MFD_AUTO_PAGE=ATT|MAP|FLIR|…");
     eprintln!("    c color · Esc quit");
